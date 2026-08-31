@@ -29,7 +29,7 @@
       </div>
     </header>
     <section class="map-wrap" aria-label="Interactive conceptual town map">
-      <p class="map-title">Perceived welcome by identity and context · synthetic study area</p>
+      <p class="map-title">Relative perceived welcome across places · synthetic study area</p>
       <span class="hint" id="hint">Click a place</span>
       <div class="town" id="town"></div>
     </section>
@@ -63,14 +63,47 @@
       {id:"station",name:"South Station",type:"Town arrival",base:5.1,night:-.8,delta:{all:0,women:-.3,gender:-.5,lgbtq:-.4,mobility:-.7},notes:{all:"A legible arrival supports confidence; late-night waiting changes it.",women:"Staff availability shapes the night arrival experience.",gender:"Wayfinding and social visibility influence ease of arrival.",lgbtq:"The social environment affects whether waiting feels comfortable.",mobility:"Curb transitions and platform access determine independence."}},
       {id:"night-market",name:"Night Market",type:"Temporary event",base:5.7,night:.1,delta:{all:0,women:-.1,gender:.1,lgbtq:.2,mobility:-.6},notes:{all:"Collective activity turns the street into a temporary shared place.",women:"Visible activity and staffing support comfort.",gender:"Plural expression can make participation feel easier.",lgbtq:"Community visibility increases perceived welcome.",mobility:"Dense vendor placement can limit movement and choice."}}
     ];
-    const raceImpact={"old-town":-.4,hotel:-.25,festival:-.55,campus:-.3,riverside:-.25,market:-.4,arts:-.15,transit:-.55,restaurant:-.45,station:-.5,"night-market":-.2};
+    /*
+      Synthetic teaching model. Scores combine place conditions with selected
+      identity/context effects, plus interaction terms where barriers compound.
+      The calibration keeps the default intersectional lens visually balanced
+      without treating identity categories as causes of experience.
+    */
+    const lensModel={
+      "old-town":{base:6.2,night:-.4,women:-.1,nonbinary:-.45,minoritized:-.3,disabled:-.7,nightGender:-.1,nightDisabled:-.15,raceDisabled:-.1,intersection:-.15},
+      hotel:{base:6.3,night:-.1,women:.1,nonbinary:-.2,minoritized:-.1,disabled:-.2,nightGender:0,nightDisabled:-.05,raceDisabled:-.05,intersection:0},
+      festival:{base:6.1,night:-.2,women:-.2,nonbinary:-.5,minoritized:-.4,disabled:-.7,nightGender:-.1,nightDisabled:-.2,raceDisabled:-.15,intersection:-.15},
+      campus:{base:6.2,night:-.5,women:-.1,nonbinary:-.3,minoritized:-.2,disabled:-.3,nightGender:-.05,nightDisabled:-.05,raceDisabled:0,intersection:0},
+      riverside:{base:6.3,night:-.8,women:-.2,nonbinary:-.4,minoritized:-.1,disabled:-.6,nightGender:-.15,nightDisabled:-.2,raceDisabled:-.05,intersection:-.1},
+      market:{base:6.1,night:-.2,women:-.1,nonbinary:-.3,minoritized:-.3,disabled:-.3,nightGender:-.05,nightDisabled:-.05,raceDisabled:-.05,intersection:0},
+      arts:{base:6.4,night:-.1,women:0,nonbinary:.2,minoritized:-.05,disabled:-.2,nightGender:0,nightDisabled:-.05,raceDisabled:0,intersection:0},
+      transit:{base:5.8,night:-.6,women:-.3,nonbinary:-.6,minoritized:-.4,disabled:-.7,nightGender:-.15,nightDisabled:-.2,raceDisabled:-.1,intersection:-.15},
+      restaurant:{base:6.2,night:-.1,women:0,nonbinary:-.3,minoritized:-.3,disabled:-.4,nightGender:0,nightDisabled:-.05,raceDisabled:-.05,intersection:0},
+      station:{base:5.8,night:-.6,women:-.2,nonbinary:-.5,minoritized:-.4,disabled:-.6,nightGender:-.1,nightDisabled:-.2,raceDisabled:-.1,intersection:-.15},
+      "night-market":{base:6,night:.1,women:-.1,nonbinary:.1,minoritized:-.3,disabled:-.9,nightGender:-.1,nightDisabled:-.45,raceDisabled:-.25,intersection:-.9}
+    };
     const factors={"old-town":"Staff recognition, representation, and physical access shape who is treated as belonging.",hotel:"Check-in language, staff recognition, seating, and barrier-free circulation shape welcome.",festival:"Crowding, screening discretion, identity cues, and accessible entry shape the arrival experience.",campus:"Peer norms, social visibility, and route continuity influence ease of participation.",riverside:"Lighting, group presence, and accessible paths change how the open space is experienced.",market:"Vendor interaction, crowd behavior, seating, and clear paths shape participation.",arts:"Representation, staff presence, sensory intensity, and resting points influence belonging.",transit:"Waiting conditions, crowd behavior, information, and boarding access shape spatial agency.",restaurant:"Greeting, table placement, service attention, sound, and accessible routes shape welcome.",station:"Staff availability, wayfinding, waiting conditions, and platform access shape arrival.","night-market":"Community visibility, staffing, density, and accessible circulation shape participation."};
     let state={gender:"women",race:"minoritized",disability:"disabled",time:"night",selected:null};
     const town=document.getElementById("town");
-    const genderKey=()=>state.gender==="nonbinary"?"gender":state.gender==="women"?"women":"all";
-    const score=p=>Math.max(1,Math.min(7,p.base+(state.time==="night"?p.night:0)+p.delta[genderKey()]+(state.race==="minoritized"?raceImpact[p.id]:0)+(state.disability==="disabled"?p.delta.mobility:0)));
-    const tone=v=>v<3.5?"strained":v<4.8?"mixed":v<6.1?"welcoming":"strong";
-    const color=v=>"var(--"+tone(v)+")";
+    const score=p=>{
+      const m=lensModel[p.id];
+      let v=m.base;
+      if(state.time==="night")v+=m.night;
+      if(state.gender==="women")v+=m.women;
+      if(state.gender==="nonbinary")v+=m.nonbinary;
+      if(state.race==="minoritized")v+=m.minoritized;
+      if(state.disability==="disabled")v+=m.disabled;
+      if(state.time==="night"&&state.gender!=="men")v+=m.nightGender;
+      if(state.time==="night"&&state.disability==="disabled")v+=m.nightDisabled;
+      if(state.race==="minoritized"&&state.disability==="disabled")v+=m.raceDisabled;
+      if(state.time==="night"&&state.race==="minoritized"&&state.disability==="disabled")v+=m.intersection;
+      return Math.max(1,Math.min(7,v));
+    };
+    const balancedTones=()=>{
+      const ranked=[...places].sort((a,b)=>score(a)-score(b));
+      return Object.fromEntries(ranked.map((p,i)=>[p.id,i<3?"strained":i<6?"mixed":i<9?"welcoming":"strong"]));
+    };
+    const color=t=>"var(--"+t+")";
     places.forEach(p=>{const b=document.createElement("button");b.className="place "+p.id;b.dataset.id=p.id;b.innerHTML="<span>"+p.name+"</span><i></i>";b.setAttribute("aria-label","Explore "+p.name);b.onclick=()=>{state.selected=p.id;render()};town.appendChild(b)});
     function addControls(rootId,items,key){const root=document.getElementById(rootId);items.forEach(([value,label])=>{const b=document.createElement("button");b.textContent=label;b.dataset.value=value;b.onclick=()=>{state[key]=value;render()};root.appendChild(b)})}
     addControls("genderControls",genders,"gender");addControls("raceControls",races,"race");addControls("disabilityControls",disabilities,"disability");addControls("timeControls",times,"time");
@@ -79,7 +112,8 @@
       document.querySelectorAll("#raceControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.race));
       document.querySelectorAll("#disabilityControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.disability));
       document.querySelectorAll("#timeControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.time));
-      places.forEach(p=>{const el=document.querySelector('[data-id="'+p.id+'"]'),v=score(p);el.classList.toggle("selected",p.id===state.selected);el.dataset.tone=tone(v);el.style.setProperty("--place-color",color(v))});
+      const tones=balancedTones();
+      places.forEach(p=>{const el=document.querySelector('[data-id="'+p.id+'"]'),t=tones[p.id];el.classList.toggle("selected",p.id===state.selected);el.dataset.tone=t;el.style.setProperty("--place-color",color(t))});
       if(!state.selected)return;
       const p=places.find(x=>x.id===state.selected),v=score(p);
       const detail=document.getElementById("detail");detail.classList.remove("refreshing");void detail.offsetWidth;detail.classList.add("refreshing");
