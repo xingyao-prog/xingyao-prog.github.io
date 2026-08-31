@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="An interactive teaching studio for evidence-led, identity-comfort space redesign.">
+  <title>IncluMap: Design Studio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600&display=swap');
+    :root{--ink:#191b1a;--muted:#777d79;--paper:#f6f5f1;--silver:#e5e6e1;--line:#cfd2cc;--block:#efefeb;--pink:#ff4f97;--pink-soft:#ffc5dc;--yellow:#dfff00;--violet:#8c70ff;--white:#fff}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font:500 13px/1.35 Manrope,Arial,sans-serif}button{font:inherit;color:inherit}.page{height:100svh;min-height:700px;padding:16px;display:grid;grid-template-rows:48px minmax(0,1fr) 126px 28px;gap:10px;overflow:hidden}.top{display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{font:500 12px/1 DM Mono,monospace;letter-spacing:.06em}.brand span{color:#858b86}.workflow{display:flex;align-items:center;gap:5px}.step,.layer-button{border:1px solid var(--line);background:transparent;padding:7px 10px;border-radius:999px;font:500 9px/1 DM Mono,monospace;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:.2s}.step{cursor:default;color:var(--muted)}.step.current{background:var(--yellow);border-color:var(--ink);color:var(--ink)}.arrow{color:#a2a7a3}.layer-button:hover,.layer-button.active{background:var(--ink);border-color:var(--ink);color:#fff}.studio{display:grid;grid-template-columns:minmax(0,1fr) 255px;gap:10px;min-height:0}.map-wrap{position:relative;min-width:0;min-height:0;overflow:hidden;background:var(--silver);border:1px solid var(--line)}.map-label{position:absolute;z-index:5;left:13px;top:11px;margin:0;font:400 8px/1.3 DM Mono,monospace;color:#737975;letter-spacing:.05em;text-transform:uppercase}.map-hint{position:absolute;z-index:5;right:12px;top:10px;background:var(--yellow);padding:5px 8px;border:1px solid var(--ink);font:500 8px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:2px 2px 0 var(--ink);transition:.2s}.map-hint.ready{background:var(--pink);color:#fff;animation:pulse 1.2s ease infinite}.town{position:absolute;inset:42px 13px 13px;display:grid;grid-template-columns:1.2fr .75fr 1fr 1.1fr .8fr 1.2fr;grid-template-rows:1fr .7fr 1fr .75fr;gap:8px}.place{position:relative;border:1px solid #d3d6d0;background:var(--block);color:#707671;cursor:pointer;overflow:hidden;text-align:left;transition:background .35s,color .25s,transform .22s,border-color .22s}.place:hover,.place:focus-visible{border-color:#8d948f;color:var(--ink);outline:0;transform:translateY(-2px)}.place.selected{border-color:var(--ink);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}.place.evidence-gap-1{background:#eeeeda}.place.evidence-gap-2{background:#f1c8d8}.place.evidence-gap-3{background:#ee91b6}.place-name{position:absolute;left:8px;bottom:7px;font-size:clamp(.56rem,.78vw,.69rem);letter-spacing:-.01em;z-index:2}.evidence-count{position:absolute;right:7px;top:7px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#fff;border:1px solid currentColor;font:500 8px/1 DM Mono,monospace;z-index:3}.markers{position:absolute;left:8px;right:8px;top:8px;display:flex;gap:4px;flex-wrap:wrap;z-index:3;padding-right:20px}.marker{border:1px solid var(--ink);background:var(--white);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;padding:0;font-size:14px;cursor:pointer;box-shadow:2px 2px 0 rgba(25,27,26,.3);animation:marker-in .36s cubic-bezier(.2,.9,.25,1.2)}.marker:hover,.marker:focus-visible{transform:translateY(-2px);outline:0;background:var(--yellow)}.place.targetable:after{content:"+";position:absolute;inset:0;display:grid;place-items:center;background:rgba(223,255,0,.72);color:var(--ink);font:500 30px/1 DM Mono,monospace;opacity:0;transition:.2s;z-index:4}.place.targetable:hover:after{opacity:1}.old-town{grid-column:1/3;grid-row:1}.hotel{grid-column:3;grid-row:1}.festival{grid-column:4/6;grid-row:1/3}.campus{grid-column:6;grid-row:1/3}.riverside{grid-column:1;grid-row:2/4}.market{grid-column:2/4;grid-row:2/4}.arts{grid-column:4/6;grid-row:3}.transit{grid-column:6;grid-row:3/5}.restaurant{grid-column:1/3;grid-row:4}.station{grid-column:3/5;grid-row:4}.night-market{grid-column:5;grid-row:4}.palette{border:1px solid var(--line);background:#fbfaf6;min-height:0;display:grid;grid-template-rows:auto auto 1fr auto;overflow:hidden}.palette-head{padding:12px 12px 10px;border-bottom:1px solid var(--line)}.eyebrow{display:block;color:var(--muted);font:500 8px/1 DM Mono,monospace;letter-spacing:.07em;text-transform:uppercase}.palette h2{margin:5px 0 0;font-size:1.05rem;letter-spacing:-.04em}.categories{padding:9px 10px;display:flex;flex-wrap:wrap;gap:5px;border-bottom:1px solid var(--line)}.category{border:1px solid var(--line);background:transparent;padding:6px 7px;border-radius:999px;color:#626863;font-size:.61rem;cursor:pointer}.category:hover{border-color:var(--pink);color:var(--ink)}.category.active{background:var(--pink);border-color:var(--pink);color:#fff}.tools{min-height:0;overflow:auto;padding:9px 10px;display:grid;align-content:start;gap:6px}.tool{border:1px solid var(--line);background:#fff;padding:8px;display:grid;grid-template-columns:29px minmax(0,1fr);gap:8px;align-items:center;text-align:left;cursor:pointer;transition:.2s}.tool:hover{border-color:var(--ink);transform:translateX(-2px)}.tool.active{border-color:var(--ink);background:var(--yellow);box-shadow:3px 3px 0 var(--ink)}.tool-emoji{font-size:1.15rem;text-align:center}.tool b{display:block;font-size:.68rem;line-height:1.2}.tool small{display:block;margin-top:2px;color:#747a75;font-size:.55rem;line-height:1.2}.palette-foot{padding:9px 11px;border-top:1px solid var(--line);color:#6f7670;font:400 7px/1.45 DM Mono,monospace}.clear{border:0;border-bottom:1px solid currentColor;background:transparent;padding:0;color:#777d79;font:inherit;cursor:pointer}.evidence{position:relative;border-top:1px solid var(--line);display:grid;grid-template-columns:150px 1fr 1fr 1fr;gap:18px;align-items:start;padding:13px 5px 4px;overflow:hidden}.evidence.refreshing{animation:evidence-flash .65s ease}.evidence:before{content:"";position:absolute;left:0;top:8px;bottom:4px;width:4px;background:var(--pink);transform:scaleY(0)}.evidence.refreshing:before{animation:evidence-line .65s ease}.place-title h2{margin:2px 0 0;font-size:1.05rem;letter-spacing:-.04em}.place-title small{display:block;margin-top:4px;color:var(--muted);font:400 7px/1.3 DM Mono,monospace;text-transform:uppercase;letter-spacing:.04em}.evidence-cell{min-width:0}.evidence-cell b{display:block;margin-bottom:5px;font:500 8px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.06em}.evidence-cell p{margin:0;color:#5f655f;font-size:.67rem;line-height:1.45}.evidence-cell.hypothesis b{color:#a1265d}.measure-tag{display:inline-block;margin-top:5px;padding:3px 5px;background:var(--yellow);border:1px solid var(--ink);font:500 7px/1 DM Mono,monospace;text-transform:uppercase}.empty{grid-column:2/-1;color:#7f8580;font-size:.72rem}.bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;color:#777d79;font:400 7px/1.3 DM Mono,monospace}.logic{text-transform:uppercase;letter-spacing:.04em}.cite{text-align:right;max-width:760px}.cite a{color:inherit;text-decoration:none}.cite a:hover{text-decoration:underline}.marker-card{position:absolute;z-index:10;right:12px;bottom:12px;width:min(280px,calc(100% - 24px));background:#fff;border:1px solid var(--ink);box-shadow:5px 5px 0 var(--pink);padding:11px;display:none}.marker-card.visible{display:block;animation:card-in .28s ease}.marker-card .close{position:absolute;right:7px;top:6px;border:0;background:transparent;cursor:pointer}.marker-card h3{margin:5px 20px 6px 0;font-size:.86rem}.marker-card p{margin:0 0 7px;color:#626863;font-size:.63rem;line-height:1.4}.marker-card .remove{border:0;background:var(--ink);color:#fff;padding:5px 7px;font:500 7px/1 DM Mono,monospace;text-transform:uppercase;cursor:pointer}@keyframes marker-in{0%{opacity:0;transform:scale(.3) rotate(-18deg)}100%{opacity:1;transform:none}}@keyframes pulse{50%{transform:translateY(-2px);box-shadow:3px 4px 0 var(--ink)}}@keyframes evidence-flash{0%{background:#ffd5e6;transform:translateY(5px)}100%{background:transparent;transform:none}}@keyframes evidence-line{25%,75%{transform:scaleY(1)}100%{transform:scaleY(0)}}@keyframes card-in{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}@media(max-width:980px){.page{height:auto;min-height:100svh;grid-template-rows:auto 700px auto auto;overflow:visible}.top{align-items:flex-start}.workflow{flex-wrap:wrap;justify-content:flex-end}.studio{grid-template-columns:1fr;grid-template-rows:500px auto}.palette{min-height:310px;grid-template-columns:190px 1fr;grid-template-rows:auto 1fr auto}.palette-head{grid-row:1;border-right:1px solid var(--line)}.categories{grid-row:2;grid-column:1;border-right:1px solid var(--line);align-content:start}.tools{grid-row:1/3;grid-column:2}.palette-foot{grid-column:1/-1}.evidence{grid-template-columns:130px 1fr 1fr}.evidence .hypothesis{grid-column:2/4}.bottom{align-items:flex-end}}@media(max-width:620px){.page{padding:10px;grid-template-rows:auto 680px auto auto}.top{display:block}.workflow{margin-top:12px;justify-content:flex-start}.step{display:none}.studio{grid-template-rows:390px auto}.town{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,1fr);gap:5px}.old-town{grid-column:1/3;grid-row:1}.hotel{grid-column:3;grid-row:1}.festival{grid-column:4;grid-row:1/3}.campus{grid-column:1;grid-row:2}.riverside{grid-column:2;grid-row:2/4}.market{grid-column:3/5;grid-row:3}.arts{grid-column:1;grid-row:3/5}.transit{grid-column:4;grid-row:4/6}.restaurant{grid-column:1/3;grid-row:5}.station{grid-column:3;grid-row:4/6}.night-market{grid-column:2;grid-row:4}.palette{display:block}.categories{border-right:0}.tools{max-height:220px;grid-template-columns:1fr 1fr}.evidence{grid-template-columns:1fr;gap:11px}.evidence .hypothesis,.empty{grid-column:1}.bottom{display:block}.cite{text-align:left;margin-top:8px}.map-label{max-width:65%}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+    /* Evidence-led redesign layers: cue, route, and zone. */
+    .geometry-key{display:flex;gap:9px;margin-top:8px;color:#727873;font:500 7px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.04em}.geometry-key b{color:var(--ink);font-weight:500}.geometry{display:inline-block;margin-right:4px;color:#aa245d;font:500 6px/1 DM Mono,monospace;text-transform:uppercase}.zones,.routes{position:absolute;inset:0;pointer-events:none}.zones{z-index:1;display:grid}.routes{z-index:2}.design-marker{pointer-events:auto;cursor:pointer}.zone-marker{position:absolute;inset:4px;border:1px dashed var(--ink);background:rgba(140,112,255,.2);padding:5px;display:flex;align-items:center;justify-content:center;font-size:17px;transition:.2s}.zone-marker:nth-child(2){inset:9px;background:rgba(255,79,151,.15)}.zone-marker:hover,.zone-marker:focus-visible{background:rgba(223,255,0,.58);outline:0}.route-marker{position:absolute;left:8%;right:8%;top:38%;height:22px;border:0;border-top:3px solid var(--ink);background:transparent;padding:0;text-align:right;font-size:15px}.route-marker:nth-child(2){top:57%}.route-marker:after{content:"";position:absolute;right:-2px;top:-6px;width:8px;height:8px;border-top:3px solid var(--ink);border-right:3px solid var(--ink);transform:rotate(45deg)}.route-marker span{position:absolute;right:4px;top:-21px;background:#fff;border:1px solid var(--ink);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;box-shadow:2px 2px 0 var(--yellow)}.route-marker:hover,.route-marker:focus-visible{border-top-color:var(--pink);outline:0}.route-marker:hover:after,.route-marker:focus-visible:after{border-color:var(--pink)}.place.has-zone .place-name{background:rgba(255,255,255,.8);padding:2px 4px}.coherence{padding:10px 11px;border-top:1px solid var(--line);background:#f1f1ed}.coherence-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.coherence-head b{font:500 8px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.05em}.coherence-head span{color:var(--muted);font:400 7px/1 DM Mono,monospace}.chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:4px;align-items:center;margin:7px 0}.chain-stage{border:1px solid #bfc3bd;background:#fff;padding:5px 3px;text-align:center;color:#8a908b;font:500 6px/1 DM Mono,monospace;text-transform:uppercase}.chain-stage.active{background:var(--yellow);border-color:var(--ink);color:var(--ink)}.chain-stage.cue.active{background:var(--pink);color:#fff}.chain-arrow{font-size:8px;color:#858b86}.coherence p{margin:0;color:#646a65;font-size:.58rem;line-height:1.35}.status-pill{display:inline-block;margin:0 0 6px;padding:3px 5px;background:var(--pink-soft);border:1px solid var(--ink);font:500 6px/1 DM Mono,monospace;text-transform:uppercase}.status-pill.supported{background:var(--yellow)}.marker-card .check{border-top:1px solid var(--line);padding-top:7px;color:#8c2453}.marker-card .meta{display:block;margin:0 0 6px;color:#777d79;font:500 7px/1 DM Mono,monospace;text-transform:uppercase}.palette{grid-template-rows:auto auto 1fr auto auto}@media(max-width:980px){.palette{grid-template-rows:auto 1fr auto auto}.coherence{grid-column:1/-1}.palette-foot{grid-column:1/-1}}@media(max-width:620px){.coherence{border-top:1px solid var(--line)}}
+    /* Five-category design bins replace directional route arrows. */
+    .category-slots{position:absolute;inset:5px 5px 20px;z-index:3;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;pointer-events:none}.category-slot{position:relative;min-width:0;min-height:0;padding:13px 2px 3px;border:1px solid rgba(25,27,26,.16);display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:2px;overflow:auto;pointer-events:none}.category-slot:before{content:attr(data-short);position:absolute;left:3px;top:3px;color:rgba(25,27,26,.55);font:500 6px/1 DM Mono,monospace}.slot-access{background:rgba(223,255,0,.2)}.slot-care{background:rgba(255,79,151,.14)}.slot-sensory{background:rgba(140,112,255,.14)}.slot-night{background:rgba(72,80,77,.12)}.slot-social{background:rgba(69,185,210,.14)}.grouped-marker{pointer-events:auto;width:clamp(17px,1.65vw,22px);height:clamp(17px,1.65vw,22px);border:1px solid var(--ink);background:#fff;padding:0;display:grid;place-items:center;font-size:clamp(10px,1vw,13px);line-height:1;cursor:pointer;box-shadow:1px 1px 0 rgba(25,27,26,.35);animation:marker-in .3s ease}.grouped-marker:hover,.grouped-marker:focus-visible{background:var(--yellow);outline:0;transform:translateY(-1px)}.marker-point{border-radius:50%}.marker-route{border-radius:999px;box-shadow:inset 0 -3px var(--pink),1px 1px 0 rgba(25,27,26,.35)}.marker-zone{border-radius:2px;background:#efeaff;box-shadow:inset 0 0 0 2px rgba(140,112,255,.28),1px 1px 0 rgba(25,27,26,.35)}.category-slot::-webkit-scrollbar{width:2px;height:2px}.category-slot::-webkit-scrollbar-thumb{background:rgba(25,27,26,.25)}.place-name{z-index:5;background:rgba(255,255,255,.78);padding:1px 3px}.evidence-count{z-index:6}.route-marker,.zone-marker{display:none!important}@media(max-width:620px){.category-slots{inset:4px 3px 16px;gap:1px}.category-slot{padding:10px 1px 2px}.category-slot:before{font-size:5px;left:2px;top:2px}.grouped-marker{width:16px;height:16px;font-size:9px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <a class="brand" href="../index.html" style="color:inherit;text-decoration:none" aria-label="Back to the IncluMap series">INCLUMAP: DESIGN STUDIO <span>/ IDENTITY COMFORT · FROM EVIDENCE TO CHANGE</span></a>
+      <div class="workflow" aria-label="Design workflow">
+        <span class="step current">01 Read evidence</span><span class="arrow">→</span><span class="step">02 Place intervention</span><span class="arrow">→</span><span class="step">03 Retest</span>
+        <button class="layer-button" id="layerButton" type="button">Show design layer</button>
+      </div>
+    </header>
+
+    <section class="studio">
+      <div class="map-wrap" aria-label="Interactive identity comfort redesign map">
+        <p class="map-label" id="mapLabel">Synthetic user comments + field observations · click a district</p>
+        <span class="map-hint" id="mapHint">Select a space</span>
+        <div class="town" id="town"></div>
+        <aside class="marker-card" id="markerCard" aria-live="polite">
+          <button class="close" id="closeCard" aria-label="Close">×</button>
+          <span class="eyebrow">Design hypothesis</span>
+          <h3 id="markerTitle"></h3>
+          <span class="meta" id="markerMeta"></span>
+          <span class="status-pill" id="markerStatus"></span>
+          <p id="markerReason"></p>
+          <p id="markerMeasure"></p>
+          <p class="check" id="markerCheck"></p>
+          <button class="remove" id="removeMarker">Remove intervention</button>
+        </aside>
+      </div>
+
+      <aside class="palette" aria-label="Intervention palette">
+        <div class="palette-head"><span class="eyebrow">Intervention palette</span><h2>What could change?</h2><div class="geometry-key"><span><b>●</b> point</span><span><b>━</b> route</span><span><b>▧</b> zone</span></div></div>
+        <div class="categories" id="categories"></div>
+        <div class="tools" id="tools"></div>
+        <div class="coherence" id="coherence">
+          <div class="coherence-head"><b>Design coherence</b><span id="coherencePlace">Festival Gate</span></div>
+          <div class="chain"><span class="chain-stage cue" data-stage="cue">Visible cue</span><span class="chain-arrow">→</span><span class="chain-stage" data-stage="function">Function</span><span class="chain-arrow">→</span><span class="chain-stage" data-stage="accountability">Response</span></div>
+          <p id="coherenceNote">Build a design chain, then retest it with users.</p>
+        </div>
+        <div class="palette-foot">Placed interventions sort into five category areas automatically; each area accepts multiple icons. Icons are hypotheses—not proof of inclusion. <button class="clear" id="clearAll">Clear design</button></div>
+      </aside>
+    </section>
+
+    <section class="evidence" id="evidence" aria-live="polite">
+      <div class="place-title"><span class="eyebrow">Selected space</span><h2 id="placeName">Festival Gate</h2><small id="placeType">Event threshold</small></div>
+      <div class="evidence-cell"><b>User voice</b><p id="comment"></p></div>
+      <div class="evidence-cell"><b>Field observation</b><p id="observation"></p></div>
+      <div class="evidence-cell hypothesis"><b>Design question</b><p id="question"></p><span class="measure-tag" id="measureTag"></span></div>
+    </section>
+
+    <footer class="bottom">
+      <div class="logic">Evidence → intervention → re-measure identity comfort</div>
+      <div class="cite"><b>Concept &amp; design:</b> Yao, X. (2026). <i>Identity Comfort Design Map.</i> &nbsp; <b>Research bases:</b> <a href="https://doi.org/10.1037/tps0000304">Kruk &amp; Matsick (2021)</a>; <a href="https://doi.org/10.1177/1948550617737601">Chaney &amp; Sanchez (2018)</a>; <a href="https://doi.org/10.1111/josi.70062">Kruk et al. (2026)</a>; <a href="https://doi.org/10.1016/j.annals.2025.103898">Vongvisitsin et al. (2025)</a>; <a href="https://www.ada.gov/law-and-regs/design-standards/2010-stds/">ADA (2010)</a>; Yao et al. (2026), <i>Gender Attributes of Space</i>. Synthetic teaching data.</div>
+    </footer>
+  </main>
+
+  <script>
+    const categories=[
+      {id:"access",label:"Access + wayfinding",items:[
+        {id:"step-free",emoji:"♿",name:"Step-free route",geometry:"route",stage:"function",why:"Connect arrival, circulation, and destination without steps or blocked clear paths.",measure:"Retest independent access + spatial agency",check:"Is it the primary route—or a longer, hidden alternative?"},
+        {id:"elevator",emoji:"🛗",name:"Elevator",geometry:"cue",stage:"function",why:"Provide an equivalent vertical route that is easy to locate and operate.",measure:"Retest route choice + effort"},
+        {id:"ramp",emoji:"◢",name:"Ramp / curb cut",geometry:"route",stage:"function",why:"Remove level-change barriers while preserving a continuous clear route.",measure:"Retest ease of arrival"},
+        {id:"tactile",emoji:"🦯",name:"Tactile guidance",geometry:"route",stage:"function",why:"Add detectable warning or tactile route cues where visual information alone is insufficient.",measure:"Retest orientation + confidence",check:"Confirm placement with blind and low-vision users; a decorative strip is not guidance."},
+        {id:"seating",emoji:"🪑",name:"Choice-based seating",geometry:"zone",stage:"function",why:"Mix solo, social, supported, different-height, companion, and mobility-device spaces.",measure:"Retest dwell choice + social comfort"},
+        {id:"signs",emoji:"🧭",name:"Predictable route",geometry:"route",stage:"function",why:"Use consistent landmarks, pictograms, contrast, and decision-point information.",measure:"Retest wayfinding confidence + cognitive load"},
+        {id:"language",emoji:"🌐",name:"Multilingual welcome",geometry:"cue",stage:"cue",why:"Extend welcome into essential service information, not only decorative greetings.",measure:"Retest comprehension + cultural welcome"},
+        {id:"multi-sensory",emoji:"🔔",name:"Multi-sensory cue",geometry:"cue",stage:"function",why:"Pair visual information with audible or tactile communication.",measure:"Retest information access"}
+      ]},
+      {id:"care",label:"Care",items:[
+        {id:"restroom",emoji:"🚻",name:"All-gender restroom",geometry:"cue",stage:"function",why:"Offer a clearly signed, accessible option that does not force identity disclosure.",measure:"Retest dignity + restroom stress",check:"Sign the facilities clearly and avoid turning the accessible restroom into the only inclusive option."},
+        {id:"changing",emoji:"👶",name:"Changing for every caregiver",geometry:"cue",stage:"function",why:"Provide accessible changing facilities across gendered restrooms or in a universal facility.",measure:"Retest caregiver access + dignity"},
+        {id:"family",emoji:"🍼",name:"Family / lactation room",geometry:"zone",stage:"function",why:"Provide a private, usable care space without isolating caregivers from the experience.",measure:"Retest participation + dignity"},
+        {id:"flex",emoji:"🎟️",name:"Flexible participation",geometry:"zone",stage:"function",why:"Offer quiet entry, queue alternatives, pause-and-return, and equivalent ways to participate.",measure:"Retest autonomy + event access"},
+        {id:"water",emoji:"🚰",name:"Accessible water point",geometry:"cue",stage:"function",why:"Place reachable hydration near routes and waiting areas.",measure:"Retest comfort + dwell time"}
+      ]},
+      {id:"sensory",label:"Sensory",items:[
+        {id:"quiet",emoji:"🔇",name:"Quiet recovery zone",geometry:"zone",stage:"function",why:"Offer a low-stimulation place to pause without leaving the experience entirely.",measure:"Retest sensory comfort + return",check:"Can people use it without being segregated from the main experience?"},
+        {id:"sound",emoji:"🎧",name:"Sound-managed zone",geometry:"zone",stage:"function",why:"Reduce unpredictable noise and clarify acoustic zones.",measure:"Retest overload + communication"},
+        {id:"glare",emoji:"☀️",name:"Low-glare zone",geometry:"zone",stage:"function",why:"Use even, controllable light and reduce flicker, glare, and abrupt transitions.",measure:"Retest sensory ease"}
+      ]},
+      {id:"night",label:"Night + safety",items:[
+        {id:"lighting",emoji:"💡",name:"Night comfort route",geometry:"route",stage:"function",why:"Illuminate routes, faces, thresholds, and decision points without harsh glare.",measure:"Retest night comfort + legibility",check:"Check both facial visibility and sensory impact; more light is not automatically better."},
+        {id:"sightlines",emoji:"👁️",name:"Clear-sightline zone",geometry:"zone",stage:"function",why:"Remove visual traps and support mutual visibility across routes and waiting areas.",measure:"Retest perceived control"},
+        {id:"help",emoji:"🆘",name:"Low-barrier help point",geometry:"cue",stage:"accountability",why:"Make assistance and reporting easy to find without requiring identity disclosure.",measure:"Retest help-seeking confidence"}
+      ]},
+      {id:"social",label:"Identity + service",items:[
+        {id:"pride",emoji:"🌈",name:"Visible allyship cue",geometry:"cue",stage:"cue",why:"Signal LGBTQ+ welcome with a year-round, context-appropriate Pride symbol.",measure:"Retest identity safety + perceived authenticity",check:"A flag invites; it does not prove inclusion. Is it supported by facilities, staff behavior, and policy?"},
+        {id:"pronoun",emoji:"🪪",name:"Optional pronoun cue",geometry:"cue",stage:"cue",why:"Offer—not require—pronoun sharing in staff introductions, registration, and name badges.",measure:"Retest recognition + interaction comfort",check:"Keep disclosure voluntary and train staff to respond consistently."},
+        {id:"representation",emoji:"🫶",name:"Inclusive representation",geometry:"zone",stage:"cue",why:"Represent varied race, age, family, gender expression, and disability without tokenizing people.",measure:"Retest belonging + recognition"},
+        {id:"community",emoji:"🎨",name:"Community-created marker",geometry:"cue",stage:"cue",why:"Invite affected communities to create locally meaningful art, names, or welcome cues.",measure:"Retest place attachment + authenticity"},
+        {id:"staff",emoji:"🗣️",name:"Inclusive service practice",geometry:"cue",stage:"accountability",why:"Pair the physical redesign with trained, consistent, identity-respectful interaction.",measure:"Retest recognition + service fairness"},
+        {id:"conduct",emoji:"📜",name:"Visible code of conduct",geometry:"cue",stage:"accountability",why:"State specific anti-harassment expectations and what staff will do when they are breached.",measure:"Retest anticipated protection + trust"},
+        {id:"report",emoji:"🤝",name:"Response protocol",geometry:"cue",stage:"accountability",why:"Make reporting, assistance, follow-up, and responsibility visible and credible.",measure:"Retest trust + participation"}
+      ]}
+    ];
+
+    const places=[
+      {id:"old-town",name:"Old Town",type:"Historic retail",gap:2,comment:"The street has character, but I have to plan which entrances I can actually use.",observation:"Several narrow thresholds; uneven paving; access route is discontinuous.",question:"How might access become part of the historic route—not a separate detour?",metric:"agency + route choice"},
+      {id:"hotel",name:"Hotel Lobby",type:"Hospitality servicescape",gap:2,comment:"I could not tell which check-in line or counter would work for me.",observation:"One high counter; lounge furniture narrows the clear route; signage is visually dense.",question:"How might arrival communicate independent, dignified choice before staff assistance is needed?",metric:"arrival confidence"},
+      {id:"festival",name:"Festival Gate",type:"Event threshold",gap:3,comment:"The accessible queue disappeared into the crowd, and I had to explain why I needed it.",observation:"Queue barriers narrow at screening; staff instructions vary; faces are poorly lit after dark.",question:"How might the threshold offer equitable access without forcing identity disclosure?",metric:"welcome + effort"},
+      {id:"campus",name:"Campus Commons",type:"Learning environment",gap:1,comment:"I can join in, but there is nowhere quiet to reset without leaving.",observation:"Open social layout; high acoustic spill; few low-stimulation edges.",question:"How might recovery and participation coexist in the same social space?",metric:"sensory comfort"},
+      {id:"riverside",name:"Riverside Lawn",type:"Outdoor gathering",gap:2,comment:"After dark, the lawn feels like a different place and I stop using the far path.",observation:"Uneven route lighting; few landmarks; seating ends before the river edge.",question:"How might night use feel legible and socially connected without over-lighting nature?",metric:"night comfort"},
+      {id:"market",name:"Market Square",type:"Public plaza",gap:1,comment:"On busy days, tables and vendor lines close the route I normally use.",observation:"Furniture migrates into circulation; seating lacks companion space; routes are unmarked.",question:"How might flexible activity preserve clear, equitable movement choices?",metric:"movement + dwell choice"},
+      {id:"arts",name:"Arts Walk",type:"Cultural corridor",gap:1,comment:"The murals make me feel represented, but the event information is only in English.",observation:"Strong identity cues; high-contrast art; essential program text is single-language.",question:"How might representation extend from imagery into usable information?",metric:"recognition + comprehension"},
+      {id:"transit",name:"Transit Corner",type:"Mobility hub",gap:3,comment:"When the platform changes, I hear it too late and cannot find anyone to ask.",observation:"Announcements are audio-only; help point is obscured; limited seating near departure cues.",question:"How might every rider receive timely information in more than one sensory mode?",metric:"information access"},
+      {id:"restaurant",name:"Restaurant",type:"Dining servicescape",gap:2,comment:"The changing table was only in the women’s restroom, so my partner could not use it.",observation:"Tight table spacing; one gendered changing facility; no quiet seating zone.",question:"How might care, circulation, and service support every guest without special requests?",metric:"caregiver dignity"},
+      {id:"station",name:"South Station",type:"Town arrival",gap:3,comment:"At night I wait near strangers because the staffed area is hard to identify.",observation:"Dark platform edges; poor sightline to staff; accessible route takes an indirect turn.",question:"How might lighting, staffing, and route logic work as one arrival system?",metric:"control + trust"},
+      {id:"night-market",name:"Night Market",type:"Temporary event",gap:2,comment:"I love the atmosphere, but crowds and music leave no place to recover.",observation:"Dense vendor layout; amplified sound overlaps; no signed low-stimulation area.",question:"How might a lively event include a visible path to pause and return?",metric:"participation + return"}
+    ];
+
+    let state={selected:"festival",category:"access",tool:null,layer:"evidence",markers:[],activeMarker:null};
+    const town=document.getElementById("town"),categoriesRoot=document.getElementById("categories"),toolsRoot=document.getElementById("tools");
+
+    places.forEach(place=>{
+      const button=document.createElement("div");
+      button.className=`place ${place.id} evidence-gap-${place.gap}`;
+      button.dataset.id=place.id;
+      button.setAttribute("role","button");button.setAttribute("tabindex","0");button.setAttribute("aria-label",`Explore or redesign ${place.name}`);
+      button.innerHTML=`<span class="evidence-count" title="Evidence items">${place.gap}</span><span class="category-slots"></span><span class="place-name">${place.name}</span>`;
+      button.onclick=event=>{
+        if(event.target.closest(".design-marker"))return;
+        if(state.tool){placeIntervention(place.id)}else{state.selected=place.id;renderEvidence();renderMap()}
+      };
+      button.onkeydown=event=>{if((event.key==="Enter"||event.key===" ")&&!event.target.closest(".design-marker")){event.preventDefault();button.click()}};
+      town.appendChild(button);
+    });
+
+    categories.forEach(category=>{
+      const button=document.createElement("button");button.className="category";button.dataset.id=category.id;button.textContent=category.label;
+      button.onclick=()=>{state.category=category.id;state.tool=null;renderPalette();renderMap()};categoriesRoot.appendChild(button);
+    });
+
+    function activeItems(){return categories.find(category=>category.id===state.category).items}
+    function findTool(id){for(const category of categories){const item=category.items.find(tool=>tool.id===id);if(item)return item}}
+    function categoryForTool(id){return categories.find(category=>category.items.some(tool=>tool.id===id))}
+    function geometryLabel(tool){return tool.geometry==="cue"?"point":tool.geometry}
+    function renderPalette(){
+      document.querySelectorAll(".category").forEach(button=>button.classList.toggle("active",button.dataset.id===state.category));
+      toolsRoot.innerHTML="";
+      activeItems().forEach(tool=>{
+        const button=document.createElement("button");button.className="tool"+(state.tool===tool.id?" active":"");button.dataset.id=tool.id;
+        button.innerHTML=`<span class="tool-emoji">${tool.emoji}</span><span><b>${tool.name}</b><small><span class="geometry">${geometryLabel(tool)}</span>${tool.measure.replace("Retest ","")}</small></span>`;
+        button.onclick=()=>{state.tool=state.tool===tool.id?null:tool.id;renderPalette();renderMap()};toolsRoot.appendChild(button);
+      });
+    }
+
+    function placeIntervention(placeId){
+      const tool=findTool(state.tool);if(!tool)return;
+      state.markers.push({id:Date.now()+Math.random(),placeId,toolId:tool.id});state.selected=placeId;state.layer="design";state.activeMarker=state.markers[state.markers.length-1].id;state.tool=null;
+      renderAll();showMarkerCard(state.activeMarker);
+    }
+
+    function renderMap(){
+      document.querySelectorAll(".place").forEach(element=>{
+        const placeId=element.dataset.id;element.classList.toggle("selected",placeId===state.selected);element.classList.toggle("targetable",!!state.tool);
+        element.className=element.className.replace(/evidence-gap-\d/g,"").trim();
+        if(state.layer==="evidence")element.classList.add("evidence-gap-"+places.find(place=>place.id===placeId).gap);
+        const slotsRoot=element.querySelector(".category-slots");slotsRoot.innerHTML="";
+        if(state.layer==="design"){
+          const shortLabels={access:"A",care:"C",sensory:"S",night:"N",social:"I"};
+          categories.forEach(category=>{const slot=document.createElement("span");slot.className=`category-slot slot-${category.id}`;slot.dataset.category=category.id;slot.dataset.short=shortLabels[category.id];slot.title=category.label;slotsRoot.appendChild(slot)});
+          state.markers.filter(marker=>marker.placeId===placeId).forEach(marker=>{
+            const tool=findTool(marker.toolId),category=categoryForTool(marker.toolId),slot=slotsRoot.querySelector(`[data-category="${category.id}"]`),button=document.createElement("button");button.type="button";button.title=`${tool.name} · ${category.label}`;button.setAttribute("aria-label",`${tool.name} in ${places.find(place=>place.id===placeId).name}`);button.className=`design-marker grouped-marker marker-${geometryLabel(tool)}`;button.textContent=tool.emoji;
+            button.onclick=event=>{event.stopPropagation();showMarkerCard(marker.id)};slot.appendChild(button);
+          });
+        }
+      });
+      const hint=document.getElementById("mapHint"),tool=findTool(state.tool);
+      hint.textContent=tool?`Place ${tool.emoji} on a space`:state.layer==="evidence"?"Evidence layer":"Design layer · 5 groups";hint.classList.toggle("ready",!!tool);
+      document.getElementById("mapLabel").textContent=state.layer==="evidence"?"Synthetic user comments + field observations · click a district":"A Access + wayfinding · C Care · S Sensory · N Night + safety · I Identity + service";
+      const layer=document.getElementById("layerButton");layer.textContent=state.layer==="evidence"?"Show design layer":"Show evidence layer";layer.classList.toggle("active",state.layer==="design");
+      const selectedCoherence=coherenceFor(state.selected),stepIndex=selectedCoherence.cue&&selectedCoherence.function&&selectedCoherence.accountability?2:state.markers.length?1:0;
+      document.querySelectorAll(".step").forEach((step,index)=>step.classList.toggle("current",index===stepIndex));
+      renderCoherence();
+    }
+
+    function coherenceFor(placeId){
+      const stages=new Set(state.markers.filter(marker=>marker.placeId===placeId).map(marker=>findTool(marker.toolId).stage));
+      return {cue:stages.has("cue"),function:stages.has("function"),accountability:stages.has("accountability")};
+    }
+
+    function renderCoherence(){
+      const place=places.find(item=>item.id===state.selected),status=coherenceFor(state.selected);document.getElementById("coherencePlace").textContent=place.name;
+      document.querySelectorAll(".chain-stage").forEach(stage=>stage.classList.toggle("active",status[stage.dataset.stage]));
+      let note="Build a design chain, then retest it with users.";
+      if(status.cue&&!status.function&&!status.accountability)note="Visible signal only · functional support and response are not yet demonstrated.";
+      else if(status.cue&&status.function&&!status.accountability)note="The cue has a usable counterpart · add a credible service or response practice.";
+      else if(status.cue&&!status.function&&status.accountability)note="The welcome and response are visible · add an independently usable spatial change.";
+      else if(!status.cue&&status.function&&status.accountability)note="Strong functional base · add a community-authentic cue only where appropriate.";
+      else if(status.cue&&status.function&&status.accountability)note="Supported inclusion hypothesis · now return to affected users and retest.";
+      else if(status.function)note="Functional change placed · connect it to welcome and accountable service.";
+      else if(status.accountability)note="Response mechanism placed · connect it to a usable spatial intervention.";
+      document.getElementById("coherenceNote").textContent=note;
+    }
+
+    function renderEvidence(){
+      const place=places.find(item=>item.id===state.selected),box=document.getElementById("evidence");
+      box.classList.remove("refreshing");void box.offsetWidth;box.classList.add("refreshing");
+      document.getElementById("placeName").textContent=place.name;document.getElementById("placeType").textContent=place.type;
+      document.getElementById("comment").textContent=`“${place.comment}”`;document.getElementById("observation").textContent=place.observation;document.getElementById("question").textContent=place.question;document.getElementById("measureTag").textContent=`Retest: ${place.metric}`;
+    }
+
+    function showMarkerCard(markerId){
+      const marker=state.markers.find(item=>item.id===markerId);if(!marker)return;state.activeMarker=markerId;
+      const tool=findTool(marker.toolId),place=places.find(item=>item.id===marker.placeId),card=document.getElementById("markerCard");
+      const coherence=coherenceFor(marker.placeId),supported=coherence.cue&&coherence.function&&coherence.accountability,status=document.getElementById("markerStatus");
+      document.getElementById("markerTitle").textContent=`${tool.emoji} ${tool.name} · ${place.name}`;document.getElementById("markerMeta").textContent=`${categoryForTool(marker.toolId).label} · ${geometryLabel(tool)} intervention · ${tool.stage}`;status.textContent=supported?"Supported hypothesis":tool.stage==="cue"?"Visible signal · not yet verified":"Evidence-led intervention";status.classList.toggle("supported",supported);document.getElementById("markerReason").textContent=tool.why;document.getElementById("markerMeasure").innerHTML=`<b>Test after redesign:</b> ${tool.measure.replace("Retest ","")}. Compare with the original comment and field note.`;document.getElementById("markerCheck").innerHTML=`<b>Critical check:</b> ${tool.check||"Validate this change with affected users and examine who might still be excluded."}`;card.classList.add("visible");
+    }
+
+    function renderAll(){renderPalette();renderMap();renderEvidence()}
+    document.getElementById("layerButton").onclick=()=>{state.layer=state.layer==="evidence"?"design":"evidence";renderMap()};
+    document.getElementById("closeCard").onclick=()=>document.getElementById("markerCard").classList.remove("visible");
+    document.getElementById("removeMarker").onclick=()=>{state.markers=state.markers.filter(marker=>marker.id!==state.activeMarker);document.getElementById("markerCard").classList.remove("visible");renderMap()};
+    document.getElementById("clearAll").onclick=()=>{state.markers=[];state.activeMarker=null;document.getElementById("markerCard").classList.remove("visible");renderMap()};
+    renderAll();
+  </script>
+</body>
+</html>
