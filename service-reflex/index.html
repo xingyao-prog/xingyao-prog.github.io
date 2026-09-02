@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="A concise interactive teaching demonstration of explicit and implicit measurement in event service design.">
+  <title>Service Reflex — Explicit × Implicit Experience Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#1b1d1c;
+      --paper:#efefec;
+      --white:#fafaf8;
+      --violet:#ef9fbd;
+      --violet-soft:#f5d9e4;
+      --acid:#19a84b;
+      --line:#c5c9c6;
+      --muted:#666c68;
+      --error:#a83232;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:500 14px/1.45 Manrope,Arial,sans-serif}
+    button,input{font:inherit}
+    button{color:inherit}
+    .shell{width:min(1180px,calc(100% - 40px));margin:auto}
+    .topbar{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{font:500 10px/1 DM Mono,monospace;letter-spacing:.08em}
+    .brand span{color:#878c87}
+    .steps{display:flex;gap:7px}
+    .steps button{border:0;background:transparent;padding:8px 10px;color:#7c817d;font:500 9px/1 DM Mono,monospace;letter-spacing:.06em;cursor:pointer}
+    .steps button.active{background:var(--violet);color:#fff;box-shadow:0 4px 0 var(--acid)}
+    .steps button span{margin-right:6px;opacity:.6}
+    main{min-height:calc(100svh - 126px)}
+    .panel{display:none;padding:50px 0 38px}
+    .panel.active{display:block;animation:panel-in .45s ease}
+    @keyframes panel-in{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .panel-head{display:block;padding-left:120px;margin-bottom:26px}
+    .micro{font:500 8px/1.3 DM Mono,monospace;letter-spacing:.09em;text-transform:uppercase}
+    .panel-head h1,.panel-head h2{margin:0;font-size:clamp(2.35rem,4vw,4.25rem);line-height:1.01;letter-spacing:-.055em;font-weight:600}
+    .panel-head h2{font-size:clamp(2.15rem,3.4vw,3.55rem)}
+    #diagnosePanel .panel-head h2,#redesignPanel .panel-head h2{font-size:clamp(2rem,3vw,3.2rem);letter-spacing:-.05em}
+    .panel-head em{font-style:normal;color:var(--violet)}
+    .panel-head .green{color:var(--acid)}
+    .panel-intro{max-width:720px;margin:12px 0 0;color:var(--muted);font-size:.76rem;line-height:1.55}
+    .lab-surface{border:1px solid #aeb2ad;background:var(--white);min-height:430px;position:relative;overflow:hidden}
+    .primary-action{border:1px solid var(--ink);background:var(--ink);color:#fff;padding:11px 15px;cursor:pointer;box-shadow:5px 5px 0 var(--acid);font:500 9px/1 DM Mono,monospace;letter-spacing:.06em;text-transform:uppercase}
+    .primary-action:hover{transform:translateY(-2px)}
+    .secondary-action{border:1px solid var(--ink);background:transparent;padding:10px 14px;cursor:pointer;font:500 9px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.05em}
+    [hidden]{display:none!important}
+
+    .start-screen{display:grid;grid-template-columns:.85fr 1.15fr;min-height:430px}
+    .start-copy{padding:42px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+    .start-copy h3{margin:10px 0 15px;font-size:2.15rem;line-height:1.05;letter-spacing:-.05em}
+    .start-copy p{max-width:360px;margin:0 0 28px;color:#686e69;font-size:.82rem}
+    .sort-rule{margin:0 0 24px;padding:12px 14px;border-left:4px solid var(--acid);background:#edf6f2;color:var(--ink);font-size:.74rem;line-height:1.45}
+    .sort-rule b{display:block;margin-bottom:3px;font:500 8px/1 DM Mono,monospace;letter-spacing:.07em;text-transform:uppercase}
+    .start-copy small{margin-top:17px;color:#858a86;font:400 7px/1.3 DM Mono,monospace;text-transform:uppercase}
+    .mechanism{position:relative;display:grid;grid-template-columns:1fr 120px 1fr;align-items:center;gap:15px;padding:42px;background:#e7e9e5}
+    .key-pair{min-height:200px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--ink);background:rgba(255,255,255,.88)}
+    .key-pair:first-child{box-shadow:inset 0 6px 0 var(--violet)}
+    .key-pair:last-child{box-shadow:inset 0 6px 0 var(--acid)}
+    .key-pair small{font:500 8px DM Mono,monospace;color:#777c78}
+    .key-pair b{font-size:1.05rem;line-height:1.2}
+    .key-pair b em{display:block;margin:7px 0;color:var(--violet);font:500 8px/1 DM Mono,monospace;font-style:normal;letter-spacing:.08em}
+    .key-pair span{font-size:.68rem;color:#777c78}
+    .same-key{text-align:center;font:500 8px/1.4 DM Mono,monospace;text-transform:uppercase}
+    .same-key i{display:block;width:12px;height:12px;margin:10px auto;background:var(--acid);transform:rotate(45deg)}
+
+    .task-screen{min-height:430px}
+    .task-meta{height:56px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font:500 8px/1 DM Mono,monospace;letter-spacing:.07em}
+    .trial-progress{display:flex;align-items:center;gap:10px}
+    .trial-progress i{display:block;width:100px;height:5px;background:#e1e3df}
+    .trial-progress i:after{content:"";display:block;width:var(--progress,0%);height:100%;background:var(--violet);transition:width .25s}
+    .sort-stage{position:relative;display:grid;grid-template-columns:1fr 1fr;min-height:374px}
+    .sort-side{border:0;background:transparent;padding:27px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;text-align:left}
+    .sort-side+button{border-left:1px solid var(--line);text-align:right}
+    .sort-side:hover{background:#edf6f2}
+    .sort-side small{font:500 8px DM Mono,monospace;color:#797f7a;letter-spacing:.06em}
+    .sort-side strong{max-width:220px;font-size:1rem;line-height:1.3}
+    .sort-side.right strong{align-self:flex-end}
+    .stimulus-card{position:absolute;z-index:3;left:50%;top:50%;width:190px;height:160px;transform:translate(-50%,-50%);display:grid;place-items:center;border:1px solid var(--ink);background:var(--white);box-shadow:9px 9px 0 var(--acid);text-align:center}
+    .stimulus-card.word{font-size:1.45rem;letter-spacing:-.04em}
+    .stimulus-card svg{width:78px;height:78px;stroke:var(--ink);fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+    .guest-stimulus{display:grid;place-items:center;gap:7px}
+    .guest-stimulus b{font:500 8px/1 DM Mono,monospace;letter-spacing:.06em;text-transform:uppercase}
+    .stimulus-card.correct{animation:correct .26s ease}
+    .stimulus-card.wrong:after{content:"×";position:absolute;inset:0;display:grid;place-items:center;background:rgba(255,255,255,.92);color:var(--error);font-size:5rem;font-weight:600}
+    @keyframes correct{50%{transform:translate(-50%,-50%) scale(.94);background:var(--violet-soft)}}
+    .block-break{min-height:430px;display:grid;place-items:center;text-align:center;background:#e7e9e5;padding:35px}
+    .block-break h3{margin:8px 0 13px;font-size:2.6rem;letter-spacing:-.06em}
+    .block-break p{max-width:470px;margin:0 auto 24px;color:#5f655f}
+
+    .compare-grid{display:grid;grid-template-columns:1.25fr .75fr;min-height:430px}
+    .speed-visual{padding:34px 38px;border-right:1px solid var(--line)}
+    .speed-visual h3,.explicit-panel h3{margin:8px 0 28px;font-size:1.6rem;letter-spacing:-.045em}
+    .bar-row{display:grid;grid-template-columns:155px 1fr 65px;align-items:center;gap:15px;margin:24px 0}
+    .bar-row span{font-size:.75rem}
+    .bar-row i{height:28px;background:#e4e5e2;overflow:hidden}
+    .bar-row i:after{content:"";display:block;width:var(--bar,70%);height:100%;background:var(--violet);transition:width .65s cubic-bezier(.2,.8,.2,1)}
+    .bar-row:nth-of-type(2) i:after{background:var(--violet-soft)}
+    .bar-row b{font:500 10px DM Mono,monospace}
+    .speed-note{margin:35px 0 0;padding-top:16px;border-top:1px solid var(--line);color:#626863;font-size:.75rem}
+    .speed-note strong{display:block;margin-bottom:5px;color:var(--ink)}
+    .explicit-panel{padding:34px;display:flex;flex-direction:column;background:#f0f1ee}
+    .statement{margin:0 0 25px;font-size:1.1rem;line-height:1.35}
+    .slider-line{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px}
+    .slider-line span{font:400 7px DM Mono,monospace;color:#747a75}
+    input[type="range"]{accent-color:var(--violet);width:100%}
+    .commitment{margin:22px 0 0;padding:18px;border:1px solid var(--ink);background:var(--white)}
+    .commitment small,.commitment b{display:block}
+    .commitment small{font:400 7px DM Mono,monospace;color:#777d78}
+    .commitment b{margin-top:7px;font-size:1.2rem}
+    .compare-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:15px;padding-top:25px}
+    .compare-foot small{max-width:180px;color:#7a807b;font:400 7px/1.4 DM Mono,monospace}
+    .compare-question{display:flex;align-items:center;gap:16px;padding:14px 18px;background:var(--ink);color:#fff}
+    .compare-question b{color:var(--acid);font:500 8px/1 DM Mono,monospace;letter-spacing:.08em;white-space:nowrap}
+    .compare-question span{font-size:.76rem}
+
+    .diagnosis-surface{min-height:430px;background:#e7e9e6}
+    .finding-banner{padding:15px 22px;border-bottom:1px solid var(--ink);background:var(--ink);color:#fff;font-size:.78rem}
+    .finding-banner b{margin-right:12px;color:var(--acid);font:500 8px/1 DM Mono,monospace;letter-spacing:.08em}
+    .source-tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--ink)}
+    .source-tabs button{padding:17px 20px;border:0;border-right:1px solid var(--ink);background:var(--white);cursor:pointer;text-align:left}
+    .source-tabs button:last-child{border-right:0}
+    .source-tabs small{display:block;margin-bottom:5px;font:500 7px/1 DM Mono,monospace;letter-spacing:.08em}
+    .source-tabs b{font-size:.84rem}
+    .source-tabs b span{display:block;margin-top:3px;color:#5f6561;font-weight:500}
+    .source-tabs button[aria-selected="true"] b span{color:var(--ink)}
+    .source-tabs button[aria-selected="true"]{background:var(--violet);box-shadow:inset 0 -6px 0 var(--acid)}
+    .source-focus{padding:30px 34px}
+    .source-focus>small{font:500 8px/1 DM Mono,monospace;letter-spacing:.08em}
+    .source-focus h3{margin:8px 0 22px;font-size:1.55rem;letter-spacing:-.045em}
+    .signal-contrast{display:grid;grid-template-columns:1fr 100px 1fr;align-items:stretch}
+    .contrast-card{min-height:165px;padding:22px;border:1px solid var(--ink);background:var(--white)}
+    .contrast-card small{font:500 7px/1 DM Mono,monospace;letter-spacing:.08em;color:var(--muted)}
+    .contrast-card b{display:block;margin-top:28px;max-width:330px;font-size:1.08rem;line-height:1.3}
+    .contrast-card.daily{background:var(--violet-soft)}
+    .contrast-gap{display:grid;place-items:center;text-align:center;font:500 8px/1.35 DM Mono,monospace;letter-spacing:.06em}
+    .contrast-gap i{display:block;width:34px;height:3px;margin:10px auto;background:var(--acid)}
+    .source-result{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:18px}
+    .source-result p{max-width:650px;margin:0;color:#626864;font-size:.75rem}
+
+    .redesign-workbench{--choice-green:var(--acid);--choice-pink:var(--violet);--choice-black:var(--ink);min-height:430px;background:var(--white)}
+    .redesign-bridge{display:flex;align-items:center;gap:18px;padding:15px 22px;background:var(--choice-black);color:#fff}
+    .redesign-bridge b{color:var(--choice-green);font:500 8px/1 DM Mono,monospace;letter-spacing:.08em;white-space:nowrap}
+    .redesign-bridge span{font-size:.75rem}
+    .lever-picker{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--choice-black)}
+    .lever-picker button{min-height:76px;padding:16px 20px;border:0;border-right:1px solid var(--choice-black);background:#fff;text-align:left;cursor:pointer}
+    .lever-picker button:last-child{border-right:0}
+    .lever-picker small{display:block;margin-bottom:7px;font:500 7px/1 DM Mono,monospace;letter-spacing:.08em}
+    .lever-picker b{font-size:.86rem}
+    .lever-picker button[aria-selected="true"]{background:var(--choice-green);box-shadow:inset 0 -7px 0 var(--choice-pink)}
+    .lever-stage{padding:28px 32px 30px}
+    .lever-title{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:20px}
+    .lever-title small{font:500 8px/1 DM Mono,monospace;letter-spacing:.08em}
+    .lever-title h3{margin:7px 0 0;font-size:1.6rem;letter-spacing:-.045em}
+    .lever-title p{max-width:350px;margin:0;color:#68706b;font-size:.72rem}
+    .lever-flow{display:grid;grid-template-columns:1fr 50px 1.1fr 50px 1fr;align-items:stretch}
+    .lever-card{min-height:170px;padding:20px;border:1px solid var(--choice-black)}
+    .lever-card small{font:500 7px/1 DM Mono,monospace;letter-spacing:.08em}
+    .lever-card b{display:block;margin-top:28px;font-size:1.05rem;line-height:1.25}
+    .lever-card.current{background:var(--violet-soft)}
+    .lever-card.redesign{background:#def0e3}
+    .lever-card.test{background:var(--choice-black);color:#fff}
+    .lever-arrow{display:grid;place-items:center;font:500 22px/1 DM Mono,monospace}
+    .teaching-loop{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:20px;padding-top:15px;border-top:1px solid var(--line)}
+    .teaching-loop b{font:500 8px/1 DM Mono,monospace;letter-spacing:.07em}
+    .teaching-loop span{font-size:.72rem;color:#606863}
+
+    .rationale{border-bottom:1px solid var(--line)}
+    .rationale summary{display:flex;align-items:center;justify-content:space-between;padding:15px 0;cursor:pointer;list-style:none;color:var(--muted);font:500 8px/1 DM Mono,monospace;letter-spacing:.07em;text-transform:uppercase}
+    .rationale summary::-webkit-details-marker{display:none}
+    .rationale summary b{color:var(--ink);font-size:16px;font-weight:400;transition:.25s}
+    .rationale[open] summary b{transform:rotate(45deg)}
+    .rationale-content{display:grid;grid-template-columns:1fr 1fr;gap:30px;padding:0 0 18px;color:#626864;font-size:.72rem}
+    .rationale-content p{margin:0}
+    .research-foundation{padding:0 0 48px}
+    .research-foundation details{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .research-foundation summary{display:flex;justify-content:space-between;align-items:center;padding:19px 0;cursor:pointer;list-style:none;font:500 9px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.07em}
+    .research-foundation summary::-webkit-details-marker{display:none}
+    .research-foundation summary b{font-size:20px;font-weight:400;transition:transform .25s ease}
+    .research-foundation details[open] summary b{transform:rotate(45deg)}
+    .reference-list{margin:0;padding:8px 0 26px 20px;columns:2;column-gap:50px;color:#56625e;font-size:.7rem;line-height:1.5}
+    .reference-list li{margin:0 0 12px;padding-left:4px;break-inside:avoid}
+    .reference-list li:first-child{color:var(--ink);font-weight:600}
+    .reference-list a{color:inherit;text-underline-offset:2px}
+    footer{height:56px;background:var(--ink);color:#cfd2ce}
+    footer .shell{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;font:400 8px DM Mono,monospace}
+    footer span{color:#888e89}
+
+    @media(max-width:850px){
+      .panel-head{padding-left:70px}
+      .start-screen,.compare-grid{grid-template-columns:1fr}.start-copy,.speed-visual{border-right:0;border-bottom:1px solid var(--line)}
+      .signal-contrast{grid-template-columns:1fr}.contrast-gap{min-height:64px}
+      .reference-list{columns:1}
+    }
+    @media(max-width:600px){
+      .shell{width:calc(100% - 24px)}
+      .topbar{height:auto;min-height:62px;align-items:flex-start;padding:16px 0;gap:12px}
+      .brand span{display:none}.steps{gap:2px}.steps button{padding:7px 6px;font-size:7px}.steps button span{display:none}
+      .panel{padding:40px 0 28px}.panel-head{padding-left:0}.panel-head h1,.panel-head h2{font-size:2.45rem}
+      .start-copy{padding:28px}.mechanism{grid-template-columns:1fr 55px 1fr;padding:20px;gap:8px}.key-pair{padding:13px;min-height:160px}.key-pair b{font-size:.76rem}.key-pair span{font-size:.56rem}
+      .task-meta{padding:0 12px}.trial-progress i{width:55px}.sort-side{padding:18px 11px}.sort-side strong{font-size:.72rem}.stimulus-card{width:140px;height:125px}.stimulus-card.word{font-size:1.1rem}
+      .speed-visual,.explicit-panel{padding:25px 20px}.bar-row{grid-template-columns:105px 1fr 50px;gap:9px}.bar-row span{font-size:.64rem}
+      .compare-question{align-items:flex-start;flex-direction:column;gap:7px}
+      .source-tabs{grid-template-columns:1fr}.source-tabs button{border-right:0;border-bottom:1px solid var(--ink)}.source-tabs button:last-child{border-bottom:0}.source-focus{padding:24px 20px}.source-result,.rationale-content{grid-template-columns:1fr;align-items:flex-start;flex-direction:column}
+      .redesign-bridge,.lever-title,.teaching-loop{align-items:flex-start;flex-direction:column}.lever-picker{grid-template-columns:1fr}.lever-picker button{border-right:0;border-bottom:1px solid var(--choice-black)}.lever-picker button:last-child{border-bottom:0}.lever-stage{padding:24px 20px}.lever-flow{grid-template-columns:1fr}.lever-arrow{height:40px}.lever-arrow{transform:rotate(90deg)}
+      footer{height:auto}footer .shell{min-height:60px;align-items:flex-start;justify-content:center;flex-direction:column;padding:14px 0}
+    }
+    @media(prefers-reduced-motion:reduce){.panel.active,.stimulus-card.correct,.outcome-pulse{animation:none!important}.trial-progress i:after,.bar-row i:after,.route,.barrier{transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="topbar shell">
+    <div class="brand">SERVICE REFLEX <span>/ EXPLICIT × IMPLICIT EXPERIENCE LAB</span></div>
+    <nav class="steps" aria-label="Project stages">
+      <button class="active" data-panel="sort"><span>01</span>SORT</button>
+      <button data-panel="compare"><span>02</span>COMPARE</button>
+      <button data-panel="diagnose"><span>03</span>SOURCE</button>
+      <button data-panel="redesign"><span>04</span>REDESIGN</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel active shell" id="sortPanel">
+      <div class="panel-head">
+        <h1>Implicit Association <em>Test.</em></h1>
+        <p class="panel-intro">An IAT compares response speed to estimate the relative strength of automatic associations. When one image or word appears, choose the left or right side if it matches <strong>either</strong> category shown there.</p>
+      </div>
+      <div class="lab-surface">
+        <div class="start-screen" id="startScreen">
+          <div class="start-copy">
+            <span class="micro">HOW AN IAT WORKS</span>
+            <h3>One key.<br>Two concepts.</h3>
+            <p>One guest image or one service word appears at a time.</p>
+            <div class="sort-rule"><b>The rule</b>Press left if the item matches <strong>either</strong> label on the left. Press right if it matches <strong>either</strong> label on the right.</div>
+            <button class="primary-action" id="startDemo">Try 12 demo trials →</button>
+            <small>Teaching demonstration · not a diagnostic IAT</small>
+          </div>
+          <div class="mechanism" aria-label="Two concept pairs share two response keys">
+            <div class="key-pair"><small>E · LEFT KEY</small><b>Disabled guest<em>OR</em>Welcoming word</b><span>If either appears, choose left</span></div>
+            <div class="same-key">One item<i></i>sort fast</div>
+            <div class="key-pair"><small>I · RIGHT KEY</small><b>Nondisabled guest<em>OR</em>Burdensome word</b><span>If either appears, choose right</span></div>
+          </div>
+        </div>
+
+        <div class="task-screen" id="taskScreen" hidden>
+          <div class="task-meta">
+            <span id="blockLabel">PAIRING 1 OF 2</span>
+            <div class="trial-progress"><span id="trialCount">1 / 12</span><i id="progressTrack"></i></div>
+          </div>
+          <div class="sort-stage">
+            <button class="sort-side left" data-side="left"><small>E · LEFT · MATCH EITHER</small><strong id="leftCategories">Disabled guest<br>OR Welcoming word</strong></button>
+            <button class="sort-side right" data-side="right"><small>I · RIGHT · MATCH EITHER</small><strong id="rightCategories">Nondisabled guest<br>OR Burdensome word</strong></button>
+            <div class="stimulus-card word" id="stimulusCard" aria-live="polite">Welcoming</div>
+          </div>
+        </div>
+
+        <div class="block-break" id="blockBreak" hidden>
+          <div>
+            <span class="micro">PAIRING 2</span>
+            <h3>Now the pairing reverses.</h3>
+            <p>The guest categories stay in place. The service words switch sides.</p>
+            <button class="primary-action" id="continueDemo">Reverse the keys →</button>
+          </div>
+        </div>
+      </div>
+      <details class="rationale"><summary><span>Method note</span><b aria-hidden="true">+</b></summary><div class="rationale-content"><p>An IAT compares response speed when categories share a response key. This 12-trial version teaches the mechanism; research requires validated stimuli, counterbalanced blocks, and the full D-score algorithm.</p><p>Greenwald et al., 2003; 2022 · Hua &amp; Yao, 2026</p></div></details>
+    </section>
+
+    <section class="panel shell" id="comparePanel">
+      <div class="panel-head">
+        <h2>Compare <em>implicit</em><br>and <span class="green">explicit.</span></h2>
+      </div>
+      <div class="lab-surface compare-grid">
+        <div class="speed-visual">
+          <span class="micro">IMPLICIT MEASURE</span>
+          <h3>What associations are faster?</h3>
+          <span class="micro" id="speedHeading">Illustrative pairing times</span>
+          <div class="bar-row"><span>Disabled ↔ welcoming</span><i id="barA"></i><b id="timeA">640 ms</b></div>
+          <div class="bar-row"><span>Disabled ↔ burdensome</span><i id="barB"></i><b id="timeB">760 ms</b></div>
+          <p class="speed-note"><strong id="speedResult">Faster pairing: disabled guest ↔ welcoming</strong><span id="speedExplain">Reaction-time difference, not a diagnosis of an individual.</span></p>
+        </div>
+        <div class="explicit-panel">
+          <span class="micro">EXPLICIT MEASURE</span>
+          <h3>What do you say you believe?</h3>
+          <p class="statement">“Accommodation is part of excellent service.”</p>
+          <div class="slider-line"><span>DISAGREE</span><input id="explicitSlider" type="range" min="1" max="7" value="6" aria-label="Explicit support for accommodation"><span>AGREE</span></div>
+          <div class="commitment"><small>EXPLICIT RESPONSE</small><b id="commitmentValue">6 / 7 · Strong support</b></div>
+          <div class="compare-foot"><small>Automatic association is not a hidden truth detector.</small><button class="secondary-action" data-next="diagnose">Find the source →</button></div>
+        </div>
+      </div>
+      <div class="compare-question"><b>COMPARE THE TWO</b><span>Do automatic associations align with stated values?</span></div>
+      <details class="rationale"><summary><span>How to interpret this comparison</span><b aria-hidden="true">+</b></summary><div class="rationale-content"><p>Read automatic association and stated commitment together—not as competing versions of truth or as a diagnosis of an individual.</p><p>Use anonymous class patterns. Never grade individual D-scores.</p></div></details>
+    </section>
+
+    <section class="panel shell" id="diagnosePanel">
+      <div class="panel-head">
+        <h2>The gap between IAT and EAT<br>is <em>organizational.</em></h2>
+      </div>
+      <div class="lab-surface diagnosis-surface">
+        <div class="finding-banner"><b>ORGANIZATIONAL GAP</b>Formal accessibility commitment ≠ the signals embedded in metrics, routines, and resources.</div>
+        <div class="source-tabs" role="tablist" aria-label="Organizational sources of implicit-explicit misalignment">
+          <button role="tab" aria-selected="true" data-source="metrics"><small>01 · METRICS</small><b>Access is promised.<span>Speed is rewarded.</span></b></button>
+          <button role="tab" aria-selected="false" data-source="routine"><small>02 · ROUTINES</small><b>Access is standard.<span>Requests stay exceptional.</span></b></button>
+          <button role="tab" aria-selected="false" data-source="resources"><small>03 · RESOURCES</small><b>Staff should act.<span>Support is missing.</span></b></button>
+        </div>
+        <div class="source-focus" aria-live="polite">
+          <small id="sourceKicker">ORGANIZATIONAL SIGNAL 01</small>
+          <h3 id="sourceHeading">Efficiency becomes the real priority.</h3>
+          <div class="signal-contrast">
+            <article class="contrast-card"><small>EXPLICIT COMMITMENT</small><b>“Accessibility is part of excellent service.”</b></article>
+            <div class="contrast-gap"><span>DOES NOT<br>ALIGN WITH</span><i></i></div>
+            <article class="contrast-card daily"><small>DAILY SIGNAL</small><b id="dailySignal">Only speed and throughput are rewarded.</b></article>
+          </div>
+          <div class="source-result"><p id="sourceExplanation">Repeated efficiency-first cues can position accessibility as secondary—even when policy says otherwise.</p><button class="secondary-action" data-next="redesign">Redesign this source →</button></div>
+        </div>
+      </div>
+      <details class="rationale"><summary><span>Why focus on the organization?</span><b aria-hidden="true">+</b></summary><div class="rationale-content"><p>Organizational priorities are learned through performance metrics, routines, leadership behavior, and resource allocation—not only through written policy.</p><p>The manuscript found organizational-level discrepancy across all participant groups. Occupational-health effects remain a future research question.</p></div></details>
+    </section>
+
+    <section class="panel shell" id="redesignPanel">
+      <div class="panel-head">
+        <h2>Redesign the<br><em>organizational signals.</em></h2>
+      </div>
+      <div class="lab-surface redesign-workbench">
+        <div class="lever-picker" role="tablist" aria-label="Organizational redesign levers">
+          <button role="tab" aria-selected="true" data-lever="metrics"><small>01 · REWARD</small><b>Performance metrics</b></button>
+          <button role="tab" aria-selected="false" data-lever="routine"><small>02 · NORMALIZE</small><b>Routines + resources</b></button>
+          <button role="tab" aria-selected="false" data-lever="leadership"><small>03 · REINFORCE</small><b>Leadership signals</b></button>
+        </div>
+        <div class="lever-stage" aria-live="polite">
+          <div class="lever-title">
+            <div><small id="leverKicker">ORGANIZATIONAL LEVER 01</small><h3 id="leverHeading">Reward access—not speed alone.</h3></div>
+            <p id="leverRationale">Performance metrics tell employees what the organization truly values.</p>
+          </div>
+          <div class="lever-flow">
+            <article class="lever-card current"><small>CURRENT SIGNAL</small><b id="currentSignal">Fast service counts. Accessible service is invisible.</b></article>
+            <div class="lever-arrow">→</div>
+            <article class="lever-card redesign"><small>ORGANIZATIONAL REDESIGN</small><b id="redesignAction">Track access quality alongside wait time.</b></article>
+            <div class="lever-arrow">→</div>
+            <article class="lever-card test"><small>STUDENT TEST</small><b id="studentTest">Role-play a rush period. Compare access decisions under both scorecards.</b></article>
+          </div>
+        </div>
+      </div>
+      <details class="rationale"><summary><span>Teaching use + research rationale</span><b aria-hidden="true">+</b></summary><div class="rationale-content"><p>Students audit one event or hotel system, redesign one organizational lever, role-play the revised system, and retest implicit and explicit measures.</p><p>Organizational initiatives showed the most consistent implicit–explicit discrepancies across groups (Hua &amp; Yao, manuscript).</p></div></details>
+    </section>
+
+    <section class="research-foundation shell" aria-label="Research foundation and references">
+      <details>
+        <summary><span>Research foundation</span><b aria-hidden="true">+</b></summary>
+        <ol class="reference-list">
+          <li>Hua, C., &amp; Yao, X. (2026). <i>Is your data telling the whole story? Toward an explicit–implicit psychometric paradigm in tourism and hospitality research.</i> [Manuscript].</li>
+          <li><a href="https://doi.org/10.1037/0022-3514.74.6.1464" target="_blank" rel="noopener">Greenwald, McGhee, &amp; Schwartz (1998). Measuring individual differences in implicit cognition.</a></li>
+          <li><a href="https://doi.org/10.1037/0022-3514.85.2.197" target="_blank" rel="noopener">Greenwald, Nosek, &amp; Banaji (2003). An improved IAT scoring algorithm.</a></li>
+          <li><a href="https://doi.org/10.3758/s13428-021-01624-3" target="_blank" rel="noopener">Greenwald et al. (2022). Best research practices for using the IAT.</a></li>
+          <li><a href="https://doi.org/10.1375/jhtm.16.1.32" target="_blank" rel="noopener">Darcy &amp; Dickson (2009). A whole-of-life approach to accessible tourism experiences.</a></li>
+          <li>Clarkson, Coleman, Keates, &amp; Lebbon (Eds.). (2003). <i>Inclusive design: Design for the whole population.</i></li>
+        </ol>
+      </details>
+    </section>
+  </main>
+
+  <footer><div class="shell"><b>SERVICE REFLEX</b><span>Measure the gap. Redesign the encounter.</span></div></footer>
+
+  <script>
+    const panels=["sort","compare","diagnose","redesign"];
+    const navButtons=[...document.querySelectorAll(".steps button")];
+    function showPanel(name){
+      panels.forEach(id=>document.getElementById(id+"Panel").classList.toggle("active",id===name));
+      navButtons.forEach(button=>button.classList.toggle("active",button.dataset.panel===name));
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+    navButtons.forEach(button=>button.addEventListener("click",()=>showPanel(button.dataset.panel)));
+    document.querySelectorAll("[data-next]").forEach(button=>button.addEventListener("click",()=>{
+      showPanel(button.dataset.next);
+      if(button.dataset.leverTarget)showLever(button.dataset.leverTarget);
+    }));
+
+    const standingIcon='<div class="guest-stimulus"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="15" r="9" fill="currentColor" stroke="none"/><path d="M50 30v30M27 43l23-11 23 11M50 60L34 88M50 60l16 28"/></svg><b>Nondisabled guest</b></div>';
+    const wheelchairIcon='<div class="guest-stimulus"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="38" cy="13" r="9" fill="currentColor" stroke="none"/><circle cx="43" cy="66" r="25"/><path d="M37 27l5 31h27l12 23M40 42h23"/></svg><b>Disabled guest</b></div>';
+    const trials=[
+      {type:"disabled",display:wheelchairIcon},{type:"positive",display:"Welcoming"},{type:"abled",display:standingIcon},
+      {type:"negative",display:"Laborious"},{type:"positive",display:"Efficient"},{type:"disabled",display:wheelchairIcon},
+      {type:"negative",display:"Rigid"},{type:"abled",display:standingIcon},{type:"positive",display:"Confident"},
+      {type:"disabled",display:wheelchairIcon},{type:"negative",display:"Burdensome"},{type:"abled",display:standingIcon}
+    ];
+    const mappings=[
+      {left:["disabled","positive"],right:["abled","negative"],leftLabel:"Disabled guest<br>OR Welcoming word",rightLabel:"Nondisabled guest<br>OR Burdensome word"},
+      {left:["disabled","negative"],right:["abled","positive"],leftLabel:"Disabled guest<br>OR Burdensome word",rightLabel:"Nondisabled guest<br>OR Welcoming word"}
+    ];
+    let block=0,index=0,trialStarted=0,errors=0,times=[[],[]],taskActive=false;
+    const startScreen=document.getElementById("startScreen"),taskScreen=document.getElementById("taskScreen"),blockBreak=document.getElementById("blockBreak");
+    const card=document.getElementById("stimulusCard");
+    function beginDemo(){
+      block=0;index=0;errors=0;times=[[],[]];taskActive=true;
+      startScreen.hidden=true;blockBreak.hidden=true;taskScreen.hidden=false;renderTrial();
+    }
+    function renderTrial(){
+      const mapping=mappings[block],trial=trials[index];
+      document.getElementById("blockLabel").textContent="PAIRING "+(block+1)+" OF 2";
+      document.getElementById("leftCategories").innerHTML=mapping.leftLabel;
+      document.getElementById("rightCategories").innerHTML=mapping.rightLabel;
+      document.getElementById("trialCount").textContent=(block*6+(index%6)+1)+" / 12";
+      document.getElementById("progressTrack").style.setProperty("--progress",((block*6+(index%6))/12*100)+"%");
+      card.className="stimulus-card "+(trial.type==="disabled"||trial.type==="abled"?"icon":"word");
+      card.innerHTML=trial.display;
+      trialStarted=performance.now();taskActive=true;
+    }
+    function choose(side){
+      if(!taskActive)return;
+      const trial=trials[index],correct=mappings[block][side].includes(trial.type);
+      if(!correct){errors++;card.classList.add("wrong");setTimeout(()=>card.classList.remove("wrong"),380);return}
+      taskActive=false;times[block].push(performance.now()-trialStarted+(errors?600:0));errors=0;
+      card.classList.add("correct");
+      setTimeout(()=>{
+        index++;
+        if(index===6&&block===0){taskScreen.hidden=true;blockBreak.hidden=false;return}
+        if(index===12&&block===1){finishDemo();return}
+        renderTrial();
+      },260);
+    }
+    document.getElementById("startDemo").addEventListener("click",beginDemo);
+    document.getElementById("continueDemo").addEventListener("click",()=>{block=1;index=6;blockBreak.hidden=true;taskScreen.hidden=false;renderTrial()});
+    document.querySelectorAll(".sort-side").forEach(button=>button.addEventListener("click",()=>choose(button.dataset.side)));
+    document.addEventListener("keydown",event=>{if(event.key.toLowerCase()==="e")choose("left");if(event.key.toLowerCase()==="i")choose("right")});
+    function average(values){return Math.round(values.reduce((sum,value)=>sum+value,0)/Math.max(values.length,1))}
+    function finishDemo(){
+      taskActive=false;
+      const a=average(times[0]),b=average(times[1]);
+      updateComparison(a,b,true);showPanel("compare");
+    }
+    function updateComparison(a=640,b=760,observed=false){
+      document.getElementById("speedHeading").textContent=observed?"Your 12-trial demo":"Illustrative pairing times";
+      document.getElementById("timeA").textContent=a+" ms";document.getElementById("timeB").textContent=b+" ms";
+      const ceiling=Math.max(a,b,900);
+      document.getElementById("barA").style.setProperty("--bar",Math.max(22,a/ceiling*100)+"%");
+      document.getElementById("barB").style.setProperty("--bar",Math.max(22,b/ceiling*100)+"%");
+      const gap=Math.abs(a-b);
+      const result=document.getElementById("speedResult"),explain=document.getElementById("speedExplain");
+      if(gap<100){result.textContent="No clear speed difference in this short demo";explain.textContent="A full, counterbalanced IAT is required for research."}
+      else if(a<b){result.textContent="Faster pairing: disabled guest ↔ welcoming";explain.textContent="A relative response pattern—not an individual diagnosis."}
+      else{result.textContent="Faster pairing: disabled guest ↔ burdensome";explain.textContent="A relative response pattern—not an individual diagnosis."}
+    }
+    updateComparison();
+    const slider=document.getElementById("explicitSlider");
+    function updateSlider(){
+      const value=Number(slider.value),labels=["Strong disagreement","Disagreement","Slight disagreement","Neutral","Slight support","Strong support","Very strong support"];
+      document.getElementById("commitmentValue").textContent=value+" / 7 · "+labels[value-1];
+    }
+    slider.addEventListener("input",updateSlider);updateSlider();
+
+    const sourceContent={
+      metrics:{kicker:"ORGANIZATIONAL SIGNAL 01",heading:"Efficiency becomes the real priority.",signal:"Only speed and throughput are rewarded.",explanation:"Repeated efficiency-first cues can position accessibility as secondary—even when policy says otherwise."},
+      routine:{kicker:"ORGANIZATIONAL SIGNAL 02",heading:"Exception handling becomes normal.",signal:"Accommodation sits outside the standard workflow.",explanation:"When every request requires an exception, employees repeatedly learn that access interrupts ordinary service."},
+      resources:{kicker:"ORGANIZATIONAL SIGNAL 03",heading:"Uncertainty is built into the job.",signal:"Staff lack resources, authority, or practiced responses.",explanation:"Limited support makes inclusive action harder and can weaken perceived control even when attitudes are supportive."}
+    };
+    const sourceButtons=[...document.querySelectorAll("[data-source]")];
+    function showSource(key){
+      const content=sourceContent[key];
+      sourceButtons.forEach(button=>button.setAttribute("aria-selected",String(button.dataset.source===key)));
+      document.getElementById("sourceKicker").textContent=content.kicker;
+      document.getElementById("sourceHeading").textContent=content.heading;
+      document.getElementById("dailySignal").textContent=content.signal;
+      document.getElementById("sourceExplanation").textContent=content.explanation;
+      document.querySelector("#diagnosePanel [data-next='redesign']").dataset.leverTarget=key==="resources"?"leadership":key;
+    }
+    sourceButtons.forEach(button=>button.addEventListener("click",()=>showSource(button.dataset.source)));
+    showSource("metrics");
+
+    const leverContent={
+      metrics:{kicker:"ORGANIZATIONAL LEVER 01",heading:"Reward access—not speed alone.",rationale:"Performance metrics tell employees what the organization truly values.",current:"Fast service counts. Accessible service is invisible.",redesign:"Track access quality alongside wait time.",test:"Role-play a rush period. Compare access decisions under both scorecards."},
+      routine:{kicker:"ORGANIZATIONAL LEVER 02",heading:"Make accommodation routine.",rationale:"Standard workflows and resources determine whether access feels normal or exceptional.",current:"Each request triggers improvisation.",redesign:"Build access steps, tools, and decision authority into the routine.",test:"Run the same service scenario with and without the redesigned protocol."},
+      leadership:{kicker:"ORGANIZATIONAL LEVER 03",heading:"Reinforce the signal every day.",rationale:"Leadership behavior makes written accessibility commitments credible in practice.",current:"Policy is visible; leadership reinforcement is not.",redesign:"Model, recognize, and debrief inclusive service decisions.",test:"Observe which behaviors teams repeat after leader modeling and feedback."}
+    };
+    const leverButtons=[...document.querySelectorAll("[data-lever]")];
+    function showLever(key){
+      const content=leverContent[key];
+      leverButtons.forEach(button=>button.setAttribute("aria-selected",String(button.dataset.lever===key)));
+      document.getElementById("leverKicker").textContent=content.kicker;
+      document.getElementById("leverHeading").textContent=content.heading;
+      document.getElementById("leverRationale").textContent=content.rationale;
+      document.getElementById("currentSignal").textContent=content.current;
+      document.getElementById("redesignAction").textContent=content.redesign;
+      document.getElementById("studentTest").textContent=content.test;
+    }
+    leverButtons.forEach(button=>button.addEventListener("click",()=>showLever(button.dataset.lever)));
+    showLever("metrics");
+  </script>
+</body>
+</html>
