@@ -75,6 +75,24 @@
     @keyframes explicit-depth{0%,100%{transform:rotateY(-9deg) rotateZ(1deg)}50%{transform:rotateY(-4deg) rotateZ(.3deg) translateY(-5px)}}
     @keyframes gap-depth{50%{transform:translateZ(55px) scale(1.08)}}
 
+    /* Animated illustrated IAT sequence: person → association → organization */
+    .m .iat-art{position:absolute;z-index:2;inset:5% 6% 19%;width:88%;height:76%;filter:drop-shadow(0 18px 18px rgba(36,40,37,.14));overflow:visible}
+    .m .iat-art .paper{fill:#f7f2ee}
+    .m .iat-art .mint{fill:#bfe1cf}.m .iat-art .apricot{fill:#f3b765}.m .iat-art .coral{fill:#ef6f78}.m .iat-art .pink{fill:#e98bb0}.m .iat-art .green{fill:#3db66a}.m .iat-art .ink{fill:#242725}.m .iat-art .sky{fill:#b7dbe3}.m .iat-art .soft{fill:#e6e8e4}
+    .m .iat-art text{fill:#242725;font-family:"DM Mono",monospace;font-weight:500;letter-spacing:.08em}
+    .m .iat-art .frame{opacity:0;transform-origin:50% 50%}
+    .m .iat-art .frame-person{animation:iat-person 9s ease-in-out infinite}
+    .m .iat-art .frame-sort{animation:iat-sort 9s ease-in-out infinite}
+    .m .iat-art .frame-system{animation:iat-system 9s ease-in-out infinite}
+    .m .iat-art .dot{animation:iat-dot 2.2s ease-in-out infinite alternate}
+    .m .iat-art .float-one{animation:iat-float 3.4s ease-in-out infinite alternate}
+    .m .iat-art .float-two{animation:iat-float 3.4s .7s ease-in-out infinite alternate-reverse}
+    @keyframes iat-person{0%,29%{opacity:1;transform:translateY(0) scale(1)}33%,96%{opacity:0;transform:translateY(8px) scale(.97)}97%,100%{opacity:1}}
+    @keyframes iat-sort{0%,30%{opacity:0;transform:translateX(8px) scale(.97)}35%,62%{opacity:1;transform:translateX(0) scale(1)}66%,100%{opacity:0;transform:translateX(-8px) scale(.97)}}
+    @keyframes iat-system{0%,63%{opacity:0;transform:translateY(-7px) scale(.97)}68%,94%{opacity:1;transform:translateY(0) scale(1)}98%,100%{opacity:0;transform:translateY(7px) scale(.97)}}
+    @keyframes iat-dot{to{transform:translateY(-4px)}}
+    @keyframes iat-float{to{transform:translateY(-6px) rotate(2deg)}}
+
     /* Live events */
     .j{background:#151934}.j .wave{left:12%;right:12%;height:14%;border:5px solid transparent;border-top-color:#75dcff;border-radius:50%;animation:wave 4s ease-in-out infinite}.j .wave:nth-child(1){top:25%}.j .wave:nth-child(2){top:38%;border-top-color:#ff6ca8;animation-delay:-1s}.j .wave:nth-child(3){top:51%;border-top-color:#e7ff39;animation-delay:-2s}
 
@@ -96,7 +114,53 @@
     <section class="grid" aria-label="Selected work and visual studies">
       <a class="tile i" href="./maps/index.html" aria-label="Open the IncluMap interactive map series"><i class="map"></i><i class="pin"></i><span class="label">IncluMap Series<span class="sub">Experience Lens + Design Studio · Open ↗</span></span></a>
       <a class="tile a" href="https://xingyao-prog.github.io/wearables/" aria-label="Wearables for Experience Measurement"><i class="watch-aura"></i><i class="watch-body"></i><i class="watch-screen"></i><i class="ema-dot"></i><span class="label">Wearables × Experience Measurement<span class="sub">Teaching case · Open page ↗</span></span></a>
-      <a class="tile m" href="./service-reflex/index.html" aria-label="Open the implicit and explicit attitudes teaching project"><i class="measure implicit"></i><i class="measure explicit"></i><i class="gap"></i><span class="label">Implicit × Explicit Attitudes<span class="sub">IAT teaching + organizational redesign · Open ↗</span></span></a>
+      <a class="tile m" href="./service-reflex/index.html" aria-label="Open the implicit and explicit attitudes teaching project">
+        <svg class="iat-art" viewBox="0 0 320 250" aria-hidden="true">
+          <g class="frame frame-person">
+            <rect class="paper" x="28" y="18" width="264" height="206" rx="18"/>
+            <rect class="mint" x="28" y="18" width="139" height="206" rx="18"/>
+            <rect class="apricot float-one" x="134" y="52" width="122" height="148" rx="5"/>
+            <g class="coral dot">
+              <circle cx="48" cy="44" r="3"/><circle cx="69" cy="44" r="3"/><circle cx="90" cy="44" r="3"/><circle cx="111" cy="44" r="3"/>
+              <circle cx="48" cy="63" r="3"/><circle cx="69" cy="63" r="3"/><circle cx="90" cy="63" r="3"/><circle cx="111" cy="63" r="3"/>
+            </g>
+            <path class="sky" d="M118 215c5-48 28-69 70-69s65 21 70 69z"/>
+            <rect fill="#aa755c" x="176" y="132" width="24" height="31" rx="9"/>
+            <ellipse fill="#c78e6f" cx="188" cy="105" rx="43" ry="48"/>
+            <path class="ink" d="M146 106c-8-26 3-65 42-66 42-1 55 34 44 69-3-16-11-23-22-32-13 14-35 20-64 18z"/>
+            <circle class="ink" cx="172" cy="108" r="3"/><circle class="ink" cx="204" cy="108" r="3"/>
+            <path d="M177 126c8 7 16 7 24 0" fill="none" stroke="#704735" stroke-width="3" stroke-linecap="round"/>
+            <circle class="coral" cx="270" cy="37" r="12"/><text x="264" y="41" font-size="10">01</text>
+            <text x="46" y="199" font-size="9">STIMULUS</text>
+          </g>
+          <g class="frame frame-sort">
+            <rect class="paper" x="28" y="18" width="264" height="206" rx="18"/>
+            <rect class="pink float-one" x="45" y="49" width="100" height="135" rx="13"/>
+            <rect class="green float-two" x="175" y="49" width="100" height="135" rx="13"/>
+            <rect fill="rgba(255,255,255,.24)" x="55" y="59" width="80" height="4" rx="2"/>
+            <rect fill="rgba(255,255,255,.24)" x="185" y="59" width="80" height="4" rx="2"/>
+            <circle fill="#fbfaf8" cx="160" cy="116" r="27"/>
+            <text x="154" y="121" font-size="18">OR</text>
+            <text x="58" y="164" font-size="9">IMPLICIT</text><text x="188" y="164" font-size="9">EXPLICIT</text>
+            <path class="coral" d="M151 115h-23l8-8m-8 8 8 8" fill="none" stroke="#ef6f78" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="green" d="M169 115h23l-8-8m8 8-8 8" fill="none" stroke="#3db66a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="apricot" cx="270" cy="37" r="12"/><text x="264" y="41" font-size="10">02</text>
+            <text x="46" y="207" font-size="9">ASSOCIATION</text>
+          </g>
+          <g class="frame frame-system">
+            <rect class="paper" x="28" y="18" width="264" height="206" rx="18"/>
+            <rect class="mint float-one" x="45" y="45" width="68" height="118" rx="9"/>
+            <rect class="pink float-two" x="126" y="45" width="68" height="118" rx="9"/>
+            <rect class="apricot float-one" x="207" y="45" width="68" height="118" rx="9"/>
+            <text x="57" y="105" font-size="8">TIME</text><text x="137" y="105" font-size="8">POLICY</text><text x="217" y="105" font-size="8">SUPPORT</text>
+            <path d="M64 178h193" fill="none" stroke="#929893" stroke-width="3" stroke-linecap="round"/>
+            <circle class="coral dot" cx="96" cy="178" r="10"/><circle class="green dot" cx="160" cy="178" r="10"/><circle class="apricot dot" cx="224" cy="178" r="10"/>
+            <circle class="green" cx="270" cy="37" r="12"/><text x="264" y="41" font-size="10">03</text>
+            <text x="46" y="207" font-size="9">ORGANIZATION</text>
+          </g>
+        </svg>
+        <span class="label">Implicit × Explicit Attitudes<span class="sub">IAT teaching + organizational redesign · Open ↗</span></span>
+      </a>
       <div class="tile b"><i class="orb"></i><i class="orb"></i><i class="orb"></i><i class="ring"></i><span class="label">Affective experience<span class="sub">Visual study</span></span></div>
       <div class="tile c"><i class="arc"></i><i class="spark"></i><span class="label">Interaction systems<span class="sub">Visual study</span></span></div>
       <div class="tile d"><i class="flask"></i><span class="label">Experience measurement<span class="sub">Research method</span></span></div>
