@@ -93,6 +93,40 @@
     @keyframes iat-dot{to{transform:translateY(-4px)}}
     @keyframes iat-float{to{transform:translateY(-6px) rotate(2deg)}}
 
+    /* Hand-drawn wearable: always moving, with a dark title reveal on hover */
+    .a{background:#fbfaf8;perspective:none;transition:background .45s ease}
+    .a:before{content:"";position:absolute;z-index:4;inset:0;background:rgba(42,43,42,.88);opacity:0;transition:opacity .48s ease;pointer-events:none}
+    .a .watch-sketch{position:absolute;z-index:3;inset:2% 1% 18%;width:98%;height:80%;overflow:visible;color:#1d1e1d;animation:sketch-breathe 5.2s ease-in-out infinite;transition:transform .7s cubic-bezier(.2,.8,.2,1),filter .45s ease}
+    .a .watch-sketch .line{fill:none;stroke:currentColor;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:760;stroke-dashoffset:760;animation:sketch-draw 7s ease-in-out infinite}
+    .a .watch-sketch .fine{stroke-width:2.3;stroke-dasharray:520;animation-delay:-1.8s}
+    .a .watch-sketch .ghost{fill:#dcd6fa;stroke:none;opacity:.55;animation:sketch-cloud 4.6s ease-in-out infinite alternate}
+    .a .watch-sketch .accent{fill:none;stroke:#d7ef16;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 3px rgba(135,151,0,.18));stroke-dasharray:240;stroke-dashoffset:240;animation:signal-draw 3.2s ease-in-out infinite}
+    .a .watch-sketch .ema{fill:#d7ef16;stroke:none;animation:ema-bob 2.8s ease-in-out infinite}
+    .a .watch-sketch text{fill:#222523;font:500 8px/1 "DM Mono",monospace;letter-spacing:.08em;transition:fill .45s ease}
+    .a .watch-cycle{position:absolute;z-index:5;left:0;right:0;top:35%;height:58px;pointer-events:none;text-align:center;color:#171917;transition:opacity .3s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+    .a .watch-cycle b{position:absolute;left:0;right:0;top:0;font:650 38px/.95 Manrope,Arial,sans-serif;letter-spacing:-.08em;opacity:0}
+    .a .watch-cycle .cycle-hrv{animation:cycle-hrv 7.2s ease-in-out infinite}
+    .a .watch-cycle .cycle-ema{animation:cycle-ema 7.2s ease-in-out infinite}
+    .a .watch-cycle small{position:absolute;left:0;right:0;top:43px;color:#747a76;font:500 7px/1 "DM Mono",monospace;letter-spacing:.15em;animation:cycle-note 7.2s ease-in-out infinite}
+    .a .watch-reveal{position:absolute;z-index:6;left:12%;right:10%;top:36%;color:#fff;opacity:0;transform:translateY(14px);transition:opacity .35s ease,transform .55s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+    .a .watch-reveal b{display:block;font:500 clamp(1.65rem,3vw,2.7rem)/1 Manrope,Arial,sans-serif;letter-spacing:-.05em}
+    .a .watch-reveal:after{content:"";display:block;width:24px;height:4px;margin-top:18px;background:#46d5b2}
+    .a .watch-reveal small{display:block;margin-top:12px;color:#d2d5d2;font:500 8px/1.3 "DM Mono",monospace;letter-spacing:.14em}
+    .a:hover:before,.a:focus-visible:before{opacity:1}
+    .a:hover .watch-sketch,.a:focus-visible .watch-sketch{z-index:5;color:#090a09;transform:scale(1.08) rotate(-2deg) translateY(-3px);filter:contrast(.9)}
+    .a:hover .watch-sketch text,.a:focus-visible .watch-sketch text{fill:#090a09}
+    .a:hover .watch-cycle,.a:focus-visible .watch-cycle{opacity:0;transform:translateY(-10px)}
+    .a:hover .watch-reveal,.a:focus-visible .watch-reveal{opacity:1;transform:translateY(0)}
+    .a:hover:after,.a:focus-visible:after{border-width:0}
+    @keyframes sketch-draw{0%{stroke-dashoffset:760;opacity:.28}18%,72%{stroke-dashoffset:0;opacity:1}88%,100%{stroke-dashoffset:-760;opacity:.22}}
+    @keyframes signal-draw{0%,12%{stroke-dashoffset:240;opacity:.25}42%,78%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-240;opacity:.25}}
+    @keyframes sketch-breathe{0%,100%{transform:rotate(-.8deg) translateY(1px)}50%{transform:rotate(1.2deg) translateY(-5px)}}
+    @keyframes sketch-cloud{to{transform:translate(7px,-5px) scale(1.05);opacity:.78}}
+    @keyframes ema-bob{50%{transform:translateY(-7px) rotate(5deg)}}
+    @keyframes cycle-hrv{0%,8%{opacity:0;transform:translateY(7px)}14%,35%{opacity:1;transform:none}43%,100%{opacity:0;transform:translateY(-7px)}}
+    @keyframes cycle-ema{0%,42%{opacity:0;transform:translateY(7px)}50%,71%{opacity:1;transform:none}79%,100%{opacity:0;transform:translateY(-7px)}}
+    @keyframes cycle-note{0%,9%,80%,100%{opacity:0}16%,72%{opacity:1}}
+
     /* Live events */
     .j{background:#151934}.j .wave{left:12%;right:12%;height:14%;border:5px solid transparent;border-top-color:#75dcff;border-radius:50%;animation:wave 4s ease-in-out infinite}.j .wave:nth-child(1){top:25%}.j .wave:nth-child(2){top:38%;border-top-color:#ff6ca8;animation-delay:-1s}.j .wave:nth-child(3){top:51%;border-top-color:#e7ff39;animation-delay:-2s}
 
@@ -113,7 +147,22 @@
     <p class="intro">XY explores how <strong>events, places, and emerging tools</strong> can make everyday experiences more meaningful.</p>
     <section class="grid" aria-label="Selected work and visual studies">
       <a class="tile i" href="./maps/index.html" aria-label="Open the IncluMap interactive map series"><i class="map"></i><i class="pin"></i><span class="label">IncluMap Series<span class="sub">Experience Lens + Design Studio · Open ↗</span></span></a>
-      <a class="tile a" href="https://xingyao-prog.github.io/wearables/" aria-label="Wearables for Experience Measurement"><i class="watch-aura"></i><i class="watch-body"></i><i class="watch-screen"></i><i class="ema-dot"></i><span class="label">Wearables × Experience Measurement<span class="sub">Teaching case · Open page ↗</span></span></a>
+      <a class="tile a" href="https://xingyao-prog.github.io/wearables/" aria-label="Wearables for Experience Measurement">
+        <svg class="watch-sketch" viewBox="0 0 320 250" aria-hidden="true">
+          <path class="ghost" d="M50 54c39-45 109-51 149-15 42 37 70 30 93 8v154c-47 32-91 25-129-7-43-36-87-22-124 12z"/>
+          <path class="line fine" d="M16 60c31-27 58-22 70-3 9 15-10 28-24 17-14-12 5-35 34-35 27 0 39 15 45 27"/>
+          <path class="line" d="M129 11c-9 10-12 26-11 50m73-50c10 13 12 32 10 51M118 61c-17 8-24 25-23 46l2 51c1 21 14 32 35 34l60-1c22-2 33-16 34-37l-1-48c0-23-11-39-28-45-19-6-60-6-79 0zM127 192c-4 17-3 37 4 50m66-51c3 20 1 37-6 51"/>
+          <path class="line fine" d="M113 80c17-12 73-14 93 0m-95 91c23 10 70 11 95-1"/>
+          <path class="accent" d="M119 133l17-10 14 13 20-32 16 26 17-14"/>
+          <path class="line fine" d="M246 65c22-13 46-3 40 15-5 16-27 18-34 4-5-10 5-19 17-18"/>
+          <circle class="ema" cx="271" cy="76" r="16"/>
+          <text x="262" y="79">EMA</text>
+          <path class="line fine" d="M238 206c25-16 50-12 67 2m-291 4c24-23 49-27 72-11 15 11 29 11 45-1"/>
+        </svg>
+        <span class="watch-cycle" aria-hidden="true"><b class="cycle-hrv">HRV</b><b class="cycle-ema">EMA</b><small>MEASURE THE MOMENT</small></span>
+        <span class="watch-reveal" aria-hidden="true"><b>HRV × EMA</b><small>WEARABLE EXPERIENCE MEASURE</small></span>
+        <span class="label">Wearables × Experience Measurement<span class="sub">Teaching case · Open page ↗</span></span>
+      </a>
       <a class="tile m" href="./service-reflex/index.html" aria-label="Open the implicit and explicit attitudes teaching project">
         <svg class="iat-art" viewBox="0 0 320 250" aria-hidden="true">
           <g class="frame frame-person">
