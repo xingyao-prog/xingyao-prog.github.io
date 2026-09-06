@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Event Flow Lens is a camera-based teaching project for measuring visitor flow, experience friction, and event redesign outcomes.">
+  <title>Event Flow Lens — Yao</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap');
+    :root{--ink:#1b1c1b;--muted:#696f6b;--paper:#f4f4f1;--white:#fff;--line:#cfd3cf;--blue:#315dff;--coral:#ff705d;--mint:#72d6b2;--soft-blue:#dfe8ff;--soft-coral:#ffe1dc}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:500 15px/1.45 Manrope,Arial,sans-serif}
+    button,a{font:inherit}
+    button{color:inherit}
+    .page{width:min(1380px,calc(100% - 40px));margin:auto}
+    .topbar{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{color:inherit;text-decoration:none;font:500 11px/1 DM Mono,monospace;letter-spacing:.12em;text-transform:uppercase}
+    .back{color:var(--muted);text-decoration:none;font:500 10px/1 DM Mono,monospace;letter-spacing:.09em;text-transform:uppercase}
+    .back:hover,.back:focus-visible{color:var(--ink)}
+    .hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:48px;align-items:end;padding:70px 0 52px}
+    .eyebrow{margin:0 0 20px;font:500 10px/1.2 DM Mono,monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--blue)}
+    h1{margin:0;max-width:850px;font-size:clamp(3.2rem,7vw,7.5rem);line-height:.87;letter-spacing:-.075em;font-weight:600}
+    h1 span{color:var(--coral)}
+    .hero-copy{max-width:440px;margin:0 0 5px;color:var(--muted);font-size:clamp(1rem,1.5vw,1.28rem);line-height:1.5}
+    .hero-copy strong{color:var(--ink);font-weight:600}
+
+    .lab{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .lab-inner{padding:24px 0 30px}
+    .lab-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:18px}
+    .question{margin:0;font-size:clamp(1.35rem,2.3vw,2.15rem);line-height:1.1;letter-spacing:-.04em;font-weight:600}
+    .toggle{display:flex;gap:4px;background:#e8eae7;padding:4px;border-radius:999px}
+    .toggle button{border:0;background:transparent;border-radius:999px;padding:10px 16px;cursor:pointer;font:500 10px/1 DM Mono,monospace;letter-spacing:.08em;text-transform:uppercase}
+    .toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+    .stage{position:relative;min-height:570px;background:#e9ece8;overflow:hidden;isolation:isolate}
+    .stage svg{display:block;width:100%;height:auto;min-height:570px}
+    .zone{fill:#f8f8f6;stroke:#bdc4be;stroke-width:1.2}
+    .road{fill:#d8ddd8}
+    .barrier{stroke:#747b76;stroke-width:8;stroke-linecap:round}
+    .barrier-soft{stroke:#aab0ab;stroke-width:4;stroke-linecap:round}
+    .route{fill:none;stroke:var(--blue);stroke-width:5;stroke-linecap:round;stroke-dasharray:10 11;opacity:.68}
+    .route.access{stroke:var(--mint);stroke-width:7}
+    .path-person{fill:none;stroke:var(--blue);stroke-width:2.8;stroke-linecap:round;opacity:.82;stroke-dasharray:520;stroke-dashoffset:520;animation:draw-path 4.6s ease-in-out infinite}
+    .path-person.alt{stroke:var(--coral);animation-delay:-1.55s}
+    .path-person.third{animation-delay:-3.05s}
+    .camera-cone{fill:rgba(49,93,255,.08);stroke:rgba(49,93,255,.35);stroke-width:1.5}
+    .camera-body{fill:var(--ink)}
+    .camera-lens{fill:var(--blue)}
+    .sign{fill:var(--blue)}
+    .sign-text{fill:#fff;font:500 11px DM Mono,monospace;letter-spacing:.06em}
+    .map-label{fill:#555c57;font:500 11px DM Mono,monospace;letter-spacing:.08em}
+    .map-note{fill:var(--ink);font:600 14px Manrope,Arial,sans-serif}
+    .flow-dot{fill:var(--ink)}
+    .wheel{fill:var(--mint);stroke:var(--ink);stroke-width:2}
+    .friction-ring{fill:none;stroke:var(--coral);stroke-width:4;animation:ring 2.2s ease-out infinite;transform-origin:center}
+    .dwell{fill:var(--coral);opacity:.16}
+    .standard-only,.redesign-only{transition:opacity .35s ease,transform .45s ease}
+    .stage[data-mode="standard"] .redesign-only{opacity:0;pointer-events:none;transform:translateY(8px)}
+    .stage[data-mode="redesign"] .standard-only{opacity:0;pointer-events:none;transform:translateY(8px)}
+    .stage[data-layer="paths"] .dwell-layer,.stage[data-layer="paths"] .friction-layer{opacity:.12}
+    .stage[data-layer="dwell"] .paths-layer,.stage[data-layer="dwell"] .friction-layer{opacity:.12}
+    .stage[data-layer="friction"] .paths-layer,.stage[data-layer="friction"] .dwell-layer{opacity:.12}
+    .paths-layer,.dwell-layer,.friction-layer{transition:opacity .25s}
+    .map-controls{position:absolute;z-index:4;left:18px;bottom:18px;display:flex;gap:7px;flex-wrap:wrap}
+    .layer-button{border:1px solid var(--ink);background:rgba(255,255,255,.93);padding:9px 12px;cursor:pointer;font:500 9px/1 DM Mono,monospace;letter-spacing:.07em;text-transform:uppercase}
+    .layer-button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+    .camera-key{position:absolute;z-index:4;top:18px;left:18px;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.93);padding:9px 11px;font:500 9px/1 DM Mono,monospace;letter-spacing:.06em;text-transform:uppercase}
+    .camera-key i{width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 5px rgba(49,93,255,.12)}
+    .readout{position:absolute;z-index:4;right:18px;top:18px;width:min(280px,calc(100% - 36px));background:rgba(255,255,255,.95);padding:18px}
+    .readout-label{margin:0 0 13px;color:var(--muted);font:500 9px/1 DM Mono,monospace;letter-spacing:.1em;text-transform:uppercase}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .metric b{display:block;font-size:clamp(1.15rem,2.1vw,1.75rem);line-height:1;letter-spacing:-.05em;font-weight:600}
+    .metric small{display:block;margin-top:6px;color:var(--muted);font:500 8px/1.2 DM Mono,monospace;text-transform:uppercase}
+    .demo-note{position:absolute;right:18px;bottom:18px;color:#606661;font:400 8px/1 DM Mono,monospace;letter-spacing:.06em;text-transform:uppercase}
+    @keyframes draw-path{0%{stroke-dashoffset:520;opacity:0}15%{opacity:.85}62%,100%{stroke-dashoffset:0}}
+    @keyframes ring{0%{r:10;opacity:1}80%,100%{r:28;opacity:0}}
+
+    .bridge{padding:76px 0}
+    .bridge h2,.teach h2{margin:0 0 36px;font-size:clamp(2rem,4vw,4rem);line-height:.94;letter-spacing:-.06em;font-weight:600}
+    .evidence{display:grid;grid-template-columns:1fr 60px 1fr 60px 1fr;align-items:stretch}
+    .evidence-block{min-height:240px;padding:26px;background:var(--white);display:flex;flex-direction:column;justify-content:space-between;border-top:5px solid var(--blue)}
+    .evidence-block:nth-of-type(3){border-color:var(--coral)}
+    .evidence-block:nth-of-type(5){border-color:var(--mint)}
+    .evidence-kicker{font:500 9px/1 DM Mono,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .evidence-big{margin:0;font-size:clamp(1.45rem,2.7vw,2.5rem);line-height:1.05;letter-spacing:-.05em;font-weight:600}
+    .evidence-small{color:var(--muted);font-size:.88rem}
+    .arrow{display:grid;place-items:center;font-size:1.6rem;color:#8e948f}
+
+    .kit{padding:80px 0;border-top:1px solid var(--line)}
+    .kit h2{margin:0 0 36px;font-size:clamp(2rem,4vw,4rem);line-height:.94;letter-spacing:-.06em;font-weight:600}
+    .kit-layout{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);min-height:520px;background:var(--white)}
+    .kit-menu{display:flex;flex-direction:column;border-right:1px solid var(--line)}
+    .kit-button{position:relative;flex:1;min-height:140px;padding:24px 25px;border:0;border-bottom:1px solid var(--line);background:transparent;text-align:left;cursor:pointer}
+    .kit-button:last-child{border-bottom:0}
+    .kit-button:hover,.kit-button:focus-visible,.kit-button[aria-pressed="true"]{background:var(--soft-blue)}
+    .kit-button[aria-pressed="true"]:after{content:"";position:absolute;right:-1px;top:0;bottom:0;width:5px;background:var(--blue)}
+    .kit-number{display:block;margin-bottom:24px;color:var(--blue);font:500 9px/1 DM Mono,monospace;letter-spacing:.1em}
+    .kit-button b{display:block;font-size:1.25rem;font-weight:600;letter-spacing:-.03em}
+    .kit-button small{display:block;margin-top:6px;color:var(--muted);font:400 10px/1.45 DM Mono,monospace}
+    .kit-view{position:relative;min-height:520px;overflow:hidden;background:#eceeeb}
+    .kit-panel{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .3s,transform .45s}
+    .kit-panel.is-active{opacity:1;pointer-events:auto;transform:none}
+    .kit-photo{position:relative;min-height:520px;display:grid;place-items:center;overflow:hidden;background:#eef0ed}
+    .kit-photo img{display:block;width:100%;height:100%;object-fit:contain;padding:34px}
+    .kit-photo.software img{object-fit:cover;object-position:center top;padding:0}
+    .kit-photo:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,transparent 64%,rgba(49,93,255,.09) 64%)}
+    .kit-details{padding:30px 28px;display:flex;flex-direction:column;justify-content:space-between;background:var(--ink);color:#fff}
+    .kit-type{font:500 9px/1 DM Mono,monospace;letter-spacing:.12em;text-transform:uppercase;color:#aeb5b0}
+    .kit-details h3{margin:18px 0 12px;font-size:clamp(1.5rem,2.6vw,2.45rem);line-height:1;letter-spacing:-.05em;font-weight:600}
+    .kit-details p{margin:0;color:#cdd1ce;font-size:.88rem}
+    .specs{margin:26px 0 0;padding:0;list-style:none;font:400 9px/1.55 DM Mono,monospace;color:#fff}
+    .specs li{padding:8px 0;border-top:1px solid #464a47}
+    .source{color:#949b96;font:400 8px/1.4 DM Mono,monospace}
+    .source a{color:inherit}
+    .phone{width:230px;height:410px;border:10px solid var(--ink);border-radius:31px;background:#fff;box-shadow:18px 22px 0 var(--soft-coral);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:23px}
+    .phone:before{content:"";width:62px;height:7px;border-radius:99px;background:var(--ink)}
+    .qr{width:116px;height:116px;background:conic-gradient(from 90deg at 25% 25%,var(--ink) 0 25%,transparent 0 50%,var(--ink) 0 75%,transparent 0),conic-gradient(from 0deg at 75% 75%,var(--ink) 0 25%,transparent 0 50%,var(--ink) 0 75%,transparent 0);background-size:29px 29px;border:8px solid #fff;box-shadow:0 0 0 2px var(--ink)}
+    .phone span{font:500 10px/1.5 DM Mono,monospace;text-align:center;letter-spacing:.05em}
+    .teach{padding:80px 0;border-top:1px solid var(--line)}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+    .step{min-height:230px;padding:24px 22px;border-right:1px solid var(--line);cursor:pointer;background:transparent;text-align:left}
+    .step:last-child{border-right:0}
+    .step:hover,.step:focus-visible,.step[aria-expanded="true"]{background:var(--white)}
+    .step-no{display:block;margin-bottom:65px;font:500 10px/1 DM Mono,monospace;color:var(--blue)}
+    .step b{display:block;font-size:1.25rem;letter-spacing:-.03em;font-weight:600}
+    .step span{display:block;max-height:0;margin-top:0;overflow:hidden;color:var(--muted);font-size:.86rem;opacity:0;transition:max-height .3s,opacity .3s,margin .3s}
+    .step[aria-expanded="true"] span{max-height:90px;margin-top:10px;opacity:1}
+    .method{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:46px}
+    .method p{margin:0;color:var(--muted);max-width:610px}
+    .method strong{color:var(--ink);font-weight:600}
+    .footer{height:70px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font:500 9px/1 DM Mono,monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.stage{min-height:520px}.stage svg{min-height:520px}.evidence{grid-template-columns:1fr}.arrow{height:42px;transform:rotate(90deg)}.kit-layout{grid-template-columns:1fr}.kit-menu{display:grid;grid-template-columns:repeat(3,1fr);border-right:0;border-bottom:1px solid var(--line)}.kit-button{min-height:150px;border-right:1px solid var(--line);border-bottom:0}.kit-button:last-child{border-right:0}.kit-button[aria-pressed="true"]:after{left:0;right:0;top:auto;bottom:-1px;width:auto;height:5px}.steps{grid-template-columns:repeat(2,1fr)}.step:nth-child(2){border-right:0}.step:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+    @media(max-width:620px){.page{width:min(100% - 22px,1380px)}.hero{padding:46px 0 36px;gap:24px}.lab-head{align-items:flex-start;flex-direction:column}.stage{min-height:610px}.stage svg{min-height:610px;transform:scale(1.3);transform-origin:50% 63%}.readout{left:12px;right:12px;top:48px;width:auto}.camera-key{top:12px;left:12px}.metrics{gap:7px}.map-controls{left:12px;bottom:12px}.demo-note{display:none}.bridge,.kit,.teach{padding:55px 0}.kit-menu{grid-template-columns:1fr}.kit-button{min-height:auto;border-right:0;border-bottom:1px solid var(--line);padding:18px}.kit-number{margin-bottom:8px}.kit-layout,.kit-view,.kit-photo{min-height:690px}.kit-panel{grid-template-columns:1fr;grid-template-rows:390px 1fr}.kit-photo{min-height:390px}.kit-details{min-height:300px}.steps{grid-template-columns:1fr}.step{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:0}.step-no{margin-bottom:28px}.method{grid-template-columns:1fr}.footer{height:auto;padding:25px 0;gap:16px;align-items:flex-start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar"><a class="brand" href="../index.html">Yao / Teaching projects</a><a class="back" href="../index.html">All projects ↗</a></header>
+    <section class="hero">
+      <div><p class="eyebrow">Camera-based event research</p><h1>Event Flow <span>Lens.</span></h1></div>
+      <p class="hero-copy">Students use an ordinary camera to <strong>locate experience friction</strong>, test an event redesign, and translate behavioral evidence into operational decisions.</p>
+    </section>
+  </div>
+
+  <section class="lab" aria-labelledby="lab-question">
+    <div class="page lab-inner">
+      <div class="lab-head">
+        <h2 class="question" id="lab-question">What changes when the entrance changes?</h2>
+        <div class="toggle" aria-label="Entrance design">
+          <button type="button" data-mode="standard" aria-pressed="true">A · Standard</button>
+          <button type="button" data-mode="redesign" aria-pressed="false">B · Redesigned</button>
+        </div>
+      </div>
+      <div class="stage" data-mode="standard" data-layer="paths">
+        <div class="camera-key"><i aria-hidden="true"></i>Camera view · no face ID</div>
+        <div class="readout" aria-live="polite">
+          <p class="readout-label">Synthetic classroom demo</p>
+          <div class="metrics">
+            <div class="metric"><b id="waitValue">4:20</b><small>median wait</small></div>
+            <div class="metric"><b id="hesitateValue">31%</b><small>hesitation</small></div>
+            <div class="metric"><b id="stressValue">5.3</b><small>EMA stress / 7</small></div>
+          </div>
+        </div>
+        <svg viewBox="0 0 1200 570" role="img" aria-labelledby="mapTitle mapDesc">
+          <title id="mapTitle">Animated comparison of a standard and redesigned event entrance</title>
+          <desc id="mapDesc">A top-down camera view shows visitor paths, dwell areas, hesitation, queue barriers, check-in, and an accessible route.</desc>
+          <rect class="road" x="0" y="0" width="1200" height="570"/>
+          <rect class="zone" x="65" y="105" width="290" height="365"/>
+          <rect class="zone" x="425" y="105" width="710" height="365"/>
+          <text class="map-label" x="87" y="442">ARRIVAL</text>
+          <text class="map-label" x="1010" y="442">CHECK-IN</text>
+          <polygon class="camera-cone" points="515,54 345,470 1045,470"/>
+          <g transform="translate(500 38)"><rect class="camera-body" x="0" y="0" width="34" height="23" rx="4"/><circle class="camera-lens" cx="17" cy="11.5" r="6"/><path class="camera-body" d="M34 6l13-6v23l-13-6z"/></g>
+
+          <g class="standard-only">
+            <line class="barrier" x1="520" y1="390" x2="900" y2="390"/>
+            <line class="barrier" x1="520" y1="310" x2="900" y2="310"/>
+            <line class="barrier" x1="520" y1="230" x2="900" y2="230"/>
+            <path class="route" d="M250 350 C400 350 405 390 520 390 L900 390 Q960 390 960 310 L520 310 Q470 310 470 230 L940 230"/>
+            <g class="dwell-layer"><ellipse class="dwell" cx="462" cy="345" rx="72" ry="82"/><ellipse class="dwell" cx="957" cy="273" rx="55" ry="76"/></g>
+            <g class="paths-layer">
+              <path class="path-person" d="M210 320 C345 316 410 370 458 343 C505 315 476 268 528 247 C630 205 826 262 935 228"/>
+              <path class="path-person alt" d="M205 390 C335 388 449 370 466 334 C485 293 429 281 470 245 C526 196 742 244 934 225"/>
+              <path class="path-person third" d="M225 270 C360 270 411 315 458 338 C505 362 515 390 641 389 C774 389 927 363 945 310"/>
+            </g>
+            <g class="friction-layer"><circle class="friction-ring" cx="460" cy="341" r="10"/><text class="map-note" x="405" y="420">hesitation</text><circle class="friction-ring" cx="953" cy="275" r="10"/><text class="map-note" x="905" y="192">wrong turn</text></g>
+            <circle class="flow-dot" cx="210" cy="320" r="7"/><circle class="flow-dot" cx="205" cy="390" r="7"/><circle class="wheel" cx="225" cy="270" r="9"/>
+          </g>
+
+          <g class="redesign-only">
+            <line class="barrier-soft" x1="520" y1="355" x2="930" y2="355"/>
+            <line class="barrier-soft" x1="520" y1="275" x2="930" y2="275"/>
+            <rect class="sign" x="410" y="154" width="126" height="38" rx="3"/><text class="sign-text" x="473" y="178" text-anchor="middle">CHECK-IN →</text>
+            <rect x="410" y="204" width="126" height="38" rx="3" fill="#72d6b2"/><text class="sign-text" x="473" y="228" text-anchor="middle" fill="#1b1c1b">ACCESS →</text>
+            <path class="route" d="M215 335 C350 335 420 318 520 315 L940 315"/>
+            <path class="route access" d="M220 410 C350 410 430 395 540 395 L940 395"/>
+            <g class="dwell-layer"><ellipse cx="484" cy="323" rx="35" ry="36" fill="#315dff" opacity=".09"/></g>
+            <g class="paths-layer">
+              <path class="path-person" d="M210 300 C353 305 430 316 535 315 L940 315"/>
+              <path class="path-person alt" d="M210 360 C350 355 443 335 540 335 L940 335"/>
+              <path class="path-person third" d="M220 410 C350 410 430 395 540 395 L940 395"/>
+            </g>
+            <g class="friction-layer"><circle cx="482" cy="324" r="10" fill="#72d6b2"/><text class="map-note" x="438" y="375">clear choice</text></g>
+            <circle class="flow-dot" cx="210" cy="300" r="7"/><circle class="flow-dot" cx="210" cy="360" r="7"/><circle class="wheel" cx="220" cy="410" r="9"/>
+          </g>
+          <rect x="966" y="190" width="105" height="72" fill="#1b1c1b"/><text class="sign-text" x="1018" y="221" text-anchor="middle">STAFF</text><text class="sign-text" x="1018" y="239" text-anchor="middle">CHECK-IN</text>
+        </svg>
+        <div class="map-controls" aria-label="Evidence layer">
+          <button class="layer-button" type="button" data-layer="paths" aria-pressed="true">Paths</button>
+          <button class="layer-button" type="button" data-layer="dwell" aria-pressed="false">Dwell</button>
+          <button class="layer-button" type="button" data-layer="friction" aria-pressed="false">Friction</button>
+        </div>
+        <span class="demo-note">Illustrative data · not a facial-emotion score</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="page">
+    <section class="bridge" aria-labelledby="bridge-title">
+      <p class="eyebrow">One camera + one question</p>
+      <h2 id="bridge-title">Behavior shows where.<br>EMA helps explain why.</h2>
+      <div class="evidence">
+        <article class="evidence-block"><span class="evidence-kicker">Camera observes</span><p class="evidence-big">Path · wait · hesitation</p><span class="evidence-small">Count movement, not identity.</span></article>
+        <div class="arrow" aria-hidden="true">→</div>
+        <article class="evidence-block"><span class="evidence-kicker">Visitor reports</span><p class="evidence-big">Stress · ease · welcome</p><span class="evidence-small">A brief QR-based EMA at the touchpoint.</span></article>
+        <div class="arrow" aria-hidden="true">→</div>
+        <article class="evidence-block"><span class="evidence-kicker">Student tests</span><p class="evidence-big">Layout · sign · staff</p><span class="evidence-small">Redesign the system, then measure again.</span></article>
+      </div>
+    </section>
+
+    <section class="kit" aria-labelledby="kit-title">
+      <p class="eyebrow">Minimum field kit</p>
+      <h2 id="kit-title">Small enough for a class.<br>Real enough for an event.</h2>
+      <div class="kit-layout">
+        <div class="kit-menu" aria-label="Field kit components">
+          <button class="kit-button" type="button" data-kit="capture" aria-pressed="true"><span class="kit-number">01 · CAPTURE</span><b>1080p fixed camera</b><small>Webcam + high stable mount</small></button>
+          <button class="kit-button" type="button" data-kit="code" aria-pressed="false"><span class="kit-number">02 · CODE</span><b>BORIS software</b><small>Free behavioral event logging</small></button>
+          <button class="kit-button" type="button" data-kit="ask" aria-pressed="false"><span class="kit-number">03 · ASK</span><b>QR-based EMA</b><small>Three questions at the touchpoint</small></button>
+        </div>
+        <div class="kit-view" aria-live="polite">
+          <article class="kit-panel is-active" data-kit-panel="capture">
+            <div class="kit-photo"><img src="./assets/logitech-c920s.png" alt="Logitech C920s Full HD webcam with privacy shutter"></div>
+            <div class="kit-details"><div><span class="kit-type">Example device</span><h3>Logitech C920s—or equivalent.</h3><p>A basic fixed-view webcam is sufficient for one indoor entrance zone. Mount it high and angle it downward so the study captures movement rather than faces.</p><ul class="specs"><li>1080p · 30 fps</li><li>78° fixed field of view</li><li>USB laptop connection</li><li>1.5–2 m tripod / clamp</li><li>USB extension + floor tape</li></ul></div><span class="source">Product image/specification: <a href="https://www.logitech.com/en-us/shop/p/c920s-pro-hd-webcam">Logitech</a></span></div>
+          </article>
+          <article class="kit-panel" data-kit-panel="code">
+            <div class="kit-photo software"><img src="./assets/boris-coding-map.jpg" alt="Official BORIS behavior coding map interface screenshot"></div>
+            <div class="kit-details"><div><span class="kit-type">Free software</span><h3>BORIS.</h3><p>Students define the behaviors first, then log when they happen while reviewing video. No programming is required for the core exercise.</p><ul class="specs"><li>Mark observation zones</li><li>Code wait start / stop</li><li>Log hesitation and wrong turns</li><li>Export events to CSV</li><li>Windows · macOS · Linux</li></ul></div><span class="source">Interface image: <a href="https://www.boris.unito.it/screenshots/">BORIS official screenshots</a></span></div>
+          </article>
+          <article class="kit-panel" data-kit-panel="ask">
+            <div class="kit-photo"><div class="phone" aria-hidden="true"><div class="qr"></div><span>How stressful was<br>this entry?<br><strong>1 — 7</strong></span></div></div>
+            <div class="kit-details"><div><span class="kit-type">Simple software</span><h3>Qualtrics—or a campus-approved form.</h3><p>Place the QR prompt immediately after the observed zone. Keep it brief so the answer refers to the same moment recorded by the camera.</p><ul class="specs"><li>Stress · 1–7</li><li>Ease · 1–7</li><li>Welcome · 1–7</li><li>Timestamp for matching</li><li>No name required</li></ul></div><span class="source">Use the institution's approved survey and data-retention protocol.</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="teach" aria-labelledby="teach-title">
+      <p class="eyebrow">Learn by doing</p>
+      <h2 id="teach-title">A four-part class experiment.</h2>
+      <div class="steps">
+        <button class="step" type="button" aria-expanded="false"><span class="step-no">01</span><b>Frame</b><span>Choose one event touchpoint and define observable behaviors before recording.</span></button>
+        <button class="step" type="button" aria-expanded="false"><span class="step-no">02</span><b>Observe</b><span>Code paths, waits, hesitation, assistance, and abandonment with BORIS or a simple worksheet.</span></button>
+        <button class="step" type="button" aria-expanded="false"><span class="step-no">03</span><b>Redesign</b><span>Change one operational element: route, sign, queue, or staff position.</span></button>
+        <button class="step" type="button" aria-expanded="false"><span class="step-no">04</span><b>Retest</b><span>Compare behavior and EMA responses; turn the finding into an event decision.</span></button>
+      </div>
+      <div class="method">
+        <p><strong>Minimum setup:</strong> phone or webcam, tripod, BORIS, spreadsheet, and QR survey.</p>
+        <p><strong>Research boundary:</strong> no facial identification; obtain consent or use an approved observation protocol, minimize retention, and report aggregate behavior.</p>
+      </div>
+    </section>
+
+    <footer class="footer"><span>Event Flow Lens</span><span>Yao · Applied teaching project</span></footer>
+  </main>
+
+  <script>
+    const stage = document.querySelector('.stage');
+    const modeButtons = [...document.querySelectorAll('[data-mode]')];
+    const layerButtons = [...document.querySelectorAll('[data-layer]')];
+    const metricSets = {
+      standard: { wait: '4:20', hesitate: '31%', stress: '5.3' },
+      redesign: { wait: '2:35', hesitate: '11%', stress: '3.1' }
+    };
+
+    function setMode(mode) {
+      stage.dataset.mode = mode;
+      modeButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mode === mode)));
+      const values = metricSets[mode];
+      document.getElementById('waitValue').textContent = values.wait;
+      document.getElementById('hesitateValue').textContent = values.hesitate;
+      document.getElementById('stressValue').textContent = values.stress;
+      stage.querySelectorAll('.path-person').forEach(path => {
+        path.style.animation = 'none';
+        path.getBoundingClientRect();
+        path.style.animation = '';
+      });
+    }
+
+    modeButtons.forEach(button => button.addEventListener('click', () => setMode(button.dataset.mode)));
+    layerButtons.forEach(button => button.addEventListener('click', () => {
+      stage.dataset.layer = button.dataset.layer;
+      layerButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    }));
+    const kitButtons = [...document.querySelectorAll('[data-kit]')];
+    const kitPanels = [...document.querySelectorAll('[data-kit-panel]')];
+    kitButtons.forEach(button => button.addEventListener('click', () => {
+      const selected = button.dataset.kit;
+      kitButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      kitPanels.forEach(panel => panel.classList.toggle('is-active', panel.dataset.kitPanel === selected));
+    }));
+    document.querySelectorAll('.step').forEach(step => step.addEventListener('click', () => {
+      const open = step.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.step').forEach(item => item.setAttribute('aria-expanded', 'false'));
+      step.setAttribute('aria-expanded', String(!open));
+    }));
+  </script>
+</body>
+</html>
