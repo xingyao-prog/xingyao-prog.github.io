@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A course designed for the experience students have now and what they carry forward.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The Course as a Designed Experience — Yao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="experience-page">
+    <h1>THE COURSE AS A DESIGNED EXPERIENCE</h1>
+
+    <div class="experience-branches">
+      <section class="experience-branch" data-branch="now">
+        <h2>
+          <button class="branch-trigger" type="button" aria-expanded="false" aria-controls="now-content">
+            <span>EXPERIENCE NOW</span><i aria-hidden="true">+</i>
+          </button>
+        </h2>
+
+        <div class="branch-content" id="now-content" hidden>
+          <button class="idea-trigger" type="button" aria-expanded="false" aria-controls="now-doing">
+            <span>LEARN BY DOING</span><i aria-hidden="true">+</i>
+          </button>
+          <div class="idea-content" id="now-doing" hidden>
+            <p>Students investigate, measure, and redesign experiences through hands-on projects.</p>
+            <div class="project-controls" role="group" aria-label="Select a teaching project">
+              <button class="active" type="button" data-project="inclumap" aria-pressed="true">IncluMap</button>
+              <button type="button" data-project="wearables" aria-pressed="false">Wearables</button>
+              <button type="button" data-project="flow" aria-pressed="false">Event Flow</button>
+            </div>
+            <div class="project-line" aria-hidden="true"><b></b><i></i><b></b><i></i><b></b></div>
+            <p class="project-result" data-now-project aria-live="polite">Read a place → map inclusion → redesign access</p>
+          </div>
+
+          <button class="idea-trigger locked-next" type="button" aria-expanded="false" aria-controls="now-flexibility" hidden>
+            <span>FLEXIBILITY BY DESIGN</span><i aria-hidden="true">+</i>
+          </button>
+          <div class="idea-content" id="now-flexibility" hidden>
+            <p>A transparent assessment system gives every student the same limited choices to extend, revise, or reassess—while learning standards remain intact.</p>
+            <div class="credit-budget" aria-label="Three contingency credits">
+              <span data-credit>1</span><span data-credit>2</span><span data-credit>3</span>
+              <strong data-credit-count>3 remain</strong>
+            </div>
+            <div class="credit-controls" role="group" aria-label="Allocate contingency credits">
+              <button type="button" data-credit-choice="Extension" aria-pressed="false">Extension</button>
+              <button type="button" data-credit-choice="Revision" aria-pressed="false">Revision</button>
+              <button type="button" data-credit-choice="Reassessment" aria-pressed="false">Reassessment</button>
+            </div>
+            <p class="system-result" data-credit-result aria-live="polite">Choose when flexibility matters most.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="experience-branch" data-branch="lasts">
+        <h2>
+          <button class="branch-trigger" type="button" aria-expanded="false" aria-controls="lasts-content">
+            <span>EXPERIENCE THAT LASTS</span><i aria-hidden="true">+</i>
+          </button>
+        </h2>
+
+        <div class="branch-content" id="lasts-content" hidden>
+          <button class="idea-trigger" type="button" aria-expanded="false" aria-controls="lasts-doing">
+            <span>LEARN BY DOING</span><i aria-hidden="true">+</i>
+          </button>
+          <div class="idea-content" id="lasts-doing" hidden>
+            <p>The same projects are refined into useful evidence students can carry beyond the course.</p>
+            <div class="project-controls" role="group" aria-label="Select a teaching project">
+              <button class="active" type="button" data-project="inclumap" aria-pressed="true">IncluMap</button>
+              <button type="button" data-project="wearables" aria-pressed="false">Wearables</button>
+              <button type="button" data-project="flow" aria-pressed="false">Event Flow</button>
+            </div>
+            <div class="artifact-line" aria-label="Project becomes reusable evidence">
+              <span data-trace-project>IncluMap</span><i>→</i><span data-trace-artifact>Experience map</span><i>→</i><span>Portfolio evidence</span>
+            </div>
+            <p class="project-result" data-lasts-project aria-live="polite">A trace of how the student observed, interpreted, and redesigned an experience.</p>
+          </div>
+
+          <button class="idea-trigger locked-next" type="button" aria-expanded="false" aria-controls="lasts-goals" hidden>
+            <span>GOALS BEYOND THE COURSE</span><i aria-hidden="true">+</i>
+          </button>
+          <div class="idea-content" id="lasts-goals" hidden>
+            <p>Students name one short-term goal and one long-term career goal. Throughout the semester, I reconnect relevant course resources to both.</p>
+            <div class="goal-line">
+              <small>SHORT-TERM</small>
+              <strong>A project or scholarship</strong>
+              <span>Course resource → Immediate application</span>
+            </div>
+            <div class="goal-line">
+              <small>LONG-TERM</small>
+              <strong>Career</strong>
+              <span>Class project → Portfolio example → Career story</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer hidden>
+      <span>MEANINGFUL IN THE MOMENT.</span>
+      <span>USEFUL AFTER THE COURSE.</span>
+    </footer>
+  </main>
+  <script src="./script.js"></script>
+</body>
+</html>
