@@ -1,17 +1,44 @@
 const tools = [
-  { id:'step-free', category:'access', icon:'♿', name:'Step-free route', prompt:'Connect arrival and destination without a separate detour.' },
-  { id:'wayfinding', category:'access', icon:'🧭', name:'Predictable route', prompt:'Place clear cues at the exact point of decision.' },
+  { id:'step-free', category:'access', icon:'♿', name:'Step-free route', prompt:'Connect arrival, circulation, and destination without blocked clear paths.' },
+  { id:'elevator', category:'access', icon:'🛗', name:'Elevator', prompt:'Provide an equivalent vertical route that is easy to locate and operate.' },
+  { id:'ramp', category:'access', icon:'◢', name:'Ramp / curb cut', prompt:'Remove level-change barriers while preserving a continuous clear route.' },
+  { id:'tactile', category:'access', icon:'🦯', name:'Tactile guidance', prompt:'Add detectable warnings or route cues where visual information is insufficient.' },
   { id:'seating', category:'access', icon:'🪑', name:'Choice-based seating', prompt:'Support different bodies, companions, and ways of resting.' },
-  { id:'quiet', category:'sensory', icon:'🔇', name:'Quiet recovery zone', prompt:'Make it possible to pause without leaving the experience.' },
-  { id:'lighting', category:'sensory', icon:'◐', name:'Low-glare lighting', prompt:'Improve legibility without adding harsh sensory load.' },
-  { id:'sound', category:'sensory', icon:'◒', name:'Sound-managed zone', prompt:'Reduce spill and support conversation or concentration.' },
-  { id:'multisensory', category:'communication', icon:'◉', name:'Multi-sensory cue', prompt:'Pair visual information with audible or tactile information.' },
-  { id:'plain-language', category:'communication', icon:'Aa', name:'Plain-language sign', prompt:'Make the next action understandable without insider knowledge.' },
-  { id:'multilingual', category:'communication', icon:'文', name:'Multilingual information', prompt:'Extend welcome into essential, usable information.' },
-  { id:'help', category:'service', icon:'?', name:'Low-barrier help point', prompt:'Make assistance visible without requiring identity disclosure.' },
-  { id:'flexible-entry', category:'service', icon:'↔', name:'Flexible participation', prompt:'Offer equivalent ways to enter, wait, pause, or return.' },
-  { id:'response', category:'service', icon:'✓', name:'Response protocol', prompt:'Clarify who responds, with what authority and resources.' }
+  { id:'signs', category:'access', icon:'🧭', name:'Predictable route', prompt:'Use consistent landmarks, contrast, and decision-point information.' },
+  { id:'language', category:'access', icon:'🌐', name:'Multilingual welcome', prompt:'Extend welcome into essential service information.' },
+  { id:'multi-sensory', category:'access', icon:'🔔', name:'Multi-sensory cue', prompt:'Pair visual information with audible or tactile communication.' },
+
+  { id:'restroom', category:'care', icon:'🚻', name:'All-gender restroom', prompt:'Offer a clearly signed, accessible option without forcing identity disclosure.' },
+  { id:'changing', category:'care', icon:'👶', name:'Changing for every caregiver', prompt:'Provide accessible changing facilities across restroom options.' },
+  { id:'family', category:'care', icon:'🍼', name:'Family / lactation room', prompt:'Provide a private care space without isolating caregivers.' },
+  { id:'flex', category:'care', icon:'🎟️', name:'Flexible participation', prompt:'Offer quiet entry, queue alternatives, pause-and-return, and equivalent participation.' },
+  { id:'water', category:'care', icon:'🚰', name:'Accessible water point', prompt:'Place reachable hydration near routes and waiting areas.' },
+
+  { id:'quiet', category:'sensory', icon:'🔇', name:'Quiet recovery zone', prompt:'Offer a low-stimulation pause without leaving the experience entirely.' },
+  { id:'sound', category:'sensory', icon:'🎧', name:'Sound-managed zone', prompt:'Reduce unpredictable noise and clarify acoustic zones.' },
+  { id:'glare', category:'sensory', icon:'☀️', name:'Low-glare zone', prompt:'Use even, controllable light and reduce flicker and abrupt transitions.' },
+
+  { id:'lighting', category:'night', icon:'💡', name:'Night comfort route', prompt:'Illuminate routes, faces, thresholds, and decisions without harsh glare.' },
+  { id:'sightlines', category:'night', icon:'👁️', name:'Clear-sightline zone', prompt:'Remove visual traps and support mutual visibility.' },
+  { id:'camera', category:'night', icon:'📹', name:'Safety camera', prompt:'Support accountable response at specific risk points—not blanket surveillance.' },
+  { id:'help', category:'night', icon:'🆘', name:'Low-barrier help point', prompt:'Make assistance easy to find without requiring identity disclosure.' },
+
+  { id:'pride', category:'social', icon:'🌈', name:'Visible allyship cue', prompt:'Signal welcome with a year-round, context-appropriate Pride symbol.' },
+  { id:'pronoun', category:'social', icon:'🪪', name:'Optional pronoun cue', prompt:'Offer—not require—pronoun sharing.' },
+  { id:'representation', category:'social', icon:'🫶', name:'Inclusive representation', prompt:'Represent varied identities without tokenizing people.' },
+  { id:'community', category:'social', icon:'🎨', name:'Community-created marker', prompt:'Invite affected communities to create locally meaningful cues.' },
+  { id:'staff', category:'social', icon:'🗣️', name:'Inclusive service practice', prompt:'Pair physical redesign with trained, identity-respectful interaction.' },
+  { id:'conduct', category:'social', icon:'📜', name:'Visible code of conduct', prompt:'State specific expectations and what staff will do when they are breached.' },
+  { id:'report', category:'social', icon:'🤝', name:'Response protocol', prompt:'Make reporting, assistance, follow-up, and responsibility visible.' }
 ];
+
+const categoryLabels = {
+  access:'Access + Wayfinding',
+  care:'Care',
+  sensory:'Sensory',
+  night:'Night + Safety',
+  social:'Identity + Service'
+};
 
 const state = {
   stage:'evidence',
@@ -29,6 +56,13 @@ const toolList = document.querySelector('[data-tool-list]');
 const image = document.querySelector('[data-site-image]');
 const sample = document.querySelector('[data-sample-plan]');
 const imageInput = document.querySelector('#siteImageInput');
+const customForm = document.querySelector('[data-custom-form]');
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>'"]/g, (character) => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;'
+  })[character]);
+}
 
 function setStage(stage) {
   state.stage = stage;
@@ -50,7 +84,7 @@ function renderTools() {
     button.className = `design-tool${state.selectedTool === tool.id ? ' active' : ''}`;
     button.dataset.tool = tool.id;
     button.setAttribute('aria-pressed', String(state.selectedTool === tool.id));
-    button.innerHTML = `<i>${tool.icon}</i><span><b>${tool.name}</b><small>${tool.prompt}</small></span>`;
+    button.innerHTML = `<i>${escapeHTML(tool.icon)}</i><span><b>${escapeHTML(tool.name)}</b><small>${escapeHTML(tool.prompt)}</small></span>`;
     toolList.append(button);
   });
 }
@@ -86,7 +120,7 @@ function renderPlacedList() {
   }
   list.innerHTML = state.markers.map((marker, index) => {
     const tool = tools.find((item) => item.id === marker.toolId);
-    return `<div class="placed-row"><span><b>${index + 1}</b> · ${tool.icon} ${tool.name}</span><button type="button" data-remove-marker="${marker.id}">Remove</button></div>`;
+    return `<div class="placed-row"><span><b>${index + 1}</b> · ${escapeHTML(tool.icon)} ${escapeHTML(tool.name)}</span><button type="button" data-remove-marker="${marker.id}">Remove</button></div>`;
   }).join('');
 }
 
@@ -95,7 +129,7 @@ function chooseTool(toolId) {
   const tool = tools.find((item) => item.id === toolId);
   renderTools();
   canvas.classList.add('tool-armed');
-  document.querySelector('[data-canvas-status]').innerHTML = `<b class="change-tool">${tool.icon} ${tool.name}</b> selected — click the site, or focus it and press Enter.`;
+  document.querySelector('[data-canvas-status]').innerHTML = `<b class="change-tool">${escapeHTML(tool.icon)} ${escapeHTML(tool.name)}</b> selected — click the site, or focus it and press Enter.`;
 }
 
 function placeMarker(x, y) {
@@ -127,9 +161,38 @@ document.querySelectorAll('[data-category]').forEach((button) => {
       item.setAttribute('aria-selected', String(active));
     });
     canvas.classList.remove('tool-armed');
+    customForm.hidden = true;
+    customForm.reset();
     document.querySelector('[data-canvas-status]').textContent = 'Choose an intervention, then click the site to place it.';
     renderTools();
   });
+});
+
+document.querySelector('[data-open-custom]').addEventListener('click', () => {
+  document.querySelector('[data-custom-category-label]').textContent = categoryLabels[state.category].toUpperCase();
+  customForm.hidden = false;
+  customForm.querySelector('input').focus();
+});
+
+document.querySelector('[data-cancel-custom]').addEventListener('click', () => {
+  customForm.reset();
+  customForm.hidden = true;
+});
+
+customForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const data = new FormData(customForm);
+  const tool = {
+    id:`custom-${Date.now()}`,
+    category:state.category,
+    icon:'✦',
+    name:String(data.get('customName')).trim(),
+    prompt:String(data.get('customPrompt')).trim()
+  };
+  tools.push(tool);
+  customForm.reset();
+  customForm.hidden = true;
+  chooseTool(tool.id);
 });
 
 toolList.addEventListener('click', (event) => {
@@ -269,6 +332,7 @@ document.querySelector('[data-new-project]').addEventListener('click', () => {
   document.querySelectorAll('form').forEach((form) => form.reset());
   document.querySelector('[data-site-title]').textContent = 'Untitled place';
   document.querySelector('[data-action-status]').textContent = '';
+  customForm.hidden = true;
   document.querySelectorAll('[data-category]').forEach((button) => {
     const active = button.dataset.category === 'access';
     button.classList.toggle('active', active);

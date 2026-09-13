@@ -87,17 +87,29 @@
         </form>
 
         <section class="stage-panel" data-stage="intervention" hidden>
-          <div class="stage-head"><small>02 · MAKE A HYPOTHESIS</small><h2>Mark what could change.</h2><p>Select a tool, then place it directly on your site.</p></div>
+          <div class="stage-head"><small>02 · MAKE A HYPOTHESIS</small><h2>Mark what could change.</h2><p>Use the guided map toolkit—or propose one—then place it on your site.</p></div>
 
           <div class="evidence-mini"><small>DESIGN QUESTION</small><p data-question-summary></p><button type="button" data-edit-evidence>Edit</button></div>
 
           <div class="category-tabs" role="tablist" aria-label="Intervention categories">
-            <button type="button" class="active" data-category="access" aria-selected="true">Access</button>
+            <button type="button" class="active" data-category="access" aria-selected="true">Access + Wayfinding</button>
+            <button type="button" data-category="care" aria-selected="false">Care</button>
             <button type="button" data-category="sensory" aria-selected="false">Sensory</button>
-            <button type="button" data-category="communication" aria-selected="false">Information</button>
-            <button type="button" data-category="service" aria-selected="false">Service</button>
+            <button type="button" data-category="night" aria-selected="false">Night + Safety</button>
+            <button type="button" data-category="social" aria-selected="false">Identity + Service</button>
           </div>
           <div class="tool-list" data-tool-list></div>
+          <button class="custom-tool-trigger" type="button" data-open-custom><span>＋</span> Propose your own intervention</button>
+          <form class="custom-tool-form" data-custom-form hidden>
+            <small>ADD TO <b data-custom-category-label>ACCESS + WAYFINDING</b></small>
+            <label>Intervention name
+              <input name="customName" type="text" maxlength="42" placeholder="e.g., Mobile sensory guide" required autocomplete="off">
+            </label>
+            <label>What barrier could it address?
+              <textarea name="customPrompt" rows="2" maxlength="140" placeholder="Describe the intended change—not a guaranteed outcome." required></textarea>
+            </label>
+            <div><button type="button" data-cancel-custom>Cancel</button><button type="submit">Add + select</button></div>
+          </form>
 
           <div class="placement-note"><small>PLACED ON YOUR SITE</small><div data-placed-list><p>Choose at least one intervention.</p></div></div>
           <button class="primary-action" type="button" data-to-retest disabled>Plan the retest <span>→</span></button>
