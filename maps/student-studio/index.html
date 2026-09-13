@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A student-facing IncluMap workspace for turning accessibility evidence into a spatial intervention and retest plan.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>IncluMap: Student Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../design-studio/">INCLUMAP <span>/ STUDENT STUDIO</span></a>
+    <nav class="progress" aria-label="Project progress">
+      <span class="active" data-progress="evidence"><b>01</b> EVIDENCE</span>
+      <i>→</i>
+      <span data-progress="intervention"><b>02</b> INTERVENTION</span>
+      <i>→</i>
+      <span data-progress="retest"><b>03</b> RETEST</span>
+      <i>→</i>
+      <span data-progress="brief"><b>04</b> BRIEF</span>
+    </nav>
+    <button class="new-project" type="button" data-new-project>New project</button>
+  </header>
+
+  <main>
+    <section class="learning-point">
+      <small>ACCESSIBLE DESIGN · THE LEARNING POINT</small>
+      <p><strong>Do not simulate the person.</strong> Locate a barrier in the environment, redesign it, and return to users to test the change.</p>
+    </section>
+
+    <section class="workspace">
+      <div class="canvas-column">
+        <div class="canvas-head">
+          <div><small>YOUR WORKING SITE</small><strong data-site-title>Untitled place</strong></div>
+          <div class="site-actions">
+            <label for="siteImageInput">Upload plan or photo</label>
+            <input id="siteImageInput" type="file" accept="image/*">
+            <button type="button" data-use-sample>Use sample</button>
+          </div>
+        </div>
+
+        <div class="site-canvas" data-site-canvas tabindex="0" aria-label="Site drawing area. Choose an intervention, then click to place it.">
+          <img data-site-image alt="Student-uploaded site plan" hidden>
+          <div class="sample-plan" data-sample-plan aria-hidden="true">
+            <div class="sample-arrival">ARRIVAL</div>
+            <div class="sample-route">PRIMARY ROUTE</div>
+            <div class="sample-service">SERVICE<br>POINT</div>
+            <div class="sample-experience">MAIN EXPERIENCE</div>
+            <div class="sample-obstacle">LEVEL<br>CHANGE</div>
+          </div>
+          <div class="placed-markers" data-placed-markers></div>
+          <div class="canvas-instruction" data-canvas-instruction>
+            <b>Your site becomes the assignment.</b>
+            <span>Upload a plan or use the sample. After documenting evidence, choose an intervention and place it here.</span>
+          </div>
+        </div>
+
+        <div class="canvas-foot">
+          <p><span data-canvas-status>Evidence first. Design second.</span><small>Uploaded images stay in this browser tab and are not sent anywhere.</small></p>
+          <div><span><b data-marker-count>0</b> interventions</span><button type="button" data-undo disabled>Undo last</button></div>
+        </div>
+      </div>
+
+      <aside class="student-panel">
+        <form class="stage-panel active" data-stage="evidence">
+          <div class="stage-head"><small>01 · BRING EVIDENCE</small><h1>Read the place.</h1><p>Begin with something observed or heard—not an assumption about a person.</p></div>
+
+          <label>Place or experience moment
+            <input name="place" type="text" placeholder="e.g., Festival entrance" required autocomplete="off">
+          </label>
+          <label>User voice <span>optional, anonymized</span>
+            <textarea name="voice" rows="2" placeholder="What did a participant say or experience?"></textarea>
+          </label>
+          <label>Field observation
+            <textarea name="observation" rows="3" placeholder="What environmental condition created effort, error, delay, or exclusion?" required></textarea>
+          </label>
+          <label>Design question
+            <textarea name="question" rows="2" placeholder="How might the environment support…?" required></textarea>
+          </label>
+
+          <div class="evidence-rule"><b>EVIDENCE ≠ PROOF</b><span>One observation opens a design question. It does not define an entire group.</span></div>
+          <button class="primary-action" type="submit">Open the design palette <span>→</span></button>
+        </form>
+
+        <section class="stage-panel" data-stage="intervention" hidden>
+          <div class="stage-head"><small>02 · MAKE A HYPOTHESIS</small><h2>Mark what could change.</h2><p>Select a tool, then place it directly on your site.</p></div>
+
+          <div class="evidence-mini"><small>DESIGN QUESTION</small><p data-question-summary></p><button type="button" data-edit-evidence>Edit</button></div>
+
+          <div class="category-tabs" role="tablist" aria-label="Intervention categories">
+            <button type="button" class="active" data-category="access" aria-selected="true">Access</button>
+            <button type="button" data-category="sensory" aria-selected="false">Sensory</button>
+            <button type="button" data-category="communication" aria-selected="false">Information</button>
+            <button type="button" data-category="service" aria-selected="false">Service</button>
+          </div>
+          <div class="tool-list" data-tool-list></div>
+
+          <div class="placement-note"><small>PLACED ON YOUR SITE</small><div data-placed-list><p>Choose at least one intervention.</p></div></div>
+          <button class="primary-action" type="button" data-to-retest disabled>Plan the retest <span>→</span></button>
+        </section>
+
+        <form class="stage-panel" data-stage="retest" hidden>
+          <div class="stage-head"><small>03 · CLOSE THE LOOP</small><h2>Define the retest.</h2><p>An intervention remains a hypothesis until affected users evaluate it.</p></div>
+
+          <label>Why these changes, in these locations?
+            <textarea name="rationale" rows="3" placeholder="Connect the intervention to your evidence." required></textarea>
+          </label>
+          <label>What will you re-measure?
+            <select name="measure" required>
+              <option value="">Select one primary measure</option>
+              <option>Task completion + errors</option>
+              <option>Route choice + independence</option>
+              <option>Time + physical effort</option>
+              <option>Comprehension + requests for help</option>
+              <option>Comfort + participation choice</option>
+              <option>Participant-defined outcome</option>
+            </select>
+          </label>
+          <label>Who needs to evaluate the redesign?
+            <input name="reviewer" type="text" placeholder="e.g., Disabled participants and access staff" required autocomplete="off">
+          </label>
+          <label>What would count as improvement?
+            <textarea name="success" rows="2" placeholder="Name an observable or participant-defined change." required></textarea>
+          </label>
+
+          <div class="stage-actions"><button type="button" data-back-design>← Back</button><button class="primary-action" type="submit">Generate design brief <span>→</span></button></div>
+        </form>
+
+        <section class="stage-panel" data-stage="brief" hidden>
+          <div class="stage-head"><small>04 · TAKE IT FORWARD</small><h2>Your design brief.</h2><p>A record of how evidence became a testable spatial decision.</p></div>
+
+          <div class="brief-card" data-brief-card>
+            <div><small>PLACE</small><strong data-brief-place></strong></div>
+            <div><small>EVIDENCE</small><p data-brief-evidence></p></div>
+            <div><small>DESIGN QUESTION</small><p data-brief-question></p></div>
+            <div><small>INTERVENTIONS</small><p data-brief-interventions></p></div>
+            <div><small>RATIONALE</small><p data-brief-rationale></p></div>
+            <div><small>RETEST</small><p data-brief-retest></p></div>
+          </div>
+
+          <div class="brief-actions"><button type="button" data-copy-brief>Copy brief</button><button type="button" data-print-brief>Print / Save PDF</button></div>
+          <button class="secondary-action" type="button" data-edit-retest>Revise the test plan</button>
+          <p class="action-status" data-action-status aria-live="polite"></p>
+        </section>
+      </aside>
+    </section>
+
+    <footer>
+      <span>STUDENT USE · OBSERVE → MAP → JUSTIFY → RETEST → SUBMIT</span>
+      <span>IncluMap · Evidence-led accessible experience design</span>
+    </footer>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
