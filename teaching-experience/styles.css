@@ -52,6 +52,8 @@ h1{margin:0;padding:0 0 40px;text-align:center;font:400 clamp(1.2rem,2.15vw,2rem
 .credit-budget span.spent{opacity:.2;transform:scale(.8)}
 .credit-budget strong{margin-left:auto;font:500 .7rem/1 "DM Mono",monospace}
 .system-result{margin-top:20px!important}
+.system-link{display:inline-block;margin-top:4px;padding-bottom:3px;border-bottom:1px solid var(--ink);color:var(--ink);font:500 .68rem/1.4 "DM Mono",monospace;text-decoration:none}
+.system-link:hover{color:var(--blue);border-color:var(--blue)}
 
 .artifact-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:22px 0}
 .artifact-line span{padding:8px 10px;background:#eef0ed;font:400 .67rem/1.25 "DM Mono",monospace}

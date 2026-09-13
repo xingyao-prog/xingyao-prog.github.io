@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive look at a transparent, equitable course flexibility system.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Flexibility by Design">
+  <meta property="og:description" content="Same standards. Different paths.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xingyao-prog.github.io/flexibility-by-design/">
+  <meta property="og:image" content="https://xingyao-prog.github.io/flexibility-by-design/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Flexibility by Design">
+  <meta name="twitter:description" content="Same standards. Different paths.">
+  <meta name="twitter:image" content="https://xingyao-prog.github.io/flexibility-by-design/og.png">
+  <title>Flexibility by Design — Yao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="back-link" href="../teaching-experience/">← Teaching philosophy</a>
+
+  <main>
+    <header class="page-head">
+      <p>COURSE SYSTEM</p>
+      <h1>FLEXIBILITY BY DESIGN</h1>
+      <span>Three contingency credits. Same standards. Different paths.</span>
+    </header>
+
+    <section class="standards" aria-label="Fixed and flexible parts of the course">
+      <div>
+        <small>FIXED</small>
+        <strong>LEARNING STANDARDS</strong>
+        <span>Outcomes · Criteria · Competency</span>
+      </div>
+      <i aria-hidden="true"></i>
+      <div>
+        <small>FLEXIBLE</small>
+        <strong>THE ROUTE</strong>
+        <span>Timing · Revision · Reassessment</span>
+      </div>
+    </section>
+
+    <section class="semester" aria-labelledby="semester-title">
+      <div class="budget">
+        <p id="semester-title">YOUR CONTINGENCY BUDGET</p>
+        <div class="tokens" aria-label="Three credits available">
+          <span data-token>1</span><span data-token>2</span><span data-token>3</span>
+        </div>
+        <strong data-remaining aria-live="polite">3 remain</strong>
+        <small>No personal explanation required.</small>
+      </div>
+
+      <div class="timeline">
+        <p>CHOOSE WHEN FLEXIBILITY MATTERS</p>
+        <div class="timeline-line" aria-hidden="true"></div>
+        <div class="moments">
+          <button type="button" data-choice="extension" aria-pressed="false">
+            <small>WEEK 4</small><strong>Deadline conflict</strong><span>Use for extension</span><i aria-hidden="true">1</i>
+          </button>
+          <button type="button" data-choice="revision" aria-pressed="false">
+            <small>WEEK 8</small><strong>Feedback arrives</strong><span>Use for revision</span><i aria-hidden="true">1</i>
+          </button>
+          <button type="button" data-choice="reassessment" aria-pressed="false">
+            <small>WEEK 12</small><strong>Missed the mark</strong><span>Use for reassessment</span><i aria-hidden="true">1</i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="system-flow" aria-label="What happens after a contingency credit is used">
+      <article>
+        <small>CHANGE ORDER</small>
+        <strong data-change-title>Select a moment</strong>
+        <p data-change-copy>One clear choice updates the plan.</p>
+      </article>
+      <b aria-hidden="true">→</b>
+      <article>
+        <small>RECOVERY LOOP</small>
+        <strong data-recovery-title>Path can adapt</strong>
+        <p data-recovery-copy>Constraint → choice → new plan</p>
+      </article>
+      <b aria-hidden="true">→</b>
+      <article class="receipt">
+        <small>DECISION RECEIPT</small>
+        <strong data-receipt-title>Standard unchanged</strong>
+        <p data-receipt-copy>Learning remains the destination.</p>
+      </article>
+    </section>
+
+    <section class="principle" aria-live="polite">
+      <p data-principle>Flexibility is available before anyone needs to ask for an exception.</p>
+      <button type="button" data-reset hidden>Reset the semester</button>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
