@@ -34,6 +34,15 @@
     .steps button{border:0;background:transparent;padding:8px 10px;color:#7c817d;font:500 9px/1 DM Mono,monospace;letter-spacing:.06em;cursor:pointer}
     .steps button.active{background:var(--violet);color:#fff;box-shadow:0 4px 0 var(--acid)}
     .steps button span{margin-right:6px;opacity:.6}
+    .teaching-snapshot{display:grid;grid-template-columns:145px 1fr;margin-top:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--white)}
+    .snapshot-label{padding:13px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+    .snapshot-label span,.teaching-snapshot dt{font:500 7px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em}
+    .snapshot-label small{margin-top:7px;color:#a34d6e;font:500 6px/1.2 DM Mono,monospace}
+    .teaching-snapshot dl{margin:0;display:grid;grid-template-columns:repeat(4,1fr)}
+    .teaching-snapshot dl>div{min-width:0;padding:12px 13px;border-right:1px solid var(--line)}
+    .teaching-snapshot dl>div:last-child{border-right:0}
+    .teaching-snapshot dt{color:#949995}
+    .teaching-snapshot dd{margin:6px 0 0;color:#525854;font-size:.62rem;line-height:1.35}
     main{min-height:calc(100svh - 126px)}
     .panel{display:none;padding:50px 0 38px}
     .panel.active{display:block;animation:panel-in .45s ease}
@@ -202,6 +211,12 @@
       .shell{width:calc(100% - 24px)}
       .topbar{height:auto;min-height:62px;align-items:flex-start;padding:16px 0;gap:12px}
       .brand span{display:none}.steps{gap:2px}.steps button{padding:7px 6px;font-size:7px}.steps button span{display:none}
+      .teaching-snapshot{grid-template-columns:1fr;margin-top:14px}
+      .snapshot-label{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;justify-content:space-between}
+      .snapshot-label small{margin:0}
+      .teaching-snapshot dl{grid-template-columns:1fr 1fr}
+      .teaching-snapshot dl>div:nth-child(2){border-right:0}
+      .teaching-snapshot dl>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
       .panel{padding:40px 0 28px}.panel-head{padding-left:0}.panel-head h1,.panel-head h2{font-size:2.45rem}
       .start-copy{padding:28px}.mechanism{grid-template-columns:1fr 55px 1fr;padding:20px;gap:8px}.key-pair{padding:13px;min-height:160px}.key-pair b{font-size:.76rem}.key-pair span{font-size:.56rem}
       .task-meta{padding:0 12px}.trial-progress i{width:55px}.sort-side{padding:18px 11px}.sort-side strong{font-size:.72rem}.stimulus-card{width:140px;height:125px}.stimulus-card.word{font-size:1.1rem}
@@ -224,6 +239,16 @@
       <button data-panel="redesign"><span>04</span>REDESIGN</button>
     </nav>
   </header>
+
+  <section class="teaching-snapshot shell" aria-labelledby="reflex-snapshot-title">
+    <div class="snapshot-label"><span id="reflex-snapshot-title">Teaching snapshot</span><small>Adapted from my research</small></div>
+    <dl>
+      <div><dt>Course fit</dt><dd>Service Experience · Consumer Behavior · Experiential Marketing · Research Methods</dd></div>
+      <div><dt>Format + time</dt><dd>15-min demo · 50-min lab · advanced project</dd></div>
+      <div><dt>What students submit</dt><dd>Service Systems Insight + Redesign Memo</dd></div>
+      <div><dt>Assessment</dt><dd>Method understanding · cautious interpretation · diagnosis · redesign</dd></div>
+    </dl>
+  </section>
 
   <main>
     <section class="panel active shell" id="sortPanel">
