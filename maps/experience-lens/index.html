@@ -14,54 +14,82 @@
     .control-group{gap:6px}.control-group small{color:#525954;font-weight:500}.control-group button{border:1px solid #ed78aa;background:#fff0f6;color:#702e4d;border-radius:999px;padding:7px 10px;transition:background .2s,color .2s,transform .2s}.control-group button:hover{background:#ffd4e6;color:#351522;transform:translateY(-1px)}.control-group button.active{background:#ff4f97;color:#fff;border-color:#ff4f97;box-shadow:0 3px 0 #b52e68}.place{background:var(--place-color,var(--block))}.place[data-tone="strained"]{color:#fff}.hotel{grid-column:3;grid-row:1}.restaurant{grid-column:1/3;grid-row:4}@media(max-width:800px){.hotel{grid-column:3;grid-row:1}.restaurant{grid-column:1/3;grid-row:5}.control-group button{padding:6px 8px}}@media(max-width:520px){.control-group button{padding:5px 7px}}
     /* Intersectional controls: one selection per dimension, combined as one lens. */
     .page{grid-template-rows:86px minmax(0,1fr) 88px 24px}.top{display:grid;grid-template-columns:auto 1fr;gap:28px}.controls{justify-self:end;display:flex;gap:14px;align-items:flex-start}.control-group{display:flex;flex-wrap:wrap;gap:5px;max-width:260px}.control-group small{flex:0 0 100%;margin:0 0 3px 2px;color:#4d544f}.control-group button{padding:6px 9px;font-size:.66rem}.control-group button.active{box-shadow:0 3px 0 #b52e68}@media(max-width:1050px){.page{height:auto;min-height:100svh;grid-template-rows:auto 650px 110px auto;overflow:visible}.top{grid-template-columns:1fr}.controls{justify-self:start;flex-wrap:wrap}}@media(max-width:520px){.controls{display:grid;grid-template-columns:1fr 1fr;width:100%}.control-group{max-width:none}.control-group small{display:block}.page{grid-template-rows:auto 560px 135px auto}}
-    .detail{position:relative;overflow:hidden}.detail:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:4px;background:#ff4f97;transform:scaleY(0);transform-origin:center}.detail.refreshing{animation:detail-refresh .72s cubic-bezier(.2,.8,.2,1)}.detail.refreshing:before{animation:detail-marker .72s cubic-bezier(.2,.8,.2,1)}.detail.refreshing h2,.detail.refreshing p,.detail.refreshing .score,.detail.refreshing .teaching{animation:detail-text .58s ease both}@keyframes detail-refresh{0%{background:#ffd8e8;transform:translateY(7px)}45%{background:#ffeaf2}100%{background:transparent;transform:none}}@keyframes detail-marker{0%{transform:scaleY(0)}28%,75%{transform:scaleY(1)}100%{transform:scaleY(0)}}@keyframes detail-text{0%{opacity:0;transform:translateX(10px)}100%{opacity:1;transform:none}}.credit{color:#535a55}.credit b{color:var(--ink);font-weight:500}.cite{line-height:1.45}@media(prefers-reduced-motion:reduce){.detail.refreshing,.detail.refreshing:before,.detail.refreshing h2,.detail.refreshing p,.detail.refreshing .score,.detail.refreshing .teaching{animation:none}}
+    .detail{position:relative;overflow:hidden}.detail:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:4px;background:#ff4f97;transform:scaleY(0);transform-origin:center}.detail.refreshing{animation:detail-refresh .72s cubic-bezier(.2,.8,.2,1)}.detail.refreshing:before{animation:detail-marker .72s cubic-bezier(.2,.8,.2,1)}.detail.refreshing h2,.detail.refreshing .score{animation:detail-text .58s ease both}@keyframes detail-refresh{0%{background:#ffd8e8;transform:translateY(7px)}45%{background:#ffeaf2}100%{background:transparent;transform:none}}@keyframes detail-marker{0%{transform:scaleY(0)}28%,75%{transform:scaleY(1)}100%{transform:scaleY(0)}}@keyframes detail-text{0%{opacity:0;transform:translateX(10px)}100%{opacity:1;transform:none}}.credit{color:#535a55}.credit b{color:var(--ink);font-weight:500}.cite{line-height:1.45}@media(prefers-reduced-motion:reduce){.detail.refreshing,.detail.refreshing:before,.detail.refreshing h2,.detail.refreshing .score{animation:none}}
+    /* Clearer conceptual hierarchy and an expandable learning frame. */
+    .page{grid-template-rows:auto minmax(0,1fr) 132px 28px}.top{grid-template-columns:auto minmax(0,1fr);align-items:start}.controls{display:grid;grid-template-columns:auto auto;gap:22px;align-items:start}.lens-group{display:flex;align-items:flex-start;gap:9px;padding-left:11px;border-left:2px solid #e5e7e2}.lens-heading{padding-top:4px;color:#171a18;font:500 8px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}.control-group{max-width:none}.space-context .space-choice{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border:1px solid #cfd3cc;border-radius:999px;background:#fff;color:#626963;font-size:.66rem;white-space:nowrap}.map-title{text-transform:uppercase;letter-spacing:.08em;color:#525954}.detail{grid-template-columns:minmax(150px,.7fr) 172px minmax(440px,2fr);gap:18px;min-height:132px;padding:12px 4px;opacity:1;transform:none}.place-context{min-width:0}.empty-note{grid-column:auto}.score{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"title value" "summary summary" "dimensions dimensions";align-items:baseline;column-gap:12px;row-gap:4px;white-space:normal}.score .score-title{grid-area:title;color:#303531;font:600 .77rem/1.25 Manrope,Arial,sans-serif;letter-spacing:-.02em;text-transform:none}.score-value{grid-area:value;display:flex;align-items:baseline;justify-self:end;gap:5px;white-space:nowrap}.score-value strong{font-size:1.75rem;letter-spacing:-.07em}.score-value span{color:#858b86;font:400 8px/1 DM Mono,monospace;text-transform:uppercase}.detail .score-summary{grid-area:summary;margin:0;max-width:none;color:#727873;font-size:.62rem;font-style:italic}.dimensions{grid-area:dimensions;display:flex;flex-wrap:wrap;gap:4px 10px;color:#535a55}.score .dimensions span{font:500 7px/1.3 DM Mono,monospace;text-transform:none;letter-spacing:.03em}.learning-trigger{position:relative;align-self:stretch;min-height:74px;padding:14px 36px 12px 12px;border:1px solid var(--line);background:#fff;color:#303531;text-align:left;cursor:pointer;overflow:hidden;transition:transform .2s,box-shadow .2s}.learning-trigger:hover,.learning-trigger:focus-visible{transform:translateY(-2px);box-shadow:0 4px 0 #e0e3dd;outline:1px solid #717873}.learning-scale{position:absolute;inset:0 0 auto;height:5px;display:grid;grid-template-columns:repeat(4,1fr)}.learning-scale i:nth-child(1){background:var(--strong)}.learning-scale i:nth-child(2){background:var(--welcoming)}.learning-scale i:nth-child(3){background:var(--mixed)}.learning-scale i:nth-child(4){background:var(--strained)}.learning-trigger small{display:block;margin-bottom:5px;color:#858b86;font:400 7px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.07em}.learning-trigger b{font-size:.74rem;font-weight:600}.learning-open-icon{position:absolute;right:10px;bottom:10px;width:21px;height:21px;display:grid;place-items:center;border:1px solid #8d948e;border-radius:50%;font-size:11px}.learning-dialog{width:min(560px,calc(100% - 32px));padding:0;border:1px solid #767d77;background:#fff;color:#303531;box-shadow:10px 10px 0 rgba(23,26,24,.16)}.learning-dialog::backdrop{background:rgba(23,26,24,.38);backdrop-filter:blur(2px)}.dialog-scale{height:7px;display:grid;grid-template-columns:repeat(4,1fr)}.dialog-scale i:nth-child(1){background:var(--strong)}.dialog-scale i:nth-child(2){background:var(--welcoming)}.dialog-scale i:nth-child(3){background:var(--mixed)}.dialog-scale i:nth-child(4){background:var(--strained)}.dialog-inner{position:relative;padding:28px 30px 30px}.dialog-kicker{margin:0 0 18px;color:#858b86;font:500 8px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em}.learning-dialog section+section{margin-top:18px}.learning-dialog h3{margin:0 0 5px;font:500 8px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em;color:#858b86}.learning-dialog p{margin:0;font-size:.86rem;line-height:1.55}.dialog-close{position:absolute;right:16px;top:16px;width:28px;height:28px;border:1px solid #aeb4af;border-radius:50%;background:#fff;color:#303531;cursor:pointer}.dialog-close:hover,.dialog-close:focus-visible{background:#ffd8e8;outline:0}@media(max-width:1050px){.page{grid-template-rows:auto 650px auto auto}.top{grid-template-columns:1fr}.controls{justify-self:stretch;grid-template-columns:1fr;gap:10px}.lens-group{flex-wrap:wrap}.detail{grid-template-columns:1fr 172px}.score{grid-column:1/-1}.bottom{margin-top:4px}}@media(max-width:620px){.controls{grid-template-columns:1fr}.lens-group{display:grid;grid-template-columns:1fr 1fr;padding-top:8px}.lens-heading{grid-column:1/-1}.control-group{min-width:0}.detail{grid-template-columns:1fr}.learning-trigger{width:100%;min-height:68px}.score{grid-column:auto;grid-template-columns:1fr auto}.bottom{display:grid;grid-template-columns:1fr}.cite{text-align:left;max-width:none}.dialog-inner{padding:26px 20px 24px}}
   </style>
 </head>
 <body>
   <main class="page">
     <header class="top">
-      <a class="brand" href="../index.html" style="color:inherit;text-decoration:none" aria-label="Back to the IncluMap series">INCLUMAP: EXPERIENCE LENS <span>/ ONE TOWN, DIFFERENT EXPERIENCES</span></a>
+      <a class="brand" href="../index.html" style="color:inherit;text-decoration:none" aria-label="Back to the IncluMap series">INCLUMAP: EXPERIENCE LENS</a>
       <div class="controls" aria-label="Intersectional experience lens">
-        <div class="control-group" id="genderControls"><small>Gender</small></div>
-        <div class="control-group" id="raceControls"><small>Racialization</small></div>
-        <div class="control-group" id="disabilityControls"><small>Disability</small></div>
-        <div class="control-group" id="timeControls"><small>Time</small></div>
+        <div class="lens-group" aria-label="User lens">
+          <span class="lens-heading">User Lens</span>
+          <div class="control-group" id="genderControls"><small>Gender</small></div>
+          <div class="control-group" id="raceControls"><small>Race</small></div>
+          <div class="control-group" id="disabilityControls"><small>Disability</small></div>
+        </div>
+        <div class="lens-group" aria-label="Context lens">
+          <span class="lens-heading">Context Lens</span>
+          <div class="control-group space-context"><small>Space</small><span class="space-choice" id="spaceChoice">Select on map</span></div>
+          <div class="control-group" id="timeControls"><small>Time</small></div>
+        </div>
       </div>
     </header>
     <section class="map-wrap" aria-label="Interactive conceptual town map">
-      <p class="map-title">Relative perceived welcome across places · synthetic study area</p>
+      <p class="map-title">Target Space Map</p>
       <span class="hint" id="hint">Click a place</span>
       <div class="town" id="town"></div>
     </section>
     <section class="detail" id="detail" aria-live="polite">
-      <div class="empty-note" id="emptyNote">Select a place to reveal one situated experience.</div>
-      <h2 id="placeName" hidden></h2>
-      <p id="placeNote" hidden></p>
-      <div class="score" id="placeScore" hidden><strong></strong><span>/ 7 perceived<br>welcome</span></div>
-      <div class="teaching" id="teachingNote" hidden>Teaching use · compare → redesign → retest</div>
+      <div class="place-context">
+        <div class="empty-note" id="emptyNote">Select a place to reveal one situated experience.</div>
+        <h2 id="placeName" hidden></h2>
+      </div>
+      <button class="learning-trigger" id="openLearning" type="button" aria-haspopup="dialog" aria-controls="learningDialog">
+        <span class="learning-scale" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <small>Learning frame</small><b>Concepts · Methods · Task</b><span class="learning-open-icon" aria-hidden="true">↗</span>
+      </button>
+      <div class="score" id="placeScore" hidden>
+        <span class="score-title">Identity-Related Spatial Experience</span>
+        <span class="score-value"><strong>5.4</strong><span>/ 7</span></span>
+        <p class="score-summary">Summarizes four dimensions of how people experience a space in relation to identity:</p>
+        <div class="dimensions"><span>Identity Safety</span><span>Belonging</span><span>Accessibility</span><span>Identity-Related Stress</span></div>
+      </div>
     </section>
     <footer class="bottom">
       <div class="legend"><span class="swatch" style="background:var(--strong)"></span><span>more inclusive</span><span class="swatch" style="background:var(--welcoming)"></span><span>inclusive</span><span class="swatch" style="background:var(--mixed)"></span><span>mixed</span><span class="swatch" style="background:var(--strained)"></span><span>less inclusive</span></div>
       <div class="cite"><span class="credit"><b>Concept &amp; design:</b> Yao, X. (2024). <i>IncluMap: Mapping Identity-Related Experience.</i></span><br><b>References:</b> <a href="https://www.upress.umn.edu/9780816626175/space-place-and-gender/">Massey (1994)</a>; <a href="https://doi.org/10.1177/002224299205600205">Bitner (1992)</a>; Yao et al. (2026), <i>Gender Attributes of Space</i>.</div>
     </footer>
   </main>
+  <dialog class="learning-dialog" id="learningDialog" aria-labelledby="learningDialogTitle">
+    <div class="dialog-scale" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="dialog-inner">
+      <button class="dialog-close" id="closeLearning" type="button" aria-label="Close learning frame">×</button>
+      <p class="dialog-kicker" id="learningDialogTitle">Learning frame</p>
+      <section><h3>Concepts</h3><p>Servicescape · Situated Experience · Person–Environment Interaction</p></section>
+      <section><h3>Methods</h3><p>Observation · Interview/Survey · Literature Review</p></section>
+      <section><h3>Student Task</h3><p>Identify an experience disparity</p></section>
+    </div>
+  </dialog>
   <script>
     const genders=[["women","Women"],["men","Men"],["nonbinary","Nonbinary"]];
     const races=[["minoritized","Racially minoritized"],["nonminoritized","Non-minoritized"]];
     const disabilities=[["nondisabled","Nondisabled"],["disabled","Disabled"]];
     const times=[["day","Day"],["night","Night"]];
     const places=[
-      {id:"old-town",name:"Old Town",type:"Historic retail",base:5.6,night:-.5,delta:{all:0,women:-.2,gender:-.6,lgbtq:-.4,mobility:-1.0},notes:{all:"Character and walkability support belonging; access and evening activity remain uneven.",women:"Lighting and the transition to side streets change the evening experience.",gender:"Visible inclusion cues vary sharply between businesses.",lgbtq:"Recognition depends on staff interaction and visible community signals.",mobility:"Uneven paving and narrow entries reduce choice and spatial agency."}},
-      {id:"hotel",name:"Hotel Lobby",type:"Hospitality servicescape",base:5.9,night:-.2,delta:{all:0,women:.1,gender:-.3,lgbtq:-.1,mobility:-.5},notes:{all:"Arrival cues, staff recognition, and the lobby layout shape the first hospitality experience.",women:"Visible staff and predictable circulation support evening comfort.",gender:"Forms of address and check-in interaction shape whether recognition feels inclusive.",lgbtq:"Staff language and visible inclusion cues influence belonging at arrival.",mobility:"Seating, counter height, and an unobstructed route determine independent access."}},
-      {id:"festival",name:"Festival Gate",type:"Event threshold",base:5.2,night:-.4,delta:{all:0,women:-.3,gender:-.8,lgbtq:-.6,mobility:-1.1},notes:{all:"Arrival flow and staff visibility shape the first moment of participation.",women:"Crowding and bag-check interactions lower perceived welcome.",gender:"Identity cues and staff language become consequential at the threshold.",lgbtq:"Entry procedures can signal recognition—or the need to self-monitor.",mobility:"Queue geometry and accessible entry determine whether arrival feels equitable."}},
-      {id:"campus",name:"Campus Commons",type:"Learning environment",base:5.8,night:-.6,delta:{all:0,women:-.1,gender:-.4,lgbtq:-.2,mobility:-.6},notes:{all:"Peer activity and clear paths support participation.",women:"Social visibility shifts after hours.",gender:"Peer norms influence whether participation feels effortless.",lgbtq:"Visible community cues shape belonging.",mobility:"Route continuity and seating determine usable choice."}},
-      {id:"riverside",name:"Riverside Lawn",type:"Outdoor gathering",base:5.9,night:-1.2,delta:{all:0,women:-.3,gender:-.5,lgbtq:-.3,mobility:-.9},notes:{all:"The open lawn feels different when shared activity disappears.",women:"Sparse evening activity changes how the open space is read.",gender:"Low social presence can heighten identity awareness.",lgbtq:"Group presence changes whether lingering feels comfortable.",mobility:"Limited accessible routes reduce freedom to choose where to stay."}},
-      {id:"market",name:"Market Square",type:"Public plaza",base:5.8,night:-.4,delta:{all:0,women:-.1,gender:-.4,lgbtq:-.3,mobility:-.5},notes:{all:"Flexible seating and open sightlines support choice.",women:"Crowding and edge conditions matter more after dark.",gender:"Vendor interaction and crowd norms shape recognition.",lgbtq:"Social cues affect whether the plaza feels welcoming.",mobility:"Clear paths help, while dense furniture constrains movement."}},
-      {id:"arts",name:"Arts Walk",type:"Cultural corridor",base:6.0,night:-.3,delta:{all:0,women:0,gender:.1,lgbtq:.3,mobility:-.7},notes:{all:"Public expression helps the corridor feel distinctive and shared.",women:"Lighting and visible activity support evening comfort.",gender:"Representation can create a strong signal of recognition.",lgbtq:"Visible identity expression increases perceived welcome.",mobility:"Sensory intensity and resting points affect participation."}},
-      {id:"transit",name:"Transit Corner",type:"Mobility hub",base:4.9,night:-.9,delta:{all:0,women:-.4,gender:-.7,lgbtq:-.5,mobility:-.8},notes:{all:"Waiting conditions and staff availability shape the experience.",women:"Long waits and low social presence reduce perceived welcome.",gender:"Crowd behavior and limited support increase self-monitoring.",lgbtq:"Social interactions matter as much as the physical layout.",mobility:"Boarding access, seating, and route information shape agency."}},
-      {id:"restaurant",name:"Restaurant",type:"Dining servicescape",base:5.6,night:-.1,delta:{all:0,women:0,gender:-.4,lgbtq:-.2,mobility:-.7},notes:{all:"Greeting, seating, sound, and interactions with staff and other guests shape perceived welcome.",women:"Table placement and service attention can change how comfortable it feels to stay.",gender:"Greeting language and restroom access can create or reduce identity friction.",lgbtq:"Staff response and other diners' behavior influence whether the experience feels inclusive.",mobility:"Entry, table spacing, menu access, and restroom routes shape participation."}},
-      {id:"station",name:"South Station",type:"Town arrival",base:5.1,night:-.8,delta:{all:0,women:-.3,gender:-.5,lgbtq:-.4,mobility:-.7},notes:{all:"A legible arrival supports confidence; late-night waiting changes it.",women:"Staff availability shapes the night arrival experience.",gender:"Wayfinding and social visibility influence ease of arrival.",lgbtq:"The social environment affects whether waiting feels comfortable.",mobility:"Curb transitions and platform access determine independence."}},
-      {id:"night-market",name:"Night Market",type:"Temporary event",base:5.7,night:.1,delta:{all:0,women:-.1,gender:.1,lgbtq:.2,mobility:-.6},notes:{all:"Collective activity turns the street into a temporary shared place.",women:"Visible activity and staffing support comfort.",gender:"Plural expression can make participation feel easier.",lgbtq:"Community visibility increases perceived welcome.",mobility:"Dense vendor placement can limit movement and choice."}}
+      {id:"old-town",name:"Old Town",type:"Historic retail"},
+      {id:"hotel",name:"Hotel Lobby",type:"Hospitality servicescape"},
+      {id:"festival",name:"Festival Gate",type:"Event threshold"},
+      {id:"campus",name:"Campus Commons",type:"Learning environment"},
+      {id:"riverside",name:"Riverside Lawn",type:"Outdoor gathering"},
+      {id:"market",name:"Market Square",type:"Public plaza"},
+      {id:"arts",name:"Arts Walk",type:"Cultural corridor"},
+      {id:"transit",name:"Transit Corner",type:"Mobility hub"},
+      {id:"restaurant",name:"Restaurant",type:"Dining servicescape"},
+      {id:"station",name:"South Station",type:"Town arrival"},
+      {id:"night-market",name:"Night Market",type:"Temporary event"}
     ];
     /*
       Synthetic teaching model. Scores combine place conditions with selected
@@ -83,7 +111,6 @@
       station:{base:5.3,night:-.8,women:-.35,nonbinary:-.6,minoritized:-.4,disabled:-.85,nightGender:-.2,nightDisabled:-.2,raceDisabled:-.1,intersection:-.15},
       "night-market":{base:5.8,night:-.3,women:-.3,nonbinary:-.4,minoritized:-.3,disabled:-1,nightGender:-.15,nightDisabled:-.35,raceDisabled:-.15,intersection:-.2}
     };
-    const factors={"old-town":"Staff recognition, representation, and physical access shape who is treated as belonging.",hotel:"Check-in language, staff recognition, seating, and barrier-free circulation shape welcome.",festival:"Crowding, screening discretion, identity cues, and accessible entry shape the arrival experience.",campus:"Peer norms, social visibility, and route continuity influence ease of participation.",riverside:"Lighting, group presence, and accessible paths change how the open space is experienced.",market:"Vendor interaction, crowd behavior, seating, and clear paths shape participation.",arts:"Representation, staff presence, sensory intensity, and resting points influence belonging.",transit:"Waiting conditions, crowd behavior, information, and boarding access shape spatial agency.",restaurant:"Greeting, table placement, service attention, sound, and accessible routes shape welcome.",station:"Staff availability, wayfinding, waiting conditions, and platform access shape arrival.","night-market":"Community visibility, staffing, density, and accessible circulation shape participation."};
     let state={gender:"women",race:"minoritized",disability:"disabled",time:"night",selected:null};
     const town=document.getElementById("town");
     const score=p=>{
@@ -110,18 +137,21 @@
       document.querySelectorAll("#raceControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.race));
       document.querySelectorAll("#disabilityControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.disability));
       document.querySelectorAll("#timeControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.time));
-      places.forEach(p=>{const el=document.querySelector('[data-id="'+p.id+'"]'),v=score(p),t=toneForScore(v);el.classList.toggle("selected",p.id===state.selected);el.dataset.tone=t;el.style.setProperty("--place-color",color(t));el.setAttribute("aria-label",p.name+": "+v.toFixed(1)+" out of 7 perceived welcome")});
+      places.forEach(p=>{const el=document.querySelector('[data-id="'+p.id+'"]'),v=score(p),t=toneForScore(v);el.classList.toggle("selected",p.id===state.selected);el.dataset.tone=t;el.style.setProperty("--place-color",color(t));el.setAttribute("aria-label",p.name+": "+v.toFixed(1)+" out of 7 identity-related spatial experience")});
       if(!state.selected)return;
       const p=places.find(x=>x.id===state.selected),v=score(p);
       const detail=document.getElementById("detail");detail.classList.remove("refreshing");void detail.offsetWidth;detail.classList.add("refreshing");
       document.getElementById("hint").style.opacity="0";
       detail.classList.add("visible");document.getElementById("emptyNote").hidden=true;
+      document.getElementById("spaceChoice").textContent=p.name;
       const lens=[genders.find(x=>x[0]===state.gender)[1],races.find(x=>x[0]===state.race)[1],disabilities.find(x=>x[0]===state.disability)[1],times.find(x=>x[0]===state.time)[1]].join(" · ");
       const name=document.getElementById("placeName");name.hidden=false;name.innerHTML=p.name+"<small>"+p.type+" · "+lens+"</small>";
-      const note=document.getElementById("placeNote");note.hidden=false;note.textContent=factors[p.id];
       const box=document.getElementById("placeScore");box.hidden=false;box.querySelector("strong").textContent=v.toFixed(1);
-      document.getElementById("teachingNote").hidden=false;
     }
+    const learningDialog=document.getElementById("learningDialog");
+    document.getElementById("openLearning").onclick=()=>learningDialog.showModal();
+    document.getElementById("closeLearning").onclick=()=>learningDialog.close();
+    learningDialog.addEventListener("click",event=>{if(event.target===learningDialog)learningDialog.close()});
     render();
   </script>
 </body>
