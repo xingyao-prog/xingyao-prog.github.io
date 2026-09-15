@@ -27,7 +27,6 @@
 
     <section class="studio">
       <div class="map-wrap" aria-label="Interactive identity comfort redesign map">
-        <p class="map-label" id="mapLabel">Evidence layer</p>
         <span class="map-hint" id="mapHint">Select a space</span>
         <div class="town" id="town"></div>
         <aside class="marker-card" id="markerCard" aria-live="polite">
@@ -117,7 +116,7 @@
 
     places.forEach(place=>{
       const button=document.createElement("div");
-      button.className=`place ${place.id} evidence-gap-${place.gap}`;
+      button.className=`place ${place.id}`;
       button.dataset.id=place.id;
       button.setAttribute("role","button");button.setAttribute("tabindex","0");button.setAttribute("aria-label",`Explore or redesign ${place.name}`);
       button.innerHTML=`<span class="evidence-count" title="Evidence items">${place.gap}</span><span class="category-slots"></span><span class="place-name">${place.name}</span>`;
@@ -157,13 +156,11 @@
     function renderMap(){
       document.querySelectorAll(".place").forEach(element=>{
         const placeId=element.dataset.id;element.classList.toggle("selected",placeId===state.selected);element.classList.toggle("targetable",!!state.tool);
-        element.className=element.className.replace(/evidence-gap-\d/g,"").trim();
-        element.classList.add("evidence-gap-"+places.find(place=>place.id===placeId).gap);
         const slotsRoot=element.querySelector(".category-slots");slotsRoot.innerHTML="";
         const placedMarkers=state.markers.filter(marker=>marker.placeId===placeId);
+        const shortLabels={access:"A",care:"C",sensory:"S",night:"N",social:"I"};
+        categories.forEach(category=>{const slot=document.createElement("span");slot.className=`category-slot slot-${category.id}`;slot.dataset.category=category.id;slot.dataset.short=shortLabels[category.id];slot.title=category.label;slotsRoot.appendChild(slot)});
         if(placedMarkers.length){
-          const shortLabels={access:"A",care:"C",sensory:"S",night:"N",social:"I"};
-          categories.forEach(category=>{const slot=document.createElement("span");slot.className=`category-slot slot-${category.id}`;slot.dataset.category=category.id;slot.dataset.short=shortLabels[category.id];slot.title=category.label;slotsRoot.appendChild(slot)});
           placedMarkers.forEach(marker=>{
             const tool=findTool(marker.toolId),category=categoryForTool(marker.toolId),slot=slotsRoot.querySelector(`[data-category="${category.id}"]`),button=document.createElement("button");button.type="button";button.title=`${tool.name} · ${category.label}`;button.setAttribute("aria-label",`${tool.name} in ${places.find(place=>place.id===placeId).name}`);button.className=`design-marker grouped-marker marker-${geometryLabel(tool)}`;button.textContent=tool.emoji;
             button.onclick=event=>{event.stopPropagation();showMarkerCard(marker.id)};slot.appendChild(button);
@@ -172,7 +169,6 @@
       });
       const hint=document.getElementById("mapHint"),tool=findTool(state.tool);
       hint.textContent=tool?`Place ${tool.emoji} on a space`:"Select a space";hint.classList.toggle("ready",!!tool);
-      document.getElementById("mapLabel").textContent="Evidence layer";
     }
 
     function renderEvidence(){
