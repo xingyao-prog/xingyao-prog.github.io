@@ -149,9 +149,24 @@
       background:linear-gradient(90deg,#fff 0 30%,rgba(255,255,255,.88) 62%,rgba(255,255,255,.48));
       pointer-events:none
     }
-    .station-tab:hover img,.station-tab[aria-pressed="true"] img{opacity:.31;transform:scale(1.025)}
-    .station-tab[aria-pressed="true"]{box-shadow:inset 0 4px 0 var(--green)}
-    .station-tab[data-station="vision"][aria-pressed="true"]{box-shadow:inset 0 4px 0 var(--pink)}
+    .station-tab{
+      cursor:pointer;
+      transition:background .22s,border-color .22s,box-shadow .22s,transform .22s
+    }
+    .station-tab:hover{
+      background:#f7f8f7;
+      box-shadow:inset 0 0 0 2px rgba(24,39,70,.18)
+    }
+    .station-tab:hover img{opacity:.24;transform:scale(1.02)}
+    .station-tab[aria-pressed="true"] img{opacity:.12;transform:scale(1.02)}
+    .station-tab[aria-pressed="true"]{
+      background:#eaf5ef;
+      box-shadow:inset 0 0 0 3px var(--green),inset 0 7px 0 var(--green)
+    }
+    .station-tab[data-station="vision"][aria-pressed="true"]{
+      background:#fff0f4;
+      box-shadow:inset 0 0 0 3px var(--pink),inset 0 7px 0 var(--pink)
+    }
     .station-no,.station-name,.station-desc{position:relative;z-index:2;display:block}
     .station-no{
       margin-bottom:24px;
@@ -163,13 +178,14 @@
     .station-desc{margin-top:6px;color:var(--muted);font-size:.74rem}
 
     .bench{
-      display:grid;
+      display:none;
       grid-template-columns:minmax(0,1.42fr) minmax(290px,.58fr);
       gap:1px;
       margin-top:1px;
       background:var(--line);
       border:1px solid var(--line)
     }
+    .bench.is-open{display:grid}
     .demo-wrap,.controls{background:#fff}
     .demo-wrap{position:relative;min-height:510px;padding:22px;overflow:hidden}
     .demo-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
@@ -384,7 +400,6 @@
         <p class="eyebrow">Accessible Experience Lab</p>
         <h1>Test the <span>environment.</span></h1>
       </div>
-      <p class="hero-copy">Two hands-on stations make hidden accessibility friction visible—and redesignable.</p>
     </section>
 
     <section class="snapshot" aria-label="Teaching format and learning points">
@@ -407,11 +422,10 @@
     <div class="page lab-inner">
       <div class="lab-head">
         <h2 id="lab-title">Two example stations.</h2>
-        <p>Same task. Change one condition.</p>
       </div>
 
       <div class="station-tabs" role="tablist" aria-label="Example accessibility test stations">
-        <button class="station-tab" type="button" role="tab" data-station="surface" aria-pressed="true" aria-selected="true">
+        <button class="station-tab" type="button" role="tab" data-station="surface" aria-pressed="false" aria-selected="false">
           <img src="../assets/lab-surface.jpg" alt="" aria-hidden="true">
           <span class="station-no">01 · PHYSICAL</span>
           <span class="station-name">Surface + mobility</span>
@@ -432,7 +446,6 @@
               <p class="demo-kicker" id="demoKicker"></p>
               <h3 class="demo-title" id="demoTitle"></h3>
             </div>
-            <p class="demo-prompt" id="demoPrompt"></p>
           </div>
           <div class="demo" id="demo"></div>
         </div>
@@ -443,27 +456,6 @@
   </section>
 
   <main class="page">
-    <section class="workflow">
-      <div class="workflow-head">
-        <h2>From test to design.</h2>
-        <p>Use the station as evidence—not as empathy theater.</p>
-      </div>
-
-      <div class="steps">
-        <div class="step"><small>01 · Try</small><b>Change one condition.</b><span>Keep the task constant.</span></div>
-        <div class="step"><small>02 · Measure</small><b>Notice what changes.</b><span>Time · effort · error · feedback.</span></div>
-        <div class="step"><small>03 · Redesign</small><b>Change the touchpoint.</b><span>Environment · process · support.</span></div>
-        <div class="step"><small>04 · Validate</small><b>Check the redesign.</b><span>Standards + lived experience.</span></div>
-      </div>
-
-      <div class="boundary">
-        <span class="boundary-mark" aria-hidden="true">≠</span>
-        <div><b>Restricted vision is not a dementia simulation.</b><span>The digital demo isolates visual-access conditions; dementia experiences vary.</span></div>
-      </div>
-
-      <p class="sources">Design anchors: <a href="https://www.alzheimers.org.uk/get-involved/dementia-friendly-resources/organisations/dementia-friendly-environment-checklist">Alzheimer’s Society</a> · <a href="https://www.ada.gov/law-and-regs/design-standards/2010-stds/">ADA Standards</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7863146/">Rolling-resistance review</a></p>
-    </section>
-
     <footer class="footer">
       <span>Accessible Experience Lab</span>
       <span>Yao · Applied teaching prototype</span>
@@ -476,8 +468,8 @@
     const demoWrap=document.getElementById('demoWrap');
     const demoKicker=document.getElementById('demoKicker');
     const demoTitle=document.getElementById('demoTitle');
-    const demoPrompt=document.getElementById('demoPrompt');
     const controls=document.getElementById('controls');
+    const bench=document.querySelector('.bench');
 
     let current='surface';
     let surfaceIndex=0;
@@ -621,7 +613,6 @@
       demoWrap.className='demo-wrap surface';
       demoKicker.textContent='Example station 01 · Physical test';
       demoTitle.textContent='Surface + mobility';
-      demoPrompt.textContent='Same chair. Same route. Change only the surface.';
       demo.innerHTML=surfaceSvg(surfaceIndex);
       controls.className='controls surface';
       controls.innerHTML=`
@@ -634,7 +625,6 @@
         <div class="readout">
           <small>Resistance</small>
           <strong id="surfaceLevel">${surfaceStates[surfaceIndex].level}</strong>
-          <span id="surfaceNote">0% travel · same pointer movement, different travel distance</span>
         </div>`;
 
       controls.querySelectorAll('[data-surface]').forEach(button=>button.addEventListener('click',()=>{
@@ -648,7 +638,6 @@
       demoWrap.className='demo-wrap vision';
       demoKicker.textContent='Example station 02 · Digital test';
       demoTitle.textContent='Vision + perception';
-      demoPrompt.textContent='Change the visual condition, then try to locate the same service cue.';
       demo.innerHTML=visionSvg(visionIndex);
       controls.className='controls vision';
       controls.innerHTML=`
@@ -676,6 +665,7 @@
 
     function selectStation(name){
       current=name;
+      bench.classList.add('is-open');
       tabs.forEach(tab=>{
         const active=tab.dataset.station===name;
         tab.setAttribute('aria-pressed',String(active));
@@ -686,7 +676,6 @@
     }
 
     tabs.forEach(tab=>tab.addEventListener('click',()=>selectStation(tab.dataset.station)));
-    selectStation('surface');
   </script>
 </body>
 </html>
