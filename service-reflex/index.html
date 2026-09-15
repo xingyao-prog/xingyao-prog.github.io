@@ -34,45 +34,15 @@
     .steps button{border:0;background:transparent;padding:8px 10px;color:#7c817d;font:500 9px/1 DM Mono,monospace;letter-spacing:.06em;cursor:pointer}
     .steps button.active{background:var(--violet);color:#fff;box-shadow:0 4px 0 var(--acid)}
     .steps button span{margin-right:6px;opacity:.6}
-    .teaching-snapshot{
-  display:grid;
-  grid-template-columns:.8fr 3.2fr;
-  margin-top:20px;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  background:var(--white)
-}
-.snapshot-format,
-.snapshot-learning{
-  padding:14px 16px
-}
-.snapshot-format{
-  border-right:1px solid var(--line)
-}
-.snapshot-format>span,
-.snapshot-learning>span{
-  display:block;
-  margin-bottom:9px;
-  color:#949995;
-  font:500 7px/1 DM Mono,monospace;
-  text-transform:uppercase;
-  letter-spacing:.08em
-}
-.snapshot-format p,
-.snapshot-points p{
-  margin:0;
-  color:#525854;
-  font-size:.68rem;
-  line-height:1.4
-}
-.snapshot-points{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px
-}
-.snapshot-points p{
-  font-weight:600
-}
+    .teaching-snapshot{display:grid;grid-template-columns:145px 1fr;margin-top:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--white)}
+    .snapshot-label{padding:13px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+    .snapshot-label span,.teaching-snapshot dt{font:500 7px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em}
+    .snapshot-label small{margin-top:7px;color:#a34d6e;font:500 6px/1.2 DM Mono,monospace}
+    .teaching-snapshot dl{margin:0;display:grid;grid-template-columns:repeat(4,1fr)}
+    .teaching-snapshot dl>div{min-width:0;padding:12px 13px;border-right:1px solid var(--line)}
+    .teaching-snapshot dl>div:last-child{border-right:0}
+    .teaching-snapshot dt{color:#949995}
+    .teaching-snapshot dd{margin:6px 0 0;color:#525854;font-size:.62rem;line-height:1.35}
     main{min-height:calc(100svh - 126px)}
     .panel{display:none;padding:50px 0 38px}
     .panel.active{display:block;animation:panel-in .45s ease}
@@ -242,8 +212,11 @@
       .topbar{height:auto;min-height:62px;align-items:flex-start;padding:16px 0;gap:12px}
       .brand span{display:none}.steps{gap:2px}.steps button{padding:7px 6px;font-size:7px}.steps button span{display:none}
       .teaching-snapshot{grid-template-columns:1fr;margin-top:14px}
-.snapshot-format{border-right:0;border-bottom:1px solid var(--line)}
-.snapshot-points{grid-template-columns:1fr;gap:4px}
+      .snapshot-label{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;justify-content:space-between}
+      .snapshot-label small{margin:0}
+      .teaching-snapshot dl{grid-template-columns:1fr 1fr}
+      .teaching-snapshot dl>div:nth-child(2){border-right:0}
+      .teaching-snapshot dl>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
       .panel{padding:40px 0 28px}.panel-head{padding-left:0}.panel-head h1,.panel-head h2{font-size:2.45rem}
       .start-copy{padding:28px}.mechanism{grid-template-columns:1fr 55px 1fr;padding:20px;gap:8px}.key-pair{padding:13px;min-height:160px}.key-pair b{font-size:.76rem}.key-pair span{font-size:.56rem}
       .task-meta{padding:0 12px}.trial-progress i{width:55px}.sort-side{padding:18px 11px}.sort-side strong{font-size:.72rem}.stimulus-card{width:140px;height:125px}.stimulus-card.word{font-size:1.1rem}
@@ -260,33 +233,27 @@
   <header class="topbar shell">
     <div class="brand">SERVICE REFLEX <span>/ EXPLICIT × IMPLICIT EXPERIENCE LAB</span></div>
     <nav class="steps" aria-label="Project stages">
-  <button class="active" data-panel="sort"><span>01</span>IAT</button>
-  <button data-panel="compare"><span>02</span>IMPLICIT × EXPLICIT</button>
-  <button data-panel="diagnose"><span>03</span>ORGANIZATIONAL SOURCES</button>
-  <button data-panel="redesign"><span>04</span>SERVICE REDESIGN</button>
+  <button class="active" data-panel="sort"><span>01</span>SORT</button>
+  <button data-panel="compare"><span>02</span>COMPARE</button>
+  <button data-panel="diagnose"><span>03</span>SOURCE</button>
+  <button data-panel="redesign"><span>04</span>REDESIGN</button>
 </nav
   </header>
 
-  <section class="teaching-snapshot shell" aria-label="Teaching format and learning points">
-  <div class="snapshot-format">
-    <span>FORMAT</span>
-    <p>10-min demo · 50-min lab · team redesign</p>
-  </div>
-
-  <div class="snapshot-learning">
-    <span>WHAT STUDENTS LEARN</span>
-    <div class="snapshot-points">
-      <p>Implicit &amp; Explicit Measurement</p>
-      <p>Organizational Experience Analysis</p>
-      <p>Evidence-Based Service Redesign</p>
-    </div>
-  </div>
-</section>
+  <section class="teaching-snapshot shell" aria-labelledby="reflex-snapshot-title">
+    <div class="snapshot-label"><span id="reflex-snapshot-title">Teaching snapshot</span><small>Adapted from my research</small></div>
+    <dl>
+      <div><dt>Course fit</dt><dd>Service Experience · Consumer Behavior · Experiential Marketing · Research Methods</dd></div>
+      <div><dt>Format + time</dt><dd>15-min demo · 50-min lab · advanced project</dd></div>
+      <div><dt>What students submit</dt><dd>Service Systems Insight + Redesign Memo</dd></div>
+      <div><dt>Assessment</dt><dd>Method understanding · cautious interpretation · diagnosis · redesign</dd></div>
+    </dl>
+  </section>
 
   <main>
     <section class="panel active shell" id="sortPanel">
       <div class="panel-head">
-        <h1>What happens when stated values<br>and automatic associations do not align?</h1>
+        <h1>Implicit Association <em>Test.</em></h1>
         <p class="panel-intro">An IAT compares response speed to estimate the relative strength of automatic associations. When one image or word appears, choose the left or right side if it matches <strong>either</strong> category shown there.</p>
       </div>
       <div class="lab-surface">
@@ -363,21 +330,10 @@
       <div class="lab-surface diagnosis-surface">
         <div class="finding-banner"><b>ORGANIZATIONAL GAP</b>Formal accessibility commitment ≠ the signals embedded in metrics, routines, and resources.</div>
         <div class="source-tabs" role="tablist" aria-label="Organizational sources of implicit-explicit misalignment">
-  <button role="tab" aria-selected="true" data-source="metrics">
-    <small>01 · METRICS</small>
-    <b>What gets rewarded?</b>
-  </button>
-
-  <button role="tab" aria-selected="false" data-source="routine">
-    <small>02 · ROUTINES</small>
-    <b>What becomes normal?</b>
-  </button>
-
-  <button role="tab" aria-selected="false" data-source="resources">
-    <small>03 · RESOURCES</small>
-    <b>What behavior is actually supported?</b>
-  </button>
-</div>
+          <button role="tab" aria-selected="true" data-source="metrics"><small>01 · METRICS</small><b>Access is promised.<span>Speed is rewarded.</span></b></button>
+          <button role="tab" aria-selected="false" data-source="routine"><small>02 · ROUTINES</small><b>Access is standard.<span>Requests stay exceptional.</span></b></button>
+          <button role="tab" aria-selected="false" data-source="resources"><small>03 · RESOURCES</small><b>Staff should act.<span>Support is missing.</span></b></button>
+        </div>
         <div class="source-focus" aria-live="polite">
           <small id="sourceKicker">ORGANIZATIONAL SIGNAL 01</small>
           <h3 id="sourceHeading">Efficiency becomes the real priority.</h3>
@@ -397,18 +353,23 @@
         <h2>Redesign the<br><em>organizational signals.</em></h2>
       </div>
       <div class="lab-surface redesign-workbench">
+        <div class="lever-picker" role="tablist" aria-label="Organizational redesign levers">
+          <button role="tab" aria-selected="true" data-lever="metrics"><small>01 · REWARD</small><b>Performance metrics</b></button>
+          <button role="tab" aria-selected="false" data-lever="routine"><small>02 · NORMALIZE</small><b>Routines + resources</b></button>
+          <button role="tab" aria-selected="false" data-lever="leadership"><small>03 · REINFORCE</small><b>Leadership signals</b></button>
+        </div>
         <div class="lever-stage" aria-live="polite">
           <div class="lever-title">
             <div><small id="leverKicker">ORGANIZATIONAL LEVER 01</small><h3 id="leverHeading">Reward access—not speed alone.</h3></div>
             <p id="leverRationale">Performance metrics tell employees what the organization truly values.</p>
           </div>
           <div class="lever-flow">
-  <article class="lever-card current"><small>AUDIT</small><b id="currentSignal">Fast service counts. Accessible service is invisible.</b></article>
-  <div class="lever-arrow">→</div>
-  <article class="lever-card redesign"><small>REDESIGN</small><b id="redesignAction">Track access quality alongside wait time.</b></article>
-  <div class="lever-arrow">→</div>
-  <article class="lever-card test"><small>TEST</small><b id="studentTest">Role-play a rush period. Compare access decisions under both scorecards.</b></article>
-</div>
+            <article class="lever-card current"><small>CURRENT SIGNAL</small><b id="currentSignal">Fast service counts. Accessible service is invisible.</b></article>
+            <div class="lever-arrow">→</div>
+            <article class="lever-card redesign"><small>ORGANIZATIONAL REDESIGN</small><b id="redesignAction">Track access quality alongside wait time.</b></article>
+            <div class="lever-arrow">→</div>
+            <article class="lever-card test"><small>STUDENT TEST</small><b id="studentTest">Role-play a rush period. Compare access decisions under both scorecards.</b></article>
+          </div>
         </div>
       </div>
       <details class="rationale"><summary><span>Teaching use + research rationale</span><b aria-hidden="true">+</b></summary><div class="rationale-content"><p>Students audit one event or hotel system, redesign one organizational lever, role-play the revised system, and retest implicit and explicit measures.</p><p>Organizational initiatives showed the most consistent implicit–explicit discrepancies across groups (Hua &amp; Yao, manuscript).</p></div></details>
@@ -531,7 +492,7 @@
       document.getElementById("sourceHeading").textContent=content.heading;
       document.getElementById("dailySignal").textContent=content.signal;
       document.getElementById("sourceExplanation").textContent=content.explanation;
-      document.querySelector("#diagnosePanel [data-next='redesign']").dataset.leverTarget=key;
+      document.querySelector("#diagnosePanel [data-next='redesign']").dataset.leverTarget=key==="resources"?"leadership":key;
     }
     sourceButtons.forEach(button=>button.addEventListener("click",()=>showSource(button.dataset.source)));
     showSource("metrics");
@@ -539,14 +500,8 @@
     const leverContent={
       metrics:{kicker:"ORGANIZATIONAL LEVER 01",heading:"Reward access—not speed alone.",rationale:"Performance metrics tell employees what the organization truly values.",current:"Fast service counts. Accessible service is invisible.",redesign:"Track access quality alongside wait time.",test:"Role-play a rush period. Compare access decisions under both scorecards."},
       routine:{kicker:"ORGANIZATIONAL LEVER 02",heading:"Make accommodation routine.",rationale:"Standard workflows and resources determine whether access feels normal or exceptional.",current:"Each request triggers improvisation.",redesign:"Build access steps, tools, and decision authority into the routine.",test:"Run the same service scenario with and without the redesigned protocol."},
-      resources:{
-  kicker:"ORGANIZATIONAL LEVER 03",
-  heading:"Support inclusive action in practice.",
-  rationale:"Resources, authority, and practiced responses determine which behaviors employees can actually carry out.",
-  current:"Staff are expected to accommodate, but tools and decision support are missing.",
-  redesign:"Provide accessible tools, clear authority, and practiced response protocols.",
-  test:"Role-play the same service scenario before and after adding the support system."
-}
+      leadership:{kicker:"ORGANIZATIONAL LEVER 03",heading:"Reinforce the signal every day.",rationale:"Leadership behavior makes written accessibility commitments credible in practice.",current:"Policy is visible; leadership reinforcement is not.",redesign:"Model, recognize, and debrief inclusive service decisions.",test:"Observe which behaviors teams repeat after leader modeling and feedback."}
+    };
     const leverButtons=[...document.querySelectorAll("[data-lever]")];
     function showLever(key){
       const content=leverContent[key];
