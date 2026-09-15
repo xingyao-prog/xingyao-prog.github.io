@@ -16,6 +16,7 @@
     .category-slots{position:absolute;inset:5px 5px 20px;z-index:3;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;pointer-events:none}.category-slot{position:relative;min-width:0;min-height:0;padding:13px 2px 3px;border:1px solid rgba(25,27,26,.16);display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:2px;overflow:auto;pointer-events:none}.category-slot:before{content:attr(data-short);position:absolute;left:3px;top:3px;color:rgba(25,27,26,.55);font:500 6px/1 DM Mono,monospace}.slot-access{background:rgba(223,255,0,.2)}.slot-care{background:rgba(255,79,151,.14)}.slot-sensory{background:rgba(140,112,255,.14)}.slot-night{background:rgba(72,80,77,.12)}.slot-social{background:rgba(69,185,210,.14)}.grouped-marker{pointer-events:auto;width:clamp(17px,1.65vw,22px);height:clamp(17px,1.65vw,22px);border:1px solid var(--ink);background:#fff;padding:0;display:grid;place-items:center;font-size:clamp(10px,1vw,13px);line-height:1;cursor:pointer;box-shadow:1px 1px 0 rgba(25,27,26,.35);animation:marker-in .3s ease}.grouped-marker:hover,.grouped-marker:focus-visible{background:var(--yellow);outline:0;transform:translateY(-1px)}.marker-point{border-radius:50%}.marker-route{border-radius:999px;box-shadow:inset 0 -3px var(--pink),1px 1px 0 rgba(25,27,26,.35)}.marker-zone{border-radius:2px;background:#efeaff;box-shadow:inset 0 0 0 2px rgba(140,112,255,.28),1px 1px 0 rgba(25,27,26,.35)}.category-slot::-webkit-scrollbar{width:2px;height:2px}.category-slot::-webkit-scrollbar-thumb{background:rgba(25,27,26,.25)}.place-name{z-index:5;background:rgba(255,255,255,.78);padding:1px 3px}.evidence-count{z-index:6}.route-marker,.zone-marker{display:none!important}@media(max-width:620px){.category-slots{inset:4px 3px 16px;gap:1px}.category-slot{padding:10px 1px 2px}.category-slot:before{font-size:5px;left:2px;top:2px}.grouped-marker{width:16px;height:16px;font-size:9px}}
     /* One evidence surface with interventions layered directly on top. */
     .top{justify-content:flex-start}.palette{grid-template-rows:auto auto 1fr auto}.evidence{grid-template-columns:150px 1fr 1fr}.bottom{justify-content:flex-end}@media(max-width:980px){.palette{grid-template-rows:auto 1fr auto}.evidence{grid-template-columns:130px 1fr 1fr}}@media(max-width:620px){.evidence{grid-template-columns:1fr}.bottom{display:block}}
+    .marker-card{width:min(230px,calc(100% - 24px));padding:11px}.marker-card h3{margin-bottom:11px}
   </style>
 </head>
 <body>
@@ -31,13 +32,8 @@
         <div class="town" id="town"></div>
         <aside class="marker-card" id="markerCard" aria-live="polite">
           <button class="close" id="closeCard" aria-label="Close">×</button>
-          <span class="eyebrow">Design hypothesis</span>
+          <span class="eyebrow">Placed intervention</span>
           <h3 id="markerTitle"></h3>
-          <span class="meta" id="markerMeta"></span>
-          <span class="status-pill" id="markerStatus"></span>
-          <p id="markerReason"></p>
-          <p id="markerMeasure"></p>
-          <p class="check" id="markerCheck"></p>
           <button class="remove" id="removeMarker">Remove intervention</button>
         </aside>
       </div>
@@ -189,8 +185,7 @@
     function showMarkerCard(markerId){
       const marker=state.markers.find(item=>item.id===markerId);if(!marker)return;state.activeMarker=markerId;
       const tool=findTool(marker.toolId),place=places.find(item=>item.id===marker.placeId),card=document.getElementById("markerCard");
-      const status=document.getElementById("markerStatus");
-      document.getElementById("markerTitle").textContent=`${tool.emoji} ${tool.name} · ${place.name}`;document.getElementById("markerMeta").textContent=`${categoryForTool(marker.toolId).label} · ${geometryLabel(tool)} intervention · ${tool.stage}`;status.textContent=tool.stage==="cue"?"Design cue":"Evidence-led intervention";status.classList.remove("supported");document.getElementById("markerReason").textContent=tool.why;document.getElementById("markerMeasure").innerHTML=`<b>Test after redesign:</b> ${tool.measure.replace("Retest ","")}. Compare with the original comment and field note.`;document.getElementById("markerCheck").innerHTML=`<b>Critical check:</b> ${tool.check||"Validate this change with affected users and examine who might still be excluded."}`;card.classList.add("visible");
+      document.getElementById("markerTitle").textContent=`${tool.emoji} ${tool.name} · ${place.name}`;card.classList.add("visible");
     }
 
     function renderAll(){renderPalette();renderMap();renderEvidence()}
