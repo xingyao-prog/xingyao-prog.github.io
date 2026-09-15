@@ -30,26 +30,26 @@
     .topbar{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
     .brand{font:500 10px/1 DM Mono,monospace;letter-spacing:.08em}
     .brand span{color:#878c87}
-    .steps{display:flex;gap:7px}
-    .steps button{border:0;background:transparent;padding:8px 10px;color:#7c817d;font:500 9px/1 DM Mono,monospace;letter-spacing:.06em;cursor:pointer}
+    .steps{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end}
+    .steps button{border:0;background:transparent;padding:8px 9px;color:#7c817d;font:500 8px/1 DM Mono,monospace;letter-spacing:.055em;cursor:pointer;white-space:nowrap}
     .steps button.active{background:var(--violet);color:#fff;box-shadow:0 4px 0 var(--acid)}
     .steps button span{margin-right:6px;opacity:.6}
-    .teaching-snapshot{display:grid;grid-template-columns:145px 1fr;margin-top:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--white)}
-    .snapshot-label{padding:13px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
-    .snapshot-label span,.teaching-snapshot dt{font:500 7px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em}
-    .snapshot-label small{margin-top:7px;color:#a34d6e;font:500 6px/1.2 DM Mono,monospace}
-    .teaching-snapshot dl{margin:0;display:grid;grid-template-columns:repeat(4,1fr)}
-    .teaching-snapshot dl>div{min-width:0;padding:12px 13px;border-right:1px solid var(--line)}
+    .teaching-snapshot{margin-top:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--white)}
+    .teaching-snapshot dt{font:500 7px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em}
+    .teaching-snapshot dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+    .teaching-snapshot dl>div{min-width:0;padding:15px 18px;border-right:1px solid var(--line)}
     .teaching-snapshot dl>div:last-child{border-right:0}
     .teaching-snapshot dt{color:#949995}
-    .teaching-snapshot dd{margin:6px 0 0;color:#525854;font-size:.62rem;line-height:1.35}
+    .teaching-snapshot dd{margin:7px 0 0;color:#525854;font-size:.7rem;line-height:1.45}
+    .teaching-snapshot dd span{display:block}
     main{min-height:calc(100svh - 126px)}
     .panel{display:none;padding:50px 0 38px}
     .panel.active{display:block;animation:panel-in .45s ease}
     @keyframes panel-in{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
-    .panel-head{display:block;padding-left:120px;margin-bottom:26px}
+    .panel-head{display:block;padding-left:0;margin-bottom:26px;text-align:left}
     .micro{font:500 8px/1.3 DM Mono,monospace;letter-spacing:.09em;text-transform:uppercase}
-    .panel-head h1,.panel-head h2{margin:0;font-size:clamp(2.35rem,4vw,4.25rem);line-height:1.01;letter-spacing:-.055em;font-weight:600}
+    .panel-head h1,.panel-head h2{margin:0;color:var(--ink);font-size:clamp(2.35rem,4vw,4.25rem);line-height:1.01;letter-spacing:-.055em;font-weight:600}
+    .panel-head h1{max-width:900px;font-size:clamp(2rem,3.5vw,3.65rem);line-height:1.08}
     .panel-head h2{font-size:clamp(2.15rem,3.4vw,3.55rem)}
     #diagnosePanel .panel-head h2,#redesignPanel .panel-head h2{font-size:clamp(2rem,3vw,3.2rem);letter-spacing:-.05em}
     .panel-head em{font-style:normal;color:var(--violet)}
@@ -63,7 +63,7 @@
 
     .start-screen{display:grid;grid-template-columns:.85fr 1.15fr;min-height:430px}
     .start-copy{padding:42px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
-    .start-copy h3{margin:10px 0 15px;font-size:2.15rem;line-height:1.05;letter-spacing:-.05em}
+    .start-copy h3{margin:0 0 24px;font-size:1.35rem;line-height:1.15;letter-spacing:-.035em}
     .start-copy p{max-width:360px;margin:0 0 28px;color:#686e69;font-size:.82rem}
     .sort-rule{margin:0 0 24px;padding:12px 14px;border-left:4px solid var(--acid);background:#edf6f2;color:var(--ink);font-size:.74rem;line-height:1.45}
     .sort-rule b{display:block;margin-bottom:3px;font:500 8px/1 DM Mono,monospace;letter-spacing:.07em;text-transform:uppercase}
@@ -195,14 +195,11 @@
     .research-foundation details[open] summary b{transform:rotate(45deg)}
     .reference-list{margin:0;padding:8px 0 26px 20px;columns:2;column-gap:50px;color:#56625e;font-size:.7rem;line-height:1.5}
     .reference-list li{margin:0 0 12px;padding-left:4px;break-inside:avoid}
-    .reference-list li:first-child{color:var(--ink);font-weight:600}
-    .reference-list a{color:inherit;text-underline-offset:2px}
     footer{height:56px;background:var(--ink);color:#cfd2ce}
     footer .shell{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;font:400 8px DM Mono,monospace}
     footer span{color:#888e89}
 
     @media(max-width:850px){
-      .panel-head{padding-left:70px}
       .start-screen,.compare-grid{grid-template-columns:1fr}.start-copy,.speed-visual{border-right:0;border-bottom:1px solid var(--line)}
       .signal-contrast{grid-template-columns:1fr}.contrast-gap{min-height:64px}
       .reference-list{columns:1}
@@ -210,13 +207,10 @@
     @media(max-width:600px){
       .shell{width:calc(100% - 24px)}
       .topbar{height:auto;min-height:62px;align-items:flex-start;padding:16px 0;gap:12px}
-      .brand span{display:none}.steps{gap:2px}.steps button{padding:7px 6px;font-size:7px}.steps button span{display:none}
-      .teaching-snapshot{grid-template-columns:1fr;margin-top:14px}
-      .snapshot-label{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;justify-content:space-between}
-      .snapshot-label small{margin:0}
+      .brand span{display:none}.steps{gap:2px;justify-content:flex-start}.steps button{padding:7px 6px;font-size:7px}.steps button span{display:none}
+      .teaching-snapshot{margin-top:14px}
       .teaching-snapshot dl{grid-template-columns:1fr 1fr}
       .teaching-snapshot dl>div:nth-child(2){border-right:0}
-      .teaching-snapshot dl>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
       .panel{padding:40px 0 28px}.panel-head{padding-left:0}.panel-head h1,.panel-head h2{font-size:2.45rem}
       .start-copy{padding:28px}.mechanism{grid-template-columns:1fr 55px 1fr;padding:20px;gap:8px}.key-pair{padding:13px;min-height:160px}.key-pair b{font-size:.76rem}.key-pair span{font-size:.56rem}
       .task-meta{padding:0 12px}.trial-progress i{width:55px}.sort-side{padding:18px 11px}.sort-side strong{font-size:.72rem}.stimulus-card{width:140px;height:125px}.stimulus-card.word{font-size:1.1rem}
@@ -233,38 +227,31 @@
   <header class="topbar shell">
     <div class="brand">SERVICE REFLEX <span>/ EXPLICIT × IMPLICIT EXPERIENCE LAB</span></div>
     <nav class="steps" aria-label="Project stages">
-      <button class="active" data-panel="sort"><span>01</span>SORT</button>
-      <button data-panel="compare"><span>02</span>COMPARE</button>
-      <button data-panel="diagnose"><span>03</span>SOURCE</button>
+      <button class="active" data-panel="sort"><span>01</span>IAT</button>
+      <button data-panel="compare"><span>02</span>IMPLICIT × EXPLICIT</button>
+      <button data-panel="diagnose"><span>03</span>ORGANIZATIONAL SOURCES</button>
       <button data-panel="redesign"><span>04</span>REDESIGN</button>
     </nav>
   </header>
 
-  <section class="teaching-snapshot shell" aria-labelledby="reflex-snapshot-title">
-    <div class="snapshot-label"><span id="reflex-snapshot-title">Teaching snapshot</span><small>Adapted from my research</small></div>
+  <section class="teaching-snapshot shell" aria-label="Teaching format and learning outcomes">
     <dl>
-      <div><dt>Course fit</dt><dd>Service Experience · Consumer Behavior · Experiential Marketing · Research Methods</dd></div>
-      <div><dt>Format + time</dt><dd>15-min demo · 50-min lab · advanced project</dd></div>
-      <div><dt>What students submit</dt><dd>Service Systems Insight + Redesign Memo</dd></div>
-      <div><dt>Assessment</dt><dd>Method understanding · cautious interpretation · diagnosis · redesign</dd></div>
+      <div><dt>Format</dt><dd>10-min demo · 50-min lab · team redesign</dd></div>
+      <div><dt>What students learn</dt><dd><span>Implicit &amp; Explicit Measurement</span><span>Organizational Experience Analysis</span><span>Evidence-Based Service Redesign</span></dd></div>
     </dl>
   </section>
 
   <main>
     <section class="panel active shell" id="sortPanel">
       <div class="panel-head">
-        <h1>Implicit Association <em>Test.</em></h1>
-        <p class="panel-intro">An IAT compares response speed to estimate the relative strength of automatic associations. When one image or word appears, choose the left or right side if it matches <strong>either</strong> category shown there.</p>
+        <h1>What happens when stated values and automatic associations do not align?</h1>
       </div>
       <div class="lab-surface">
         <div class="start-screen" id="startScreen">
           <div class="start-copy">
-            <span class="micro">HOW AN IAT WORKS</span>
-            <h3>One key.<br>Two concepts.</h3>
-            <p>One guest image or one service word appears at a time.</p>
+            <h3>Implicit Attitude Test</h3>
             <div class="sort-rule"><b>The rule</b>Press left if the item matches <strong>either</strong> label on the left. Press right if it matches <strong>either</strong> label on the right.</div>
             <button class="primary-action" id="startDemo">Try 12 demo trials →</button>
-            <small>Teaching demonstration · not a diagnostic IAT</small>
           </div>
           <div class="mechanism" aria-label="Two concept pairs share two response keys">
             <div class="key-pair"><small>E · LEFT KEY</small><b>Disabled guest<em>OR</em>Welcoming word</b><span>If either appears, choose left</span></div>
@@ -379,12 +366,9 @@
       <details>
         <summary><span>Research foundation</span><b aria-hidden="true">+</b></summary>
         <ol class="reference-list">
-          <li>Hua, C., &amp; Yao, X. (2026). <i>Is your data telling the whole story? Toward an explicit–implicit psychometric paradigm in tourism and hospitality research.</i> [Manuscript].</li>
-          <li><a href="https://doi.org/10.1037/0022-3514.74.6.1464" target="_blank" rel="noopener">Greenwald, McGhee, &amp; Schwartz (1998). Measuring individual differences in implicit cognition.</a></li>
-          <li><a href="https://doi.org/10.1037/0022-3514.85.2.197" target="_blank" rel="noopener">Greenwald, Nosek, &amp; Banaji (2003). An improved IAT scoring algorithm.</a></li>
-          <li><a href="https://doi.org/10.3758/s13428-021-01624-3" target="_blank" rel="noopener">Greenwald et al. (2022). Best research practices for using the IAT.</a></li>
-          <li><a href="https://doi.org/10.1375/jhtm.16.1.32" target="_blank" rel="noopener">Darcy &amp; Dickson (2009). A whole-of-life approach to accessible tourism experiences.</a></li>
-          <li>Clarkson, Coleman, Keates, &amp; Lebbon (Eds.). (2003). <i>Inclusive design: Design for the whole population.</i></li>
+          <li>Hua, C., &amp; Yao, X. (2026). Is your data telling the whole story? Toward an explicit–implicit psychometric paradigm in tourism and hospitality research.</li>
+          <li>Greenwald, Nosek, &amp; Banaji (2003). An improved IAT scoring algorithm.</li>
+          <li>Greenwald et al. (2022). Best research practices for using the IAT.</li>
         </ol>
       </details>
     </section>
