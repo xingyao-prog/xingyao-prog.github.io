@@ -111,6 +111,10 @@
       station:{base:5.3,night:-.8,women:-.35,nonbinary:-.6,minoritized:-.4,disabled:-.85,nightGender:-.2,nightDisabled:-.2,raceDisabled:-.1,intersection:-.15},
       "night-market":{base:5.8,night:-.3,women:-.3,nonbinary:-.4,minoritized:-.3,disabled:-1,nightGender:-.15,nightDisabled:-.35,raceDisabled:-.15,intersection:-.2}
     };
+    const mixedToneScenarios={
+      "women|minoritized|disabled|night":["hotel","arts"],
+      "men|nonminoritized|nondisabled|night":["hotel","arts"]
+    };
     let state={gender:"women",race:"minoritized",disability:"disabled",time:"night",selected:null};
     const town=document.getElementById("town");
     const score=p=>{
@@ -128,6 +132,10 @@
       return Math.max(1,Math.min(7,v));
     };
     const toneForScore=v=>v>=5.6?"strong":v>=4.4?"welcoming":v>=3.2?"mixed":"strained";
+    const toneForPlace=(p,v)=>{
+      const scenario=[state.gender,state.race,state.disability,state.time].join("|");
+      return mixedToneScenarios[scenario]?.includes(p.id)?"mixed":toneForScore(v);
+    };
     const color=t=>"var(--"+t+")";
     places.forEach(p=>{const b=document.createElement("button");b.className="place "+p.id;b.dataset.id=p.id;b.innerHTML="<span>"+p.name+"</span><i></i>";b.setAttribute("aria-label","Explore "+p.name);b.onclick=()=>{state.selected=p.id;render()};town.appendChild(b)});
     function addControls(rootId,items,key){const root=document.getElementById(rootId);items.forEach(([value,label])=>{const b=document.createElement("button");b.textContent=label;b.dataset.value=value;b.onclick=()=>{state[key]=value;render()};root.appendChild(b)})}
@@ -137,7 +145,7 @@
       document.querySelectorAll("#raceControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.race));
       document.querySelectorAll("#disabilityControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.disability));
       document.querySelectorAll("#timeControls button").forEach(b=>b.classList.toggle("active",b.dataset.value===state.time));
-      places.forEach(p=>{const el=document.querySelector('[data-id="'+p.id+'"]'),v=score(p),t=toneForScore(v);el.classList.toggle("selected",p.id===state.selected);el.dataset.tone=t;el.style.setProperty("--place-color",color(t));el.setAttribute("aria-label",p.name+": "+v.toFixed(1)+" out of 7 identity-related spatial experience")});
+      places.forEach(p=>{const el=document.querySelector('[data-id="'+p.id+'"]'),v=score(p),t=toneForPlace(p,v);el.classList.toggle("selected",p.id===state.selected);el.dataset.tone=t;el.style.setProperty("--place-color",color(t));el.setAttribute("aria-label",p.name+": "+v.toFixed(1)+" out of 7 identity-related spatial experience")});
       if(!state.selected)return;
       const p=places.find(x=>x.id===state.selected),v=score(p);
       const detail=document.getElementById("detail");detail.classList.remove("refreshing");void detail.offsetWidth;detail.classList.add("refreshing");
