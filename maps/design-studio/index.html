@@ -14,22 +14,19 @@
     .student-mode-link{padding:8px 10px;border:1px solid var(--ink);background:var(--yellow);color:var(--ink);text-decoration:none;font:500 8px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.04em;box-shadow:2px 2px 0 var(--ink);transition:.2s}.student-mode-link:hover,.student-mode-link:focus-visible{background:var(--pink);color:#fff;transform:translateY(-2px);outline:0}@media(max-width:620px){.student-mode-link{font-size:7px}}
     /* Five-category design bins replace directional route arrows. */
     .category-slots{position:absolute;inset:5px 5px 20px;z-index:3;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;pointer-events:none}.category-slot{position:relative;min-width:0;min-height:0;padding:13px 2px 3px;border:1px solid rgba(25,27,26,.16);display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:2px;overflow:auto;pointer-events:none}.category-slot:before{content:attr(data-short);position:absolute;left:3px;top:3px;color:rgba(25,27,26,.55);font:500 6px/1 DM Mono,monospace}.slot-access{background:rgba(223,255,0,.2)}.slot-care{background:rgba(255,79,151,.14)}.slot-sensory{background:rgba(140,112,255,.14)}.slot-night{background:rgba(72,80,77,.12)}.slot-social{background:rgba(69,185,210,.14)}.grouped-marker{pointer-events:auto;width:clamp(17px,1.65vw,22px);height:clamp(17px,1.65vw,22px);border:1px solid var(--ink);background:#fff;padding:0;display:grid;place-items:center;font-size:clamp(10px,1vw,13px);line-height:1;cursor:pointer;box-shadow:1px 1px 0 rgba(25,27,26,.35);animation:marker-in .3s ease}.grouped-marker:hover,.grouped-marker:focus-visible{background:var(--yellow);outline:0;transform:translateY(-1px)}.marker-point{border-radius:50%}.marker-route{border-radius:999px;box-shadow:inset 0 -3px var(--pink),1px 1px 0 rgba(25,27,26,.35)}.marker-zone{border-radius:2px;background:#efeaff;box-shadow:inset 0 0 0 2px rgba(140,112,255,.28),1px 1px 0 rgba(25,27,26,.35)}.category-slot::-webkit-scrollbar{width:2px;height:2px}.category-slot::-webkit-scrollbar-thumb{background:rgba(25,27,26,.25)}.place-name{z-index:5;background:rgba(255,255,255,.78);padding:1px 3px}.evidence-count{z-index:6}.route-marker,.zone-marker{display:none!important}@media(max-width:620px){.category-slots{inset:4px 3px 16px;gap:1px}.category-slot{padding:10px 1px 2px}.category-slot:before{font-size:5px;left:2px;top:2px}.grouped-marker{width:16px;height:16px;font-size:9px}}
+    /* One evidence surface with interventions layered directly on top. */
+    .top{justify-content:flex-start}.palette{grid-template-rows:auto auto 1fr auto}.evidence{grid-template-columns:150px 1fr 1fr}.bottom{justify-content:flex-end}@media(max-width:980px){.palette{grid-template-rows:auto 1fr auto}.evidence{grid-template-columns:130px 1fr 1fr}}@media(max-width:620px){.evidence{grid-template-columns:1fr}.bottom{display:block}}
   </style>
 </head>
 <body>
   <main class="page">
     <header class="top">
-      <a class="brand" href="../index.html" style="color:inherit;text-decoration:none" aria-label="Back to the IncluMap series">INCLUMAP: DESIGN STUDIO <span>/ IDENTITY COMFORT · FROM EVIDENCE TO CHANGE</span></a>
-      <div class="workflow" aria-label="Design workflow">
-        <span class="step current">01 Read evidence</span><span class="arrow">→</span><span class="step">02 Place intervention</span><span class="arrow">→</span><span class="step">03 Retest</span>
-        <button class="layer-button" id="layerButton" type="button">Show design layer</button>
-        <a class="student-mode-link" href="../student-studio/">Use your own site ↗</a>
-      </div>
+      <a class="brand" href="../index.html" style="color:inherit;text-decoration:none" aria-label="Back to the IncluMap series">INCLUMAP: DESIGN STUDIO</a>
     </header>
 
     <section class="studio">
       <div class="map-wrap" aria-label="Interactive identity comfort redesign map">
-        <p class="map-label" id="mapLabel">Synthetic user comments + field observations · click a district</p>
+        <p class="map-label" id="mapLabel">Evidence layer</p>
         <span class="map-hint" id="mapHint">Select a space</span>
         <div class="town" id="town"></div>
         <aside class="marker-card" id="markerCard" aria-live="polite">
@@ -49,11 +46,6 @@
         <div class="palette-head"><span class="eyebrow">Intervention palette</span><h2>What could change?</h2><div class="geometry-key"><span><b>●</b> point</span><span><b>━</b> route</span><span><b>▧</b> zone</span></div></div>
         <div class="categories" id="categories"></div>
         <div class="tools" id="tools"></div>
-        <div class="coherence" id="coherence">
-          <div class="coherence-head"><b>Design coherence</b><span id="coherencePlace">Festival Gate</span></div>
-          <div class="chain"><span class="chain-stage cue" data-stage="cue">Visible cue</span><span class="chain-arrow">→</span><span class="chain-stage" data-stage="function">Function</span><span class="chain-arrow">→</span><span class="chain-stage" data-stage="accountability">Response</span></div>
-          <p id="coherenceNote">Build a design chain, then retest it with users.</p>
-        </div>
         <div class="palette-foot">Placed interventions sort into five category areas automatically; each area accepts multiple icons. Icons are hypotheses—not proof of inclusion. <button class="clear" id="clearAll">Clear design</button></div>
       </aside>
     </section>
@@ -62,11 +54,9 @@
       <div class="place-title"><span class="eyebrow">Selected space</span><h2 id="placeName">Festival Gate</h2><small id="placeType">Event threshold</small></div>
       <div class="evidence-cell"><b>User voice</b><p id="comment"></p></div>
       <div class="evidence-cell"><b>Field observation</b><p id="observation"></p></div>
-      <div class="evidence-cell hypothesis"><b>Design question</b><p id="question"></p><span class="measure-tag" id="measureTag"></span></div>
     </section>
 
     <footer class="bottom">
-      <div class="logic">Evidence → intervention → re-measure identity comfort</div>
       <div class="cite"><b>Concept &amp; design:</b> Yao, X. (2026). <i>Identity Comfort Design Map.</i> &nbsp; <b>Research bases:</b> <a href="https://doi.org/10.1037/tps0000304">Kruk &amp; Matsick (2021)</a>; <a href="https://doi.org/10.1177/1948550617737601">Chaney &amp; Sanchez (2018)</a>; <a href="https://doi.org/10.1111/josi.70062">Kruk et al. (2026)</a>; <a href="https://doi.org/10.1016/j.annals.2025.103898">Vongvisitsin et al. (2025)</a>; <a href="https://www.ada.gov/law-and-regs/design-standards/2010-stds/">ADA (2010)</a>; Yao et al. (2026), <i>Gender Attributes of Space</i>. Synthetic teaching data.</div>
     </footer>
   </main>
@@ -126,7 +116,7 @@
       {id:"night-market",name:"Night Market",type:"Temporary event",gap:2,comment:"I love the atmosphere, but crowds and music leave no place to recover.",observation:"Dense vendor layout; amplified sound overlaps; no signed low-stimulation area.",question:"How might a lively event include a visible path to pause and return?",metric:"participation + return"}
     ];
 
-    let state={selected:"festival",category:"access",tool:null,layer:"evidence",markers:[],activeMarker:null};
+    let state={selected:"festival",category:"access",tool:null,markers:[],activeMarker:null};
     const town=document.getElementById("town"),categoriesRoot=document.getElementById("categories"),toolsRoot=document.getElementById("tools");
 
     places.forEach(place=>{
@@ -164,7 +154,7 @@
 
     function placeIntervention(placeId){
       const tool=findTool(state.tool);if(!tool)return;
-      state.markers.push({id:Date.now()+Math.random(),placeId,toolId:tool.id});state.selected=placeId;state.layer="design";state.activeMarker=state.markers[state.markers.length-1].id;state.tool=null;
+      state.markers.push({id:Date.now()+Math.random(),placeId,toolId:tool.id});state.selected=placeId;state.activeMarker=state.markers[state.markers.length-1].id;state.tool=null;
       renderAll();showMarkerCard(state.activeMarker);
     }
 
@@ -172,61 +162,38 @@
       document.querySelectorAll(".place").forEach(element=>{
         const placeId=element.dataset.id;element.classList.toggle("selected",placeId===state.selected);element.classList.toggle("targetable",!!state.tool);
         element.className=element.className.replace(/evidence-gap-\d/g,"").trim();
-        if(state.layer==="evidence")element.classList.add("evidence-gap-"+places.find(place=>place.id===placeId).gap);
+        element.classList.add("evidence-gap-"+places.find(place=>place.id===placeId).gap);
         const slotsRoot=element.querySelector(".category-slots");slotsRoot.innerHTML="";
-        if(state.layer==="design"){
+        const placedMarkers=state.markers.filter(marker=>marker.placeId===placeId);
+        if(placedMarkers.length){
           const shortLabels={access:"A",care:"C",sensory:"S",night:"N",social:"I"};
           categories.forEach(category=>{const slot=document.createElement("span");slot.className=`category-slot slot-${category.id}`;slot.dataset.category=category.id;slot.dataset.short=shortLabels[category.id];slot.title=category.label;slotsRoot.appendChild(slot)});
-          state.markers.filter(marker=>marker.placeId===placeId).forEach(marker=>{
+          placedMarkers.forEach(marker=>{
             const tool=findTool(marker.toolId),category=categoryForTool(marker.toolId),slot=slotsRoot.querySelector(`[data-category="${category.id}"]`),button=document.createElement("button");button.type="button";button.title=`${tool.name} · ${category.label}`;button.setAttribute("aria-label",`${tool.name} in ${places.find(place=>place.id===placeId).name}`);button.className=`design-marker grouped-marker marker-${geometryLabel(tool)}`;button.textContent=tool.emoji;
             button.onclick=event=>{event.stopPropagation();showMarkerCard(marker.id)};slot.appendChild(button);
           });
         }
       });
       const hint=document.getElementById("mapHint"),tool=findTool(state.tool);
-      hint.textContent=tool?`Place ${tool.emoji} on a space`:state.layer==="evidence"?"Evidence layer":"Design layer · 5 groups";hint.classList.toggle("ready",!!tool);
-      document.getElementById("mapLabel").textContent=state.layer==="evidence"?"Synthetic user comments + field observations · click a district":"A Access + wayfinding · C Care · S Sensory · N Night + safety · I Identity + service";
-      const layer=document.getElementById("layerButton");layer.textContent=state.layer==="evidence"?"Show design layer":"Show evidence layer";layer.classList.toggle("active",state.layer==="design");
-      const selectedCoherence=coherenceFor(state.selected),stepIndex=selectedCoherence.cue&&selectedCoherence.function&&selectedCoherence.accountability?2:state.markers.length?1:0;
-      document.querySelectorAll(".step").forEach((step,index)=>step.classList.toggle("current",index===stepIndex));
-      renderCoherence();
-    }
-
-    function coherenceFor(placeId){
-      const stages=new Set(state.markers.filter(marker=>marker.placeId===placeId).map(marker=>findTool(marker.toolId).stage));
-      return {cue:stages.has("cue"),function:stages.has("function"),accountability:stages.has("accountability")};
-    }
-
-    function renderCoherence(){
-      const place=places.find(item=>item.id===state.selected),status=coherenceFor(state.selected);document.getElementById("coherencePlace").textContent=place.name;
-      document.querySelectorAll(".chain-stage").forEach(stage=>stage.classList.toggle("active",status[stage.dataset.stage]));
-      let note="Build a design chain, then retest it with users.";
-      if(status.cue&&!status.function&&!status.accountability)note="Visible signal only · functional support and response are not yet demonstrated.";
-      else if(status.cue&&status.function&&!status.accountability)note="The cue has a usable counterpart · add a credible service or response practice.";
-      else if(status.cue&&!status.function&&status.accountability)note="The welcome and response are visible · add an independently usable spatial change.";
-      else if(!status.cue&&status.function&&status.accountability)note="Strong functional base · add a community-authentic cue only where appropriate.";
-      else if(status.cue&&status.function&&status.accountability)note="Supported inclusion hypothesis · now return to affected users and retest.";
-      else if(status.function)note="Functional change placed · connect it to welcome and accountable service.";
-      else if(status.accountability)note="Response mechanism placed · connect it to a usable spatial intervention.";
-      document.getElementById("coherenceNote").textContent=note;
+      hint.textContent=tool?`Place ${tool.emoji} on a space`:"Select a space";hint.classList.toggle("ready",!!tool);
+      document.getElementById("mapLabel").textContent="Evidence layer";
     }
 
     function renderEvidence(){
       const place=places.find(item=>item.id===state.selected),box=document.getElementById("evidence");
       box.classList.remove("refreshing");void box.offsetWidth;box.classList.add("refreshing");
       document.getElementById("placeName").textContent=place.name;document.getElementById("placeType").textContent=place.type;
-      document.getElementById("comment").textContent=`“${place.comment}”`;document.getElementById("observation").textContent=place.observation;document.getElementById("question").textContent=place.question;document.getElementById("measureTag").textContent=`Retest: ${place.metric}`;
+      document.getElementById("comment").textContent=`“${place.comment}”`;document.getElementById("observation").textContent=place.observation;
     }
 
     function showMarkerCard(markerId){
       const marker=state.markers.find(item=>item.id===markerId);if(!marker)return;state.activeMarker=markerId;
       const tool=findTool(marker.toolId),place=places.find(item=>item.id===marker.placeId),card=document.getElementById("markerCard");
-      const coherence=coherenceFor(marker.placeId),supported=coherence.cue&&coherence.function&&coherence.accountability,status=document.getElementById("markerStatus");
-      document.getElementById("markerTitle").textContent=`${tool.emoji} ${tool.name} · ${place.name}`;document.getElementById("markerMeta").textContent=`${categoryForTool(marker.toolId).label} · ${geometryLabel(tool)} intervention · ${tool.stage}`;status.textContent=supported?"Supported hypothesis":tool.stage==="cue"?"Visible signal · not yet verified":"Evidence-led intervention";status.classList.toggle("supported",supported);document.getElementById("markerReason").textContent=tool.why;document.getElementById("markerMeasure").innerHTML=`<b>Test after redesign:</b> ${tool.measure.replace("Retest ","")}. Compare with the original comment and field note.`;document.getElementById("markerCheck").innerHTML=`<b>Critical check:</b> ${tool.check||"Validate this change with affected users and examine who might still be excluded."}`;card.classList.add("visible");
+      const status=document.getElementById("markerStatus");
+      document.getElementById("markerTitle").textContent=`${tool.emoji} ${tool.name} · ${place.name}`;document.getElementById("markerMeta").textContent=`${categoryForTool(marker.toolId).label} · ${geometryLabel(tool)} intervention · ${tool.stage}`;status.textContent=tool.stage==="cue"?"Design cue":"Evidence-led intervention";status.classList.remove("supported");document.getElementById("markerReason").textContent=tool.why;document.getElementById("markerMeasure").innerHTML=`<b>Test after redesign:</b> ${tool.measure.replace("Retest ","")}. Compare with the original comment and field note.`;document.getElementById("markerCheck").innerHTML=`<b>Critical check:</b> ${tool.check||"Validate this change with affected users and examine who might still be excluded."}`;card.classList.add("visible");
     }
 
     function renderAll(){renderPalette();renderMap();renderEvidence()}
-    document.getElementById("layerButton").onclick=()=>{state.layer=state.layer==="evidence"?"design":"evidence";renderMap()};
     document.getElementById("closeCard").onclick=()=>document.getElementById("markerCard").classList.remove("visible");
     document.getElementById("removeMarker").onclick=()=>{state.markers=state.markers.filter(marker=>marker.id!==state.activeMarker);document.getElementById("markerCard").classList.remove("visible");renderMap()};
     document.getElementById("clearAll").onclick=()=>{state.markers=[];state.activeMarker=null;document.getElementById("markerCard").classList.remove("visible");renderMap()};
