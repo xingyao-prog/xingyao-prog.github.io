@@ -187,17 +187,6 @@
     .source-scenario{
       padding:32px 34px 30px;
     }
-    .source-scenario>small{
-      font:500 8px/1 DM Mono,monospace;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color:var(--muted);
-    }
-    .source-scenario h3{
-      margin:9px 0 22px;
-      font-size:1.45rem;
-      letter-spacing:-.04em;
-    }
     .scenario-pair{
       display:grid;
       grid-template-columns:1fr 56px 1fr;
@@ -231,21 +220,6 @@
       font:500 18px/1 DM Mono,monospace;
       color:var(--acid);
     }
-    .source-question{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      margin-top:18px;
-      padding-top:16px;
-      border-top:1px solid var(--line);
-    }
-    .source-question p{
-      margin:0;
-      color:var(--muted);
-      font-size:.78rem;
-    }
-
     .redesign-simple{
       min-height:390px;
       padding:30px 32px;
@@ -552,9 +526,6 @@
         </div>
 
         <div class="source-scenario" aria-live="polite">
-          <small id="sourceKicker">ORGANIZATIONAL LENS 01</small>
-          <h3 id="sourceHeading">Metrics can send a different message.</h3>
-
           <div class="scenario-pair">
             <article class="scenario-card">
               <small>STATED VALUE</small>
@@ -569,10 +540,6 @@
             </article>
           </div>
 
-          <div class="source-question">
-            <p id="sourceExplanation">What behavior would this system encourage during a busy service period?</p>
-            <button class="secondary-action" data-next="redesign">Redesign this signal →</button>
-          </div>
         </div>
       </div>
     </section>
@@ -717,10 +684,7 @@
 
     const sourceContent={
       metrics:{
-        kicker:"ORGANIZATIONAL LENS 01",
-        heading:"Metrics can send a different message.",
         signal:"Only speed and throughput are rewarded.",
-        question:"What behavior would this system encourage during a busy service period?",
         redesign:{
           kicker:"METRICS",
           heading:"Reward access—not speed alone.",
@@ -730,10 +694,7 @@
         }
       },
       routine:{
-        kicker:"ORGANIZATIONAL LENS 02",
-        heading:"Routines define what feels normal.",
         signal:"Accommodation sits outside the standard workflow.",
-        question:"What happens when every access request becomes an exception?",
         redesign:{
           kicker:"ROUTINES",
           heading:"Make accommodation part of the routine.",
@@ -743,10 +704,7 @@
         }
       },
       resources:{
-        kicker:"ORGANIZATIONAL LENS 03",
-        heading:"Resources shape what staff can actually do.",
         signal:"Staff lack tools, authority, or practiced responses.",
-        question:"What behavior is likely when support is missing?",
         redesign:{
           kicker:"RESOURCES",
           heading:"Support inclusive action in practice.",
@@ -773,10 +731,7 @@
       currentSource=key;
       const content=sourceContent[key];
       sourceButtons.forEach(button=>button.setAttribute("aria-selected",String(button.dataset.source===key)));
-      document.getElementById("sourceKicker").textContent=content.kicker;
-      document.getElementById("sourceHeading").textContent=content.heading;
       document.getElementById("dailySignal").textContent=content.signal;
-      document.getElementById("sourceExplanation").textContent=content.question;
       showRedesign(key);
     }
 
