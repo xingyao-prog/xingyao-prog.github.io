@@ -32,30 +32,8 @@
     button{cursor:pointer}
     .page{width:min(1320px,calc(100% - 40px));margin:auto}
 
-    .topbar{
-      height:66px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-bottom:1px solid var(--line);
-    }
-    .brand,.back{
-      font:500 10px/1 DM Mono,monospace;
-      letter-spacing:.1em;
-      text-transform:uppercase;
-      text-decoration:none;
-    }
-    .back{color:var(--muted)}
-
     .hero{
       padding:54px 0 34px;
-    }
-    .eyebrow{
-      margin:0 0 14px;
-      color:var(--orange);
-      font:500 9px/1.2 DM Mono,monospace;
-      letter-spacing:.14em;
-      text-transform:uppercase;
     }
     h1{
       margin:0;
@@ -681,14 +659,6 @@
       font-size:.76rem;
       text-align:right;
     }
-    .privacy-note{
-      margin:12px 0 0;
-      color:#8b918d;
-      font:500 7px/1.45 DM Mono,monospace;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-    }
-
     .industry{
       padding:0 0 62px;
     }
@@ -718,18 +688,6 @@
       text-transform:uppercase;
     }
     .boundary strong{color:#555b57;font-weight:500}
-    .footer{
-      height:62px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font:500 8px/1 DM Mono,monospace;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-
     @media(max-width:900px){
       .snapshot{grid-template-columns:1fr}
       .snapshot>div:first-child{border-right:0;border-bottom:1px solid var(--line)}
@@ -766,7 +724,7 @@
       .app:last-child{border-bottom:0}
       .mock-main{grid-template-columns:1fr}
       .mock-side{border-left:0;border-top:1px solid #d8dcda;display:grid;grid-template-columns:1fr 1fr}
-      .boundary,.footer{align-items:flex-start;flex-direction:column;height:auto;padding:20px 0}
+      .boundary{align-items:flex-start;flex-direction:column;height:auto;padding:20px 0}
     }
 
     @media(prefers-reduced-motion:reduce){
@@ -777,13 +735,7 @@
 
 <body>
   <div class="page">
-    <header class="topbar">
-      <a class="brand" href="../index.html">Yao / Teaching projects</a>
-      <a class="back" href="../index.html">All projects ↗</a>
-    </header>
-
     <section class="hero">
-      <p class="eyebrow">Event Flow Lens</p>
       <h1>See how people move.</h1>
       <p class="hero-copy">Camera-based analytics for event operations.</p>
     </section>
@@ -952,14 +904,7 @@
         </p>
       </div>
 
-      <p class="privacy-note">Operational observation · movement, not facial identification</p>
     </section>
-
-
-    <footer class="footer">
-      <span>Event Flow Lens</span>
-      <span>Yao · Teaching project</span>
-    </footer>
   </main>
 
   <script>
