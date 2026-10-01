@@ -30,9 +30,6 @@
     .topbar{height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line)}
     .selected-work{color:inherit;text-decoration:none;white-space:nowrap;font:500 9px/1 DM Mono,monospace;text-transform:uppercase;letter-spacing:.08em}
     .selected-work:hover,.selected-work:focus-visible{text-decoration:underline;text-underline-offset:4px;outline:0}
-    .brand{font:500 10px/1 DM Mono,monospace;letter-spacing:.08em}
-    .topbar .brand{margin-right:auto}
-    .brand span{color:#878c87}
     .steps{display:flex;gap:7px}
     .steps button{border:0;background:transparent;padding:8px 10px;color:#7c817d;font:500 9px/1 DM Mono,monospace;letter-spacing:.06em;cursor:pointer}
     .steps button.active{background:var(--violet);color:#fff;box-shadow:0 4px 0 var(--acid)}
@@ -335,10 +332,8 @@
     .research-foundation summary::-webkit-details-marker{display:none}
     .research-foundation summary b{font-size:20px;font-weight:400;transition:transform .25s ease}
     .research-foundation details[open] summary b{transform:rotate(45deg)}
-    .reference-list{margin:0;padding:8px 0 26px 20px;columns:2;column-gap:50px;color:#56625e;font-size:.7rem;line-height:1.5}
+    .reference-list{margin:0;padding:8px 0 26px 20px;color:var(--ink);font-size:.7rem;font-weight:500;line-height:1.5}
     .reference-list li{margin:0 0 12px;padding-left:4px;break-inside:avoid}
-    .reference-list li:first-child{color:var(--ink);font-weight:600}
-    .reference-list a{color:inherit;text-underline-offset:2px}
     footer{height:56px;background:var(--ink);color:#cfd2ce}
     footer .shell{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;font:400 8px DM Mono,monospace}
     footer span{color:#888e89}
@@ -354,7 +349,7 @@
     @media(max-width:600px){
       .shell{width:calc(100% - 24px)}
       .topbar{height:auto;min-height:62px;align-items:flex-start;padding:16px 0;gap:12px}
-      .brand{display:none}.steps{gap:2px}.steps button{padding:7px 6px;font-size:7px}.steps button span{display:none}
+      .steps{gap:2px}.steps button{padding:7px 6px;font-size:7px}.steps button span{display:none}
       .teaching-snapshot{grid-template-columns:1fr;margin-top:14px}
       .snapshot-format{border-right:0;border-bottom:1px solid var(--line)}
       .snapshot-points{grid-template-columns:1fr;gap:5px}
@@ -371,6 +366,7 @@
   
     /* Keep all page title/header blocks left-aligned */
     .panel-head{
+      padding-left:0 !important;
       justify-content:flex-start !important;
       align-items:flex-start !important;
       text-align:left !important;
@@ -388,7 +384,6 @@
 <body>
   <header class="topbar shell">
     <a class="selected-work" href="../index.html">← Selected work</a>
-    <div class="brand">SERVICE REFLEX <span>/ EXPLICIT × IMPLICIT EXPERIENCE LAB</span></div>
     <nav class="steps" aria-label="Project stages">
       <button class="active" data-panel="sort"><span>01</span>IAT</button>
       <button data-panel="compare"><span>02</span>COMPARE</button>
@@ -584,12 +579,9 @@
       <details>
         <summary><span>Research foundation</span><b aria-hidden="true">+</b></summary>
         <ol class="reference-list">
-          <li>Hua, C., &amp; Yao, X. (2026). <i>Is your data telling the whole story? Toward an explicit–implicit psychometric paradigm in tourism and hospitality research.</i> [Manuscript].</li>
-          <li><a href="https://doi.org/10.1037/0022-3514.74.6.1464" target="_blank" rel="noopener">Greenwald, McGhee, &amp; Schwartz (1998). Measuring individual differences in implicit cognition.</a></li>
-          <li><a href="https://doi.org/10.1037/0022-3514.85.2.197" target="_blank" rel="noopener">Greenwald, Nosek, &amp; Banaji (2003). An improved IAT scoring algorithm.</a></li>
-          <li><a href="https://doi.org/10.3758/s13428-021-01624-3" target="_blank" rel="noopener">Greenwald et al. (2022). Best research practices for using the IAT.</a></li>
-          <li><a href="https://doi.org/10.1375/jhtm.16.1.32" target="_blank" rel="noopener">Darcy &amp; Dickson (2009). A whole-of-life approach to accessible tourism experiences.</a></li>
-          <li>Clarkson, Coleman, Keates, &amp; Lebbon (Eds.). (2003). <i>Inclusive design: Design for the whole population.</i></li>
+          <li>Hua, C., &amp; Yao, X. (2026). Is your data telling the whole story? Toward an explicit–implicit psychometric paradigm in tourism and hospitality research. [Manuscript].</li>
+          <li>Greenwald, McGhee, &amp; Schwartz (1998). Measuring individual differences in implicit cognition.</li>
+          <li>Greenwald, Nosek, &amp; Banaji (2003). An improved IAT scoring algorithm.</li>
         </ol>
       </details>
     </section>
